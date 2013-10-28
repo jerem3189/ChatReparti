@@ -2,6 +2,7 @@
  * Description breve du fichier.
  * Description plus elaboree et detaillee du fichier.
  */
+using namespace std;
 
 #if !defined(_SOCKET_H)
 #define _SOCKET_H
