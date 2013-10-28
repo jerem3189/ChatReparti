@@ -6,7 +6,7 @@
  */
 using namespace std;
 #include "Client.hpp"
-
+#include "Socket.hpp"
 string name;
 
 Socket sock;
@@ -21,12 +21,20 @@ Client::Client(const Client& orig) {
 Client::~Client() {
 }
 
-Client::getName() {
+string Client::getName() {
     return name;
+
+}
+void Client::setName(string newName) {
+    name=newName;
 }
 
-Client::setName(string newName) {
-    name=newName;
-    
+bool Client::isMaster() {
+
 }
+
+void Client::setMaster(bool type) {
+
+}
+
 

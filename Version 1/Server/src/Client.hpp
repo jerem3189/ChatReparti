@@ -1,6 +1,6 @@
 /* 
  * File:   Client.hpp
- * Author: darkey
+ * Author: Arnaud
  *
  * Created on 28 octobre 2013, 18:56
  */
@@ -13,8 +13,10 @@ public:
     Client();
     Client(const Client& orig);
     virtual ~Client();
-    getName();
-    setName(string newName);
+    string getName();
+    void setName(string newName);
+    bool Client::isMaster();
+    void Client::setMaster(bool type);
 private:
 
 };
