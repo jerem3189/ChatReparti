@@ -9,7 +9,7 @@
 //
 //
 
-
+using namespace std;
 #include "RFC1664.hpp"
 #include "MessagesTypesRFC1664.hpp"
 
