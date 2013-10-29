@@ -6,6 +6,8 @@
 #if !defined(_THREAD_H)
 #define _THREAD_H
 
+#include <pthread.h>
+
 
 class Thread {
 public:

@@ -7,6 +7,8 @@ using namespace std;
 #if !defined(_SOCKET_H)
 #define _SOCKET_H
 
+#include <string>
+
 
 class Socket {
 public:

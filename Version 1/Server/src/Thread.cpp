@@ -17,7 +17,7 @@ void Thread::waitForEnd() {
 
 }
 
-static void* Thread::pthread_function() {
+void* Thread::pthread_function() {
 
 }
 

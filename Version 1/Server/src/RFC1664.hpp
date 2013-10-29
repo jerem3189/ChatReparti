@@ -13,6 +13,8 @@
 #if !defined(_RFC1664_HPP)
 #define _RFC1664_HPP
 
+#include <string>
+
 #include "MessagesTypesRFC1664.hpp"
 
 class RFC1664 {
