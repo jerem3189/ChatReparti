@@ -8,11 +8,12 @@
 
 #include <pthread.h>
 
-
 class Thread {
 public:
+  	Thread();
+	virtual ~Thread() {;}
 	void start();
-	void stop();
+	inline void stop();
 	void waitForEnd();
 	virtual void run() = 0;
 protected:
