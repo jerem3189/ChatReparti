@@ -5,9 +5,13 @@
  * Created on 28 octobre 2013, 18:56
  */
 
+
 #ifndef CLIENT_HPP
 #define	CLIENT_HPP
 
+#include <string>
+
+using namespace std;
 class Client {
 public:
     Client();
@@ -15,8 +19,8 @@ public:
     virtual ~Client();
     string getName();
     void setName(string newName);
-    bool Client::isMaster();
-    void Client::setMaster(bool type);
+    bool isMaster();
+    void setMaster(bool type);
 private:
 
 };
