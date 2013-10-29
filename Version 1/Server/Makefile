@@ -1,7 +1,7 @@
 CC=g++
-CFLAGS=-Wall -g
-LDFLAGS=lpthread
-EXEC=server
+CFLAGS=-Wall -g -pthread
+LDFLAGS=-pthread
+EXEC=server clean
 SRC=$(wildcard src/*.cpp)
 OBJ=$(SRC:.cpp=.o)
 
@@ -11,7 +11,7 @@ server: $(OBJ)
 	$(CC) -o bin/$@ $^ $(LDFLAGS)
 
 %.o: %.cpp
-	$(CC) -o obj/$@ -c $< $(CFLAGS)
+	$(CC) -o $@ -c $< $(CFLAGS)
 
 clean:
-	rm -f *.o
+	rm -f src/*.o

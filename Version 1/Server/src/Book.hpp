@@ -14,7 +14,7 @@ using namespace std;
 #include <iostream>
 #include <vector>
 #include <map>
-//#include <stdio.h>
+#include <stdio.h>
 
 
 class Book {
@@ -22,7 +22,7 @@ public:
         Book();
         Book(const Book& orig);
         virtual ~Book();
-	int addNewClient(string name, vector<Room&> roomList);
+	int addNewClient(string name, vector<Room*> roomList);
 	int removeClient(string name);
 	int addClientToRoom(string clientName, string roomName);
 	int removeClientFromRoom(string clientName, string roomName);
@@ -31,14 +31,14 @@ public:
 	Client findClient(string name);
 	Client findClientv3(string name);
 	map<Client, vector<Room> > getClients();
-	void setClients(map<Client client, vector<Room&> roomList> clients);
+	//void setClients(map<Client client, vector<Room*> roomList> clients);
 	vector<Client> getRoomClients(string roomName);
 	vector<Client> getGroupClients(string groupName);
 	vector<Room> getRooms();
 	int addRoom(string name);
 	int addNetworkHints(string nameClient, string ipAddress, int port);
 private:
-	map<Client, vector<Room&> > clients;
+	map<Client, vector<Room*> > clients;
 	vector<Room> rooms;
 };
 

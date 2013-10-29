@@ -8,7 +8,7 @@
 
 #include "Thread.hpp"
 
-class ReceptionUDP : public Thread, public Thread {
+class ReceptionUDP : public Thread {
 public:
 	void receiveDatagrams();
 	void run();

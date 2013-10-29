@@ -10,6 +10,8 @@
 #define _GROUP_H
 
 #include "Client.hpp"
+#include <iostream>
+#include <vector>
 
 class Group {
 public:

@@ -17,7 +17,7 @@ Book::~Book() {
 }
 
 
-int Book::addNewClient(string name, vector<Room&> roomList) {
+int Book::addNewClient(string name, vector<Room*> roomList) {
 
 }
 
@@ -45,9 +45,9 @@ map<Client, vector<Room> > Book::getClients() {
 
 }
 
-void Book::setClients(map<Client client, vector<Room&> roomList> clients) {
+//void Book::setClients(map<Client client, vector<Room*> roomList> clients) {
 
-}
+//}
 
 vector<Client> Book::getRoomClients(string roomName) {
 

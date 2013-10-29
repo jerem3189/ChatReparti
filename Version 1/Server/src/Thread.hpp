@@ -19,7 +19,7 @@ public:
 protected:
 	pthread_t thread;
 	bool end;
-	static void* pthread_function();
+	static void* pthread_function(void*);
 };
 
 #endif  //_THREAD_H

@@ -23,7 +23,7 @@ public:
 	void setClients(vector<Client> clients);
 private:
 	string name;
-	vector<Client&> clients;
+	vector<Client*> clients;
 };
 
 #endif  //_ROOM_H
