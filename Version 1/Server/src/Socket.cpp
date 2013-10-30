@@ -19,11 +19,11 @@
 #define _DEBUG(msg1, msg2) \
 	if ((msg1) == "") \
 	{ \
-		cout << stderr << "%s\n" << msg2; \
+		cout << stderr << msg2; \
 	} \
 	else \
 	{ \
-		cout << stderr << "%s : %s\n" << msg1 << msg2; \
+		cout << stderr << msg1 << msg2; \
 	}
 #else
 #define _DEBUG(msg1, msg2)
@@ -41,7 +41,7 @@ typedef struct sockaddr SOCKADDR;
 typedef int SOCKET;
 
 //char message[1024], listenPort[6];//defini un message de 1023 caractères, et un numéro de port sur 5 caractères
-ADDRINFO infos, *infos2;
+ADDRINFO infos, *infosCli;
 SOCKET listenSocket;
 int etat;
 
@@ -74,22 +74,22 @@ int Socket(int argc, char *argv[])
 			infos.ai_socktype = SOCK_DGRAM;  // UDP
 			//infos.ai_flags = AI_PASSIVE;
 
-			if ((etat = getaddrinfo("0.0.0.0", argv[1], &infos, &infos2)) != 0)
+			if ((etat = getaddrinfo("0.0.0.0", argv[1], &infos, &infosCli)) != 0)
 			{
 				cout << stderr << "getaddrinfo :" << gai_strerror(etat);
 				exit(0);
 			}
 
-			if ((listenSocket = socket(	infos2->ai_family,
-			                            infos2->ai_socktype,
-			                            infos2->ai_protocol)) == -1)
+			if ((listenSocket = socket(	infosCli->ai_family,
+			                            infosCli->ai_socktype,
+			                            infosCli->ai_protocol)) == -1)
 			{
 				perror("socket invalid :");
 				exit(ERR_GETADDRINFO);
 			}
 
 
-			if (bind(listenSocket, infos2->ai_addr, infos2->ai_addrlen) == -1)
+			if (bind(listenSocket, infosCli->ai_addr, infosCli->ai_addrlen) == -1)
 			{
 				close(listenSocket);
 				perror("bind failed :");
@@ -97,11 +97,11 @@ int Socket(int argc, char *argv[])
 			}
 			else
 			{
-				cout << "écoute sur le port UDP : %s\n" << argv[1];
+				cout << "écoute sur le port UDP :" << argv[1];
 			}
 
 			// Libération de la mémoire
-			freeaddrinfo(infos2);
+			freeaddrinfo(infosCli);
 
 
 
