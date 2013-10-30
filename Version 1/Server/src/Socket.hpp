@@ -19,12 +19,14 @@ using namespace std;
 #include <unistd.h>
 #include <errno.h>
 
-class Socket {
+class Socketdef {
 public:
 
 	Socket();
 	Socket(unsigned short port);
 	~Socket();
+	
+	char message[1024], listenPort[6];
 	
 	int connect(unsigned short = 0);
 	int create(unsigned short = 0);
@@ -43,6 +45,10 @@ private:
 	sockaddr_in	m_readaddr;
 	sockaddr_in	m_writeaddr;
 	
+};
+
+class cSocket {
+	Socketdef cSocket;
 };
 
 #endif  //_SOCKET_H
