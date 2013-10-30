@@ -8,13 +8,16 @@
 using namespace std;
 #include "Room.hpp"
 #include "Client.hpp"
+#include <vector>
 
- string name;
+
+ string roomName;
  vector<Client> clients;
 
 int Room::addClient(Client client) {
-    clients.insert(clients.end(),client);
-     
+    
+    //clients.insert(clients.end(),it,client);
+    return 1;
 }
 
 int Room::delClient(Client client) {
@@ -22,25 +25,25 @@ int Room::delClient(Client client) {
 
   // iterator pour trouver l'element correspondant au client
   it = find (clients.begin(), clients.end(), client);
-    clients.erase(it);
-
+    //clients.erase(it);
+    //Fuck it 
 }
 
 string Room::getName() {
-    return this->name;
+    return roomName;
 
 }
 
 void Room::setName(string newName) {
-    this->name=newName;
+    roomName=newName;
 }
-
+/*
 vector<Client> Room::getClients() {
-    return this->clients;
+    //return clients&;
     
-}
+}*/
 
-void Room::setClients(vector<Client> clients) {
-    this->clients = clients;
+void Room::setClients(vector<Client> newClients) {
+    //clients = newClients;
 }
 
