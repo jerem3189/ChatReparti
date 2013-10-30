@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   Book.hpp
  * Author: darkey
  *
@@ -19,27 +19,28 @@ using namespace std;
 
 class Book {
 public:
-        Book();
-        Book(const Book& orig);
-        virtual ~Book();
-	int addNewClient(string name, vector<Room*> roomList);
-	int removeClient(string name);
-	int addClientToRoom(string clientName, string roomName);
-	int removeClientFromRoom(string clientName, string roomName);
-	int changeClientName(string name, string newName);
-	int changeClientNamev3(string name, string newName);
-	Client findClient(string name);
-	Client findClientv3(string name);
-	map<Client, vector<Room> > getClients();
-	//void setClients(map<Client client, vector<Room*> roomList> clients);
-	vector<Client> getRoomClients(string roomName);
-	vector<Client> getGroupClients(string groupName);
-	vector<Room> getRooms();
-	int addRoom(string name);
-	int addNetworkHints(string nameClient, string ipAddress, int port);
+    Book();
+    Book(const Book& orig);
+    virtual ~Book();
+    int addNewClient(string name, vector<string> roomList);
+    int removeClient(string name);
+    int addClientToRoom(string clientName, string roomName);
+    int removeClientFromRoom(string clientName, string roomName);
+    int changeClientName(string name, string newName);
+    int changeClientNamev3(string name, string newName);
+    Client findClient(string name);
+    Client findClientv3(string name);
+    map<Client, vector<Room> > getClients();
+    void setClients(map<Client, vector<Room*> > clients);
+    //void setClients(vector< pair<Client, vector<Room*> > >clients);
+    vector<Client> getRoomClients(string roomName);
+    vector<Client> getGroupClients(string groupName);
+    vector<Room> getRooms();
+    int addRoom(string name);
+    int addNetworkHints(string nameClient, string ipAddress, int port);
 private:
-	map<Client, vector<Room*> > clients;
-	vector<Room> rooms;
+    vector<pair<Client, vector<Room*> > > clients;
+    vector<Room> rooms;
 };
 
 #endif  //_BOOK_H
