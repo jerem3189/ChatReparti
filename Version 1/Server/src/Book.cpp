@@ -13,89 +13,118 @@ using namespace std;
 Book::Book() {
 }
 
-Book::Book(const Book& orig) {
-}
-
 Book::~Book() {
 }
 
-int Book::addNewClient(string name, vector<string> roomList) {
-	/*    TEST TEST TEST TEST TEST
-	Client client1 = Client(name);
-	vector<Room> liste_de_rooms;
-	Room room1 = Room();
-	Room room2 = Room();
-	liste_de_rooms.insert(liste_de_rooms.begin(), room1);
-	liste_de_rooms.insert(liste_de_rooms.begin(), room2);
-	
-	vector<Room*> liste_de_rooms_etoile;
-	liste_de_rooms_etoile.insert(liste_de_rooms_etoile.begin(), &liste_de_rooms.at(0));
-	//this->clients[client1] = liste_de_rooms_etoile;
-	//this->clients[client1] = toto;
-	pair<Client,vector<Room*> > paire;
-	paire = make_pair(client1, liste_de_rooms_etoile);
-	this->clients.insert(this->clients.begin(), paire);
-	FIN TEST FIN TEST FIN TEST*/
-	
-	
+int Book::addNewClient(string name, vector<string> roomList) {	
 	Client client = Client(name); // Creation de l'objet Client a partir de son nom
-	vector<Room*> vector_room_list; // Vecteur de Room*
+	
 	for (vector<string>::iterator i = roomList.begin(); i != roomList.end(); ++i)
 	{
-		//SI *i existe dans la liste de room actuelle
-		//ALORS rajouter dans le vector_room_list un pointeur vers cette  room
 		vector<Room>::iterator it;
 		
 		bool result = false;
 		for(it = this->rooms.begin(); it != this->rooms.end(); ++it)
 		{
-			if((*it).getName() == *i)
+			if(it->getName() == *i)
 			{
 				result = true;
-				vector_room_list.push_back(&(*it));
-				cout << "La room existe" << endl;
+				it->addClient(&client);
+				cout << "La room existe et le client a été ajouté" << endl;
 				break;
 			}
 		}
 	}
 	
-	pair<Client,vector<Room*> > pair_client_roomList;
-	pair_client_roomList = make_pair(client, vector_room_list);
-	this->clients.insert(this->clients.begin(), pair_client_roomList);
+	this->clients.push_back(client);
 	
 	return 0;
 }
 
 int Book::removeClient(string name) {
-
+	Client *client = findClient(name);
+	
+	vector<Client>::iterator it;
+		for(it = this->clients.begin(); it != this->clients.end(); ++it)
+		{
+			if(it->getName() == name)
+			{
+				cout << "Client trouvé !!!" << endl;
+				// SUPPRIMER LE CLIENT DES ROOMS DANS LEQUEL IL EST
+				this->clients.erase(it);
+				cout << "Client supprimé !!!" << endl;
+				break;
+			}
+		}
+		
+		return 0;
 }
 
 int Book::addClientToRoom(string clientName, string roomName) {
-
+	Room *room = findRoom(roomName);
+	Client *client = findClient(clientName);
+	
+	room->addClient(client);
+	
+	return 0;
 }
 
 int Book::removeClientFromRoom(string clientName, string roomName) {
-
+	Client *client = findClient(clientName);
+	Room *room = findRoom(roomName);
+	
+	room->delClient(client);
+	
+	return 0;
 }
 
 int Book::changeClientName(string name, string newName) {
 
+	return 0;
 }
 
-Client Book::findClient(string name) {
-
+Client* Book::findClient(string name) {
+		vector<Client>::iterator it;
+		for(it = this->clients.begin(); it != this->clients.end(); ++it)
+		{
+			cout << "nom : " << it->getName() << endl;
+			if(it->getName() == name)
+			{
+				cout << "Client trouvé !!!" << endl;
+				return &(*it);
+			}
+		}
+		
+		return NULL;
 }
 
-map<Client, vector<Room> > Book::getClients() {
-
+Room* Book::findRoom(string name) {
+		vector<Room>::iterator it;
+		for(it = this->rooms.begin(); it != this->rooms.end(); ++it)
+		{
+			cout << "nom : " << it->getName() << endl;
+			if(it->getName() == name)
+			{
+				cout << "room trouvée !!!" << endl;
+				return &(*it);
+			}
+		}
+		
+		return NULL;
 }
 
-void Book::setClients(map<Client, vector<Room*> > clients) {
-
+vector<Client> Book::getClients() {
+	return this->clients;
 }
 
-vector<Client> Book::getRoomClients(string roomName) {
+void Book::setClients(vector<Client> clients) {
+	this->clients = clients;
+}
 
+vector<Client*> Book::getRoomClients(string roomName) {
+	Room *room = findRoom(roomName);
+	
+	return room->getClients();
 }
 
 vector<Room> Book::getRooms() {
@@ -105,8 +134,31 @@ vector<Room> Book::getRooms() {
 int Book::addRoom(string name) {
 	Room room = Room(name);
 	this->rooms.push_back(room);
+	
+	return 0;
 }
 
 int Book::addNetworkHints(string nameClient, string ipAddress, int port) {
 
+	return 0;
+}
+
+vector<Room*> Book::getClientRooms(string clientName) {
+	vector<Room*> vector_roomList = vector<Room*>();
+	
+	vector<Room>::iterator it;
+	for(it = this->rooms.begin(); it != this->rooms.end(); ++it)
+		{
+			vector<Client*>::iterator it2;
+			for(it2 = it->getClients().begin(); it2 != it->getClients().end(); ++it2)
+			{
+				if ((*it2)->getName() == clientName)
+				{
+					vector_roomList.push_back(&(*it));
+					break;
+				}
+			}
+		}	
+		
+		return vector_roomList;
 }

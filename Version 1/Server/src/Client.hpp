@@ -16,7 +16,6 @@ class Client {
 public:
     Client();
     Client(string name);
-    Client(const Client& orig);
     virtual ~Client();
     string getName();
     void setName(string newName);

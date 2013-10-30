@@ -12,21 +12,18 @@ string name;
 Socket sock;
     
 Client::Client() {
+	
 }
 
 Client::Client(string name) {
 	this->name = name;
 }
 
-Client::Client(const Client& orig) {
-}
-
 Client::~Client() {
 }
 
 string Client::getName() {
-    return name;
-
+    return this->name;
 }
 void Client::setName(string newName) {
     name=newName;
