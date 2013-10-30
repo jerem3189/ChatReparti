@@ -38,9 +38,18 @@ int Book::addNewClient(string name, vector<string> roomList) {
 	FIN TEST FIN TEST FIN TEST*/
 	
 	
-	Client client1 = Client(name); // Creation de l'objet Client a partir de son nom
+	Client client = Client(name); // Creation de l'objet Client a partir de son nom
 	vector<Room*> vector_room_list; // Vecteur de Room*
+	for (vector<string>::iterator i = roomList.begin(); i != roomList.end(); ++i)
+	{
+		//SI *i existe dans la liste de room actuelle
+		//ALORS rajouter dans le vector_room_list un pointeur vers cette  room
+		cout << "Boucle for" << endl;
+	}
 	
+	pair<Client,vector<Room*> > pair_client_roomList;
+	pair_client_roomList = make_pair(client, vector_room_list);
+	this->clients.insert(this->clients.begin(), pair_client_roomList);
 	
 	return 0;
 }
