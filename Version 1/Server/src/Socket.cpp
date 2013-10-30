@@ -49,8 +49,7 @@ int etat;
 SOCKADDR clientAddress;
 socklen_t clientAddressSize = sizeof clientAddress;
 
-//Foction principale
-int Socket(int argc, char *argv[])
+int Socket::create(int argc, char *argv[])
 {
 	if(argc != 2)
 	{
@@ -102,17 +101,18 @@ int Socket(int argc, char *argv[])
 
 			// Libération de la mémoire
 			freeaddrinfo(infosCli);
+		}
 
 
-
+void Socket::listen()
+{
 			while (1)
 			{
 
-				memset(cSocket.message, 0, sizeof cSocket.message);//vide le message
+				memset(cSocket.message, 0, sizeof cSocket.message)
 
 				recvfrom(listenSocket, cSocket.message ,sizeof cSocket.message,0,&clientAddress,&clientAddressSize);
 				_DEBUG("Message reçu",message);
-				//printf("Message reçu : %s \n",message);
 
 				if (sendto(listenSocket, cSocket.message, sizeof cSocket.message,0,(SOCKADDR *) &clientAddress,clientAddressSize) == -1)
 				{
@@ -128,25 +128,5 @@ int Socket(int argc, char *argv[])
 			return 1337;
 		}
 	}
-}
-
-/*int Socket::listen() {
-
-}
-
-int Socket::connect(SOCKET *csock, SOCKET *sock)
- { 
 	
 }
-
-int Socket::create(unsigned short = 0) {
-	
-	 SOCKADDR_IN sin; 
-		 
-		if ( (*sock = socket (AF_INET, SOCK_DGRAM, 0)) == INVALID_SOCKET)
-		   {
-			 return(m_create = false);
-			  return 1; 
-		   }
-}
-*/
