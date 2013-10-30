@@ -26,8 +26,8 @@ public:
 	Socket(unsigned short port);
 	~Socket();
 	
-	int connect(unsigned short = 0, bool = false, int = 0);
-	int create(unsigned short = 0, bool = false, int = 0);
+	int connect(unsigned short = 0);
+	int create(unsigned short = 0);
 	int listen();
 	
 	sockaddr_in	get_read_addr();
