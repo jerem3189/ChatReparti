@@ -15,6 +15,7 @@ using namespace std;
 class Client {
 public:
     Client();
+    Client(string name);
     Client(const Client& orig);
     virtual ~Client();
     string getName();
@@ -22,7 +23,8 @@ public:
     bool isMaster();
     void setMaster(bool type);
 private:
-
+	string name;
+	
 };
 
 #endif	/* CLIENT_HPP */

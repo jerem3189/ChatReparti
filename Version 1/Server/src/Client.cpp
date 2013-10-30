@@ -11,8 +11,11 @@ string name;
 
 Socket sock;
     
-
 Client::Client() {
+}
+
+Client::Client(string name) {
+	this->name = name;
 }
 
 Client::Client(const Client& orig) {
