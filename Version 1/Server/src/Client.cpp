@@ -7,9 +7,6 @@
 using namespace std;
 #include "Client.hpp"
 #include "Socket.hpp"
-string name;
-
-Socket sock;
     
 Client::Client() {
 	

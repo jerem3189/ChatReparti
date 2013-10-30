@@ -50,7 +50,13 @@ int Book::removeClient(string name) {
 			if(it->getName() == name)
 			{
 				cout << "Client trouvé !!!" << endl;
-				// SUPPRIMER LE CLIENT DES ROOMS DANS LEQUEL IL EST
+				vector<Room*> roomList = this->getClientRooms(name);
+				vector<Room*>::iterator it2;
+				// supprimer le client de chaque room dans lequel il est
+				for(it2 = roomList.begin(); it2 != roomList.end(); ++it2)
+				{
+					(*it2)->delClient(client);
+				}
 				this->clients.erase(it);
 				cout << "Client supprimé !!!" << endl;
 				break;
