@@ -24,7 +24,7 @@ int Room::delClient(Client client) {
     std::vector<int>::iterator it;
 
   // iterator pour trouver l'element correspondant au client
-  it = find (clients.begin(), clients.end(), client);
+//  it = find (clients.begin(), clients.end(), client);
     //clients.erase(it);
     //Fuck it 
 }
