@@ -16,24 +16,9 @@
 #include <arpa/inet.h>
 #include <netinet/in.h>
 
+#include <iostream>
+
 #define DEFAULT_PORT "1337"
-/*
- * Macro de messages de debug
- * S'active à la compilation avec 'gcc -D DEBUG'
- */
-#ifdef DEBUG
-#define _DEBUG(msg1, msg2) \
-	if ((msg1) == "") \
-	{ \
-		fprintf(stderr, "%s\n", msg2); \
-	} \
-	else \
-	{ \
-		fprintf(stderr, "%s : %s\n", msg1, msg2); \
-	}
-#else
-#define _DEBUG(msg1, msg2)
-#endif
 
 /* Nouveaux types */
 typedef struct addrinfo ADDRINFO;
@@ -64,12 +49,9 @@ socklen_t clientAddressSize = sizeof clientAddress;
 
 
 int main(int argc, char** argv) {
-
-
 			memset(&infos, 0, sizeof infos);
 			infos.ai_family = AF_UNSPEC;      // IPv4&6
 			infos.ai_socktype = SOCK_DGRAM;  // UDP
-			//infos.ai_flags = AI_PASSIVE;
 
 			if ((etat = getaddrinfo("0.0.0.0", DEFAULT_PORT, &infos, &infos2)) != 0)
 			{
@@ -94,31 +76,31 @@ int main(int argc, char** argv) {
 			}
 			else
 			{
-				printf("écoute sur le port UDP : %s\n", DEFAULT_PORT);
+				cout << "Main() -> Ecoute sur le port UDP : " << DEFAULT_PORT << endl;
 			}
 
 			// Libération de la mémoire
 			freeaddrinfo(infos2);
 
-
-
 			while (1)
 			{
-
+				cout << "Main() -> Attente d'un nouveau message" << endl;
 				memset(message, 0, sizeof message);//vide le message
 
 				recvfrom(listenSocket, message ,sizeof message,0,&clientAddress,&clientAddressSize);
-				_DEBUG("Message reçu",message);
-				//printf("Message reçu : %s \n",message);
+				
+				cout << "Main() -> Message reçu : " << message << endl;
 
+				/* TRAITEMENT DU MESSAGE
 				if (sendto(listenSocket, message, sizeof message,0,(SOCKADDR *) &clientAddress,clientAddressSize) == -1)
 				{
 					perror("send failed :");
 					close(listenSocket);
 					exit(0);
-				}
-				_DEBUG("Message renvoyé",message);
-				//printf("Message renvoyé : %s \n",message);
+				}*/
+				
+				cout << "Main() -> Traitement du message" << endl;
+				cout << "Main() -> Traitement du terminé" << endl;
 
 			}
 
