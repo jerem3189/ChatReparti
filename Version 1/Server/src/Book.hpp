@@ -17,7 +17,6 @@ using namespace std;
 
 class Client;
 
-
 class Book {
 public:
     Book();
@@ -37,6 +36,7 @@ public:
     vector<Room> getRooms();
     int addRoom(string name);
     int addNetworkHints(string nameClient, string ipAddress, string port);
+    int nbClientRooms(string clientName);
 private:
     vector<Client> clients;
     vector<Room> rooms;
