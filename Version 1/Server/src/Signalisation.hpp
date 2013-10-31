@@ -11,10 +11,10 @@
 
 class Signalisation : public Thread {
 public:
-	int sendKeepAlive();
-	int runkeep();
+    int sendKeepAlive();
+    int runkeep();
 private:
-	int time();
+    int time();
 };
 
 #endif  //_SIGNALISATION_H

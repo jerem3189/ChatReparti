@@ -14,27 +14,27 @@ int Signalisation::sendKeepAlive() {
 
 void sleep(int nbr_seconds)
 {
-	clock_t goal;
-	goal = (nbr_seconds * CLOCKS_PER_SEC) + clock();
-	while(goal > clock())
-	{
-		;
-	}
+    clock_t goal;
+    goal = (nbr_seconds * CLOCKS_PER_SEC) + clock();
+    while(goal > clock())
+    {
+        ;
+    }
 }
 
 int Signalisation::runkeep() {
 
 
-   while(1)
- {
-    //printf("Il vous reste %ld secondes.\n", i);
-    // ENVOI KEEP ALIVE
-    sleep(1);
+    while(1)
+    {
+        //printf("Il vous reste %ld secondes.\n", i);
+        // ENVOI KEEP ALIVE
+        sleep(1);
 
 
 
- }
-return 0;
+    }
+    return 0;
 }
 
 int Signalisation::time() {
