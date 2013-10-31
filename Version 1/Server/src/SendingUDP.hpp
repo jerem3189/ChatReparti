@@ -14,4 +14,7 @@ public:
 	void run();
 };
 
+	//int		Read(void * pData, size_t nDataSize);
+	//int		Write(void * pData, size_t nDataSize);
+
 #endif  //_SENDINGUDP_H
