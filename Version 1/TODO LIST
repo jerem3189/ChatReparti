@@ -3,6 +3,6 @@ Chacun peut rajouter les classes qu'il souhaiterait développer.
 L'idée étant qu'on ait pas les même, comme ça on s'affranchit des conflits de Git.
 
 
-Juste Jérémy : RFC1664 / Thread / Book
+Juste Jérémy : RFC1664 / Thread / Book / ReceiveUDP / SendingUDP
 Arnaud Pascal Thierry: Client / Room / Serveur(main) / SendingUDP / ReceptionUDP
 Serge Andres : Socket
