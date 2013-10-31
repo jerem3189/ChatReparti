@@ -7,6 +7,7 @@
 #define _SIGNALISATION_H
 
 #include "Thread.hpp"
+#include "NetworkUDP.hpp"
 
 class Signalisation : public Thread {
 public:

@@ -101,11 +101,8 @@ int main(int argc, char** argv) {
 				
 				cout << "Main() -> Traitement du message" << endl;
 				cout << "Main() -> Traitement du terminé" << endl;
-
 			}
 
-
-			return 1337;
-		
+			return 1337;		
 }
 

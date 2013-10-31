@@ -53,8 +53,8 @@ public:
     bool	setPort(unsigned short nPortNumber);
     bool	setAddress(const char * szAddress);
 //	bool	SetWriteAddress(unsigned char b1, unsigned char b2, unsigned char b3, unsigned char b4);
-    bool	setSendBuffer(size_t nBufferSize);
-    bool	setRecvBuffer(size_t nBufferSize);
+//    bool	setSendBuffer(size_t nBufferSize);
+//    bool	setRecvBuffer(size_t nBufferSize);
     SOCKET	getSocket();
 	int getPort();
     bool getAddressIp();

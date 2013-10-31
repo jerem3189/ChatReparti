@@ -49,11 +49,13 @@ bool Socket::setPort(u_short port)
 	}*/
 /*bool	Socket::SetWriteAddress(unsigned char b1, unsigned char b2, unsigned char b3, unsigned char b4){
 }*/
+
+/*
 bool Socket::setSendBuffer(size_t len)
 {
-	int	nLen = len;
+	//int	nLen = len;
 
-	setsockopt(this->sock, SOL_SOCKET, SO_SNDBUF, (const char*)&nLen, sizeof(int));
+	//setsockopt(this->sock, SOL_SOCKET, SO_SNDBUF, (const char*)&nLen, sizeof(int));
 
 	return true;
 }
@@ -65,7 +67,7 @@ bool Socket::setRecvBuffer(size_t len)
 	//setsockopt(m_sock, SOL_SOCKET, SO_RCVBUF, (const char*)&nLen, sizeof(int));
 
 	return true;
-}
+}*/
 
 int Socket::getPort(){
 	return 1;
