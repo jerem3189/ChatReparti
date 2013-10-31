@@ -6,10 +6,8 @@
 #include "SendingUDP.hpp"
 
 void SendingUDP::sendDatagrams() {
-
 }
 
 void SendingUDP::run() {
 
 }
-
