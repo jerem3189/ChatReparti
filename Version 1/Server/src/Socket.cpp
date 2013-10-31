@@ -13,14 +13,14 @@ Socket::Socket(){
 	this->end = false;
 }	
 
-int Socket::Open(u_short port) {
+int Socket::open(u_short port) {
 	
 	//char	c_opt_on	= 1;
 	//u_long	l_opt_on	= 1;
 	sockaddr_in	name;
 	
-	if((m_sock = socket(AF_INET, SOCK_DGRAM, 0)) == BAD_SOCKET)
-		return (m_init = false, CUDP_SOCKET);
+	if((this->sock = socket(AF_INET, SOCK_DGRAM, 0)) == BAD_SOCKET)
+		return (this->init = false, CUDP_SOCKET);
 
 	//setsockopt(m_sock, IPPROTO_TCP, TCP_NODELAY, &c_opt_on, sizeof(char));
 	
@@ -28,20 +28,20 @@ int Socket::Open(u_short port) {
 	name.sin_port			= ntohs(port);
 	name.sin_addr.s_addr	= INADDR_ANY;
 
-	if(bind(m_sock, (sockaddr *)&name, sizeof(name)) == BAD_SOCKET)
-		return (m_init = false, CUDP_BIND);
+	if(bind(this->sock, (sockaddr *)&name, sizeof(name)) == BAD_SOCKET)
+		return (this->init = false, CUDP_BIND);
 
-	m_init	= true;
+	this->init	= true;
 	return CUDP_OK;
 }
 
 
-void Socket::Terminate(){
+void Socket::terminate(){
 }
 
-bool Socket::SetWritePort(u_short port)
+bool Socket::setPort(u_short port)
 {
-	m_sWriteAddress.sin_port	= ntohs(port);
+	this->address.sin_port	= ntohs(port);
 
 	return true;
 }
@@ -49,16 +49,16 @@ bool Socket::SetWritePort(u_short port)
 	}*/
 /*bool	Socket::SetWriteAddress(unsigned char b1, unsigned char b2, unsigned char b3, unsigned char b4){
 }*/
-bool Socket::SetSendBuffer(size_t len)
+bool Socket::setSendBuffer(size_t len)
 {
-	int	nLen	= (int)len;
+	int	nLen = len;
 
-	setsockopt(m_sock, SOL_SOCKET, SO_SNDBUF, (const char*)&nLen, sizeof(int));
+	setsockopt(this->sock, SOL_SOCKET, SO_SNDBUF, (const char*)&nLen, sizeof(int));
 
 	return true;
 }
 
-bool Socket::SetRecvBuffer(size_t len)
+bool Socket::setRecvBuffer(size_t len)
 {
 	//int	nLen	= (int)len;
 
@@ -70,9 +70,16 @@ bool Socket::SetRecvBuffer(size_t len)
 int Socket::getPort(){
 	return 1;
 }
+
 bool Socket::getAddressIp()
 {
-	 std::cout << inet_ntoa(m_sReadAddress.sin_addr); 
+	 cout << inet_ntoa(this->address.sin_addr);
+	 
 	 return true;
+}
+
+sockaddr_in Socket::getAddress()
+{	 
+	 return this->address;
 }
 

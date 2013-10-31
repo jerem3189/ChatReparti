@@ -7,14 +7,13 @@
 #define _SENDINGUDP_H
 
 #include "Thread.hpp"
+#include "Socket.hpp"
 
-class SendingUDP : public Thread {
+class NetworkUDP : public Thread {
 public:
-	void sendDatagrams();
+	int sendDatagrams(SOCKET sock, char *data, size_t len, sockaddr address);
+	int receiveDatagrams(SOCKET sock, char *data, size_t len, sockaddr address);
 	void run();
 };
-
-	//int		Read(void * pData, size_t nDataSize);
-	//int		Write(void * pData, size_t nDataSize);
 
 #endif  //_SENDINGUDP_H
