@@ -3,7 +3,11 @@
 #include <sys/socket.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <arpa/inet.h>
 #include "Socket.hpp"	
+#include <iostream>
+#include <string>
+
 
 Socket::Socket(){
 	this->end = false;
@@ -66,8 +70,9 @@ bool Socket::SetRecvBuffer(size_t len)
 int Socket::getPort(){
 	return 1;
 }
-/*bool Socket::getAddressIp(){
-	 m_sReadAddress;
+bool Socket::getAddressIp()
+{
+	 std::cout << inet_ntoa(m_sReadAddress.sin_addr); 
 	 return true;
 }
-*/
+
