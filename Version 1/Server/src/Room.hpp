@@ -22,6 +22,8 @@ public:
 	void setName(string name);
 	vector<Client*> getClients();
 	void setClients(vector<Client*> clients);
+	vector<Client*>::iterator findClient(string name);
+	//Client* findClient(string name);
 private:
 	string name;
 	vector<Client*> clients;

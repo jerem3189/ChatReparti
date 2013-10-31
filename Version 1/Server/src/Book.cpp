@@ -103,6 +103,20 @@ Client* Book::findClient(string name) {
 		
 		return NULL;
 }
+/*
+vector<Client*>::iterator Book::findClient(string name) {
+		vector<Client*>::iterator it;
+		for(it = this->clients.begin(); it != this->clients.end(); ++it)
+		{
+			if((*it)->getName() == name)
+			{
+				cout << "Book::findClient() -> Client trouvé." << endl;
+				return it;
+			}
+		}
+		
+		return NULL;
+}*/
 
 Room* Book::findRoom(string name) {
 		vector<Room>::iterator it;

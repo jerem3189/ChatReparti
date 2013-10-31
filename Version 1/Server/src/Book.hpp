@@ -27,6 +27,7 @@ public:
     int removeClientFromRoom(string clientName, string roomName);
     int changeClientName(string name, string newName);
     Client* findClient(string name);
+    //vector<Client*>::iterator findClient(string name);
     Room* findRoom(string name);
     vector<Client> getClients();
     void setClients(vector<Client> clients);
