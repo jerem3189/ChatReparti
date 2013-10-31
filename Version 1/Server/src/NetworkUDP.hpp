@@ -11,8 +11,8 @@
 
 class NetworkUDP {
 public:
-	int sendDatagrams(SOCKET sock, char *data, size_t len, sockaddr address);
-	int receiveDatagrams(SOCKET sock, char *data, size_t maxLen, sockaddr address);
+    int sendDatagrams(SOCKET sock, char *data, size_t len, SOCKADDR *address);
+    int receiveDatagrams(SOCKET sock, char *data, size_t maxLen, SOCKADDR *address);
 };
 
 #endif  //_SENDINGUDP_H

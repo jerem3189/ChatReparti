@@ -1,5 +1,5 @@
 /** \file Signalisation.hpp
- * Description breve du fichier.
+ * Description brève du fichier.
  * Description plus elaboree et detaillee du fichier.
  */
 
