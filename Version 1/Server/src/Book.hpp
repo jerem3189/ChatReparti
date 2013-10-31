@@ -9,12 +9,13 @@ using namespace std;
 #if !defined(_BOOK_HPP)
 #define _BOOK_HPP
 
-#include "Client.hpp"
 #include "Room.hpp"
 #include <iostream>
 #include <vector>
 #include <map>
 #include <stdio.h>
+
+class Client;
 
 
 class Book {
@@ -35,7 +36,7 @@ public:
     vector<Room*> getClientRooms(string clientName);
     vector<Room> getRooms();
     int addRoom(string name);
-    int addNetworkHints(string nameClient, string ipAddress, int port);
+    int addNetworkHints(string nameClient, string ipAddress, string port);
 private:
     vector<Client> clients;
     vector<Room> rooms;

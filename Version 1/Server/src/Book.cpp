@@ -85,7 +85,7 @@ int Book::removeClientFromRoom(string clientName, string roomName) {
 }
 
 int Book::changeClientName(string name, string newName) {
-
+    //A CODER MAIS PAS IMPORTANT
 	return 0;
 }
 
@@ -158,7 +158,7 @@ int Book::addRoom(string name) {
 	return 0;
 }
 
-int Book::addNetworkHints(string nameClient, string ipAddress, int port) {
+int Book::addNetworkHints(string nameClient, string ipAddress, string port) {
 
 	return 0;
 }

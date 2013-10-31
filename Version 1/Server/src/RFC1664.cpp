@@ -12,36 +12,97 @@
 using namespace std;
 #include "RFC1664.hpp"
 #include "MessagesTypesRFC1664.hpp"
+ 
+#include <stdio.h>
 
-MessagesTypesRFC1664 RFC1664::type() {
+MessagesTypesRFC1664 RFC1664::type(string msg) {
+    std::size_t found = msg.find("CON§", 0);
+    if (found >= 0) {
+        //std::cout << "Debug : Connect received"<<endl;
+        return MSG_CON;
+    } else {
+        found = msg.find("DECO§", 0);
+        if (found >= 0) {
+            return MSG_DECO;
+        } else {
+            found = msg.find("ROOM_QUIT§", 0);
+            if (found >= 0) {
+                return MSG_ROOM_QUIT;
+            } else {
+                found = msg.find("ROOM_JOIN§", 0);
+                if (found >= 0) {
+                    return MSG_ROOM_JOIN;
+                } else {
+                    found = msg.find("BOOK_LIST_RQST§", 0);
+                    if (found >= 0) {
+                        return MSG_BOOK_LIST_RQST;
+
+                    } else {
+                        found = msg.find("COM§", 0);
+                        if (found >= 0) {
+                            return MSG_COM;
+
+                        } else {
+                            found = msg.find("KEEP_ALIVE§", 0);
+                            if (found >= 0) {
+                                return MSG_LIVE;
+
+                            }
+                        }
+
+
+                    }
+                }
+
+            }
+
+        }
+
+    }
+
 
 }
 
-string RFC1664::createMsgRoomQuit() {
+string RFC1664::createMsgRoomQuit(string clientName, string roomName) {
+    string retour = "ROOM_QUIT§" + clientName + "§" + roomName;
+    return retour;
+}
+
+string RFC1664::createMsgRoomJoin(string clientName, string roomName) {
+    string retour = "ROOM_JOIN§" + clientName + "§" + roomName;
+    return retour;
 
 }
 
-string RFC1664::createMsgRoomJoin() {
-
+string RFC1664::createMsgBookListRqst(string clientName) {
+    string retour = "BOOK_LIST_RQST§" + clientName;
+    return retour;
 }
 
-string RFC1664::createMsgBookListRqst() {
-
+string RFC1664::createMsgBookListResp(string clientName) {
+    string retour = "BOOK_LIST_RESP§" + clientName;
+    return retour;
 }
 
-string RFC1664::createMsgBookListResp() {
+string RFC1664::createMsgDeco(string clientName) {
 
-}
-
-string RFC1664::createMsgDeco() {
+    string retour = "DECO§" + clientName;
+    return retour;
 
 }
 
 string RFC1664::createMsgCon(string clientName) {
+    string retour = "CON§" + clientName;
+    return retour;
 
 }
 
-string RFC1664::createMsgCom() {
-
+string RFC1664::createMsgCom(string senderName, string receiverName, string message, string roomName) {
+    string retour = "COM§" + senderName + "§" + receiverName + "§" + message + "§" + roomName;
+    return retour;
 }
 
+string RFC1664::createMsgKeepAlive(string clientName) {
+    string retour = "KEEP_ALIVE§" + clientName;
+    return retour;
+}

@@ -1,5 +1,5 @@
 /** \file Signalisation.hpp
- * Description breve du fichier.
+ * Description brève du fichier.
  * Description plus elaboree et detaillee du fichier.
  */
 
@@ -7,6 +7,7 @@
 #define _SIGNALISATION_H
 
 #include "Thread.hpp"
+#include "NetworkUDP.hpp"
 
 class Signalisation : public Thread {
 public:

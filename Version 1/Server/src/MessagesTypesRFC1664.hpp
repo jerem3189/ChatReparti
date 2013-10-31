@@ -15,10 +15,17 @@
 
 
 enum MessagesTypesRFC1664 {
+        MSG_CON,
+        MSG_RCON,
+        MSG_DECO,
+        MSG_COM,
 	MSG_ROOM_QUIT,
 	MSG_ROOM_JOIN,
 	MSG_BOOK_LIST_RQST,
-	MSG_BOOK_LIST_RESP
+	MSG_BOOK_LIST_RESP,
+        MSG_LIVE,
+        ERR_PSEUDO_IN_USE
+               
 };
 
 #endif  //_MESSAGESTYPESRFC1664_HPP

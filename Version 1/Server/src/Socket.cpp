@@ -1,78 +1,103 @@
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <sys/socket.h>
+#include "Socket.hpp"
+
 #include <stdio.h>
 #include <stdlib.h>
-#include <arpa/inet.h>
-#include "Socket.hpp"	
-#include <iostream>
-#include <string>
+#include <string.h>
+#include <unistd.h>
 
 
-Socket::Socket(){
-	this->end = false;
-}	
+Socket::Socket() {
+    this->initialized = false;
 
-int Socket::Open(u_short port) {
-	
-	//char	c_opt_on	= 1;
-	//u_long	l_opt_on	= 1;
-	sockaddr_in	name;
-	
-	if((m_sock = socket(AF_INET, SOCK_DGRAM, 0)) == BAD_SOCKET)
-		return (m_init = false, CUDP_SOCKET);
+   memset(&this->hints, 0, sizeof this->hints);
+   this->hints.ai_family = AF_UNSPEC; /* IPV4 ou V6 */
+   this->hints.ai_socktype = SOCK_DGRAM; /* Mode Datagramme */
+}
 
-	//setsockopt(m_sock, IPPROTO_TCP, TCP_NODELAY, &c_opt_on, sizeof(char));
-	
-	name.sin_family			= AF_INET;
-	name.sin_port			= ntohs(port);
-	name.sin_addr.s_addr	= INADDR_ANY;
+Socket::~Socket() {
+    close(this->sock);
+}
 
-	if(bind(m_sock, (sockaddr *)&name, sizeof(name)) == BAD_SOCKET)
-		return (m_init = false, CUDP_BIND);
+SOCK_ERROR_ENUM Socket::create(string addressIp, string port) {
+    int ret = 0;
 
-	m_init	= true;
-	return CUDP_OK;
+    ret = getaddrinfo(addressIp.c_str(), port.c_str(), &this->hints, &this->server_info);
+
+    if (ret != 0)
+    {
+        cout << "Socket::create() -> Erreur lors de la récupération des informations du serveur" << endl;
+        return ERR_SOCK_HINTS;
+    }
+
+    this->sock = socket(this->server_info->ai_family, this->server_info->ai_socktype, this->server_info->ai_protocol);
+
+    if (this->sock == -1)
+    {
+        cout << "Socket::create() -> Erreur lors de la création de la socket" << endl;
+        return ERR_SOCK_CREATE;
+    }
+
+    this->initialized = true;
+    this->addressIp = addressIp;
+    this->port = port;
+
+    return SOCK_OK;
+}
+
+SOCK_ERROR_ENUM Socket::binding() {
+    if (bind(this->sock, this->server_info->ai_addr, this->server_info->ai_addrlen) == -1)
+    {
+        cout << "Socket::bind() -> Erreur lors du bind" << endl;
+        return SOCK_BIND_NOK;
+    }
+    else
+    {
+        cout << "Socket::bind() -> Bind des informations reseau ok" << endl;
+    }
+
+    return SOCK_BIND_OK;
 }
 
 
-void Socket::Terminate(){
+void Socket::terminate() {
+    close(this->sock);
 }
 
-bool Socket::SetWritePort(u_short port)
+SOCKADDR *Socket::getSockaddr() {
+    return this->server_info->ai_addr;
+}
+
+SOCKET Socket::getSocket() {
+    return this->sock;
+}
+
+/*
+bool Socket::setPort(u_short port)
 {
-	m_sWriteAddress.sin_port	= ntohs(port);
+	this->address.sin_port	= ntohs(port);
 
 	return true;
 }
-/*bool	Socket::SetWriteAddress(const char * szAddress){
-	}*/
-/*bool	Socket::SetWriteAddress(unsigned char b1, unsigned char b2, unsigned char b3, unsigned char b4){
-}*/
-bool Socket::SetSendBuffer(size_t len)
+
+bool Socket::setAddress(const char * szAddress)
 {
-	int	nLen	= (int)len;
 
-	setsockopt(m_sock, SOL_SOCKET, SO_SNDBUF, (const char*)&nLen, sizeof(int));
-
-	return true;
-}
-
-bool Socket::SetRecvBuffer(size_t len)
-{
-	//int	nLen	= (int)len;
-
-	//setsockopt(m_sock, SOL_SOCKET, SO_RCVBUF, (const char*)&nLen, sizeof(int));
-
-	return true;
+    return true;
 }
 
 int Socket::getPort(){
 	return 1;
 }
+
 bool Socket::getAddressIp()
 {
-	 std::cout << inet_ntoa(m_sReadAddress.sin_addr); 
+	 cout << inet_ntoa(this->address.sin_addr);
+
 	 return true;
 }
 
+sockaddr_in Socket::getAddress()
+{
+	 return this->address;
+}
+*/
