@@ -13,7 +13,7 @@ public:
   	Thread();
 	virtual ~Thread() {;}
 	void start();
-	inline void stop();
+    void stop();
 	void waitForEnd();
 	virtual void run() = 0;
 protected:

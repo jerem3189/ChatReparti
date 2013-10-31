@@ -20,6 +20,7 @@ SOURCES += src/main.cpp\
     ../Server/src/Room.cpp \
     ../Server/src/Thread.cpp \
     ../Server/src/Client.cpp \
+    ../Server/src/RFC1664.cpp \
     ../Server/src/Signalisation.cpp
 
 HEADERS  += src/mainwindow.hpp \
@@ -29,6 +30,7 @@ HEADERS  += src/mainwindow.hpp \
     ../Server/src/Room.hpp \
     ../Server/src/Thread.hpp \
     ../Server/src/Client.hpp \
+    ../Server/src/RFC1664.hpp \
     ../Server/src/Signalisation.hpp
 
 FORMS    += src/mainwindow.ui

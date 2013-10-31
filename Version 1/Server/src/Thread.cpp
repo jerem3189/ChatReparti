@@ -16,9 +16,14 @@ void Thread::start() {
 	int rc = pthread_create(&this->thread, NULL, Thread::pthread_function, (void*)this);
 	if (rc)
 	{
-		printf("Thread::start() - ERREUR de création du thread; Code d'erreur = %d\n",rc);
+        printf("Thread::start() -> ERREUR de création du thread; Code d'erreur = %d\n",rc);
 	}
-	printf("Thread::start() - Thread créé\n");
+    printf("Thread::start() -> Thread créé\n");
+}
+
+void Thread::stop()
+{
+    this->end = true;
 }
 
 void Thread::waitForEnd() {

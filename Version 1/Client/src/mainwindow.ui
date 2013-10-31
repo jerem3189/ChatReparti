@@ -30,6 +30,19 @@
        <attribute name="title">
         <string>Global Room</string>
        </attribute>
+       <widget class="QPushButton" name="button_keep_alive">
+        <property name="geometry">
+         <rect>
+          <x>100</x>
+          <y>200</y>
+          <width>221</width>
+          <height>27</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Lancer KeepAlive</string>
+        </property>
+       </widget>
       </widget>
      </widget>
     </item>

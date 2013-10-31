@@ -21,7 +21,10 @@ Socket::~Socket() {
 SOCK_ERROR_ENUM Socket::create(string addressIp, string port) {
     int ret = 0;
 
-    ret = getaddrinfo(addressIp.c_str(), port.c_str(), &this->hints, &this->server_info);
+    if(addressIp == "NULL")
+        ret = getaddrinfo(NULL, port.c_str(), &this->hints, &this->server_info);
+    else
+        ret = getaddrinfo(addressIp.c_str(), port.c_str(), &this->hints, &this->server_info);
 
     if (ret != 0)
     {
@@ -40,6 +43,8 @@ SOCK_ERROR_ENUM Socket::create(string addressIp, string port) {
     this->initialized = true;
     this->addressIp = addressIp;
     this->port = port;
+
+    cout << "Socket::create() -> Socket creation OK" << endl;
 
     return SOCK_OK;
 }

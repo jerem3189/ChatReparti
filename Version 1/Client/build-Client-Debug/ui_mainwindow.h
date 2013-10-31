@@ -22,6 +22,7 @@
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
+#include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTabWidget>
 #include <QtWidgets/QToolBar>
@@ -37,6 +38,7 @@ public:
     QGridLayout *gridLayout;
     QTabWidget *QTabWidget_onglets;
     QWidget *QTabWidget_GlobalRoom;
+    QPushButton *button_keep_alive;
     QLabel *label;
     QLineEdit *lineEdit;
     QMenuBar *menuBar;
@@ -65,6 +67,9 @@ public:
         QTabWidget_onglets->setTabShape(QTabWidget::Rounded);
         QTabWidget_GlobalRoom = new QWidget();
         QTabWidget_GlobalRoom->setObjectName(QStringLiteral("QTabWidget_GlobalRoom"));
+        button_keep_alive = new QPushButton(QTabWidget_GlobalRoom);
+        button_keep_alive->setObjectName(QStringLiteral("button_keep_alive"));
+        button_keep_alive->setGeometry(QRect(100, 200, 221, 27));
         QTabWidget_onglets->addTab(QTabWidget_GlobalRoom, QString());
 
         gridLayout->addWidget(QTabWidget_onglets, 0, 0, 1, 2);
@@ -121,6 +126,7 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", 0));
+        button_keep_alive->setText(QApplication::translate("MainWindow", "Lancer KeepAlive", 0));
         QTabWidget_onglets->setTabText(QTabWidget_onglets->indexOf(QTabWidget_GlobalRoom), QApplication::translate("MainWindow", "Global Room", 0));
         label->setText(QApplication::translate("MainWindow", "Pseudo", 0));
         menu_File->setTitle(QApplication::translate("MainWindow", "&File", 0));

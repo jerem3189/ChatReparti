@@ -29,8 +29,8 @@ int main(int argc, char** argv) {
     NetworkUDP udp;
     RFC1664 rfc;
 
-    listenSocket.create("0.0.0.0", DEFAULT_PORT);
-    listenSocket.binding();
+    cout << listenSocket.create("0.0.0.0", DEFAULT_PORT);
+    cout << listenSocket.binding();
 
 			while (1)
 			{
@@ -40,8 +40,6 @@ int main(int argc, char** argv) {
                 udp.receiveDatagrams(listenSocket.getSocket(), message, sizeof message, listenSocket.getSockaddr());
 				
 				cout << "Main() -> Message reçu : " << message << endl;
-
-
 
 				/* TRAITEMENT DU MESSAGE
 				if (sendto(listenSocket, message, sizeof message,0,(SOCKADDR *) &clientAddress,clientAddressSize) == -1)
