@@ -11,7 +11,7 @@
 class Signalisation : public Thread {
 public:
 	int sendKeepAlive();
-	void run();
+	int runkeep();
 private:
 	int time();
 };
