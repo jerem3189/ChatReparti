@@ -13,8 +13,22 @@ TEMPLATE = app
 
 
 SOURCES += src/main.cpp\
-        src/mainwindow.cpp
+        src/mainwindow.cpp \
+    ../Server/src/Book.cpp \
+    ../Server/src/Socket.cpp \
+    ../Server/src/NetworkUDP.cpp \
+    ../Server/src/Room.cpp \
+    ../Server/src/Thread.cpp \
+    ../Server/src/Client.cpp \
+    ../Server/src/Signalisation.cpp
 
-HEADERS  += src/mainwindow.hpp
+HEADERS  += src/mainwindow.hpp \
+    ../Server/src/Book.hpp \
+    ../Server/src/Socket.hpp \
+    ../Server/src/NetworkUDP.hpp \
+    ../Server/src/Room.hpp \
+    ../Server/src/Thread.hpp \
+    ../Server/src/Client.hpp \
+    ../Server/src/Signalisation.hpp
 
 FORMS    += src/mainwindow.ui

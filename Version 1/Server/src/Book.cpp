@@ -159,8 +159,20 @@ int Book::addRoom(string name) {
 }
 
 int Book::addNetworkHints(string nameClient, string ipAddress, string port) {
+    Client *client = this->findClient(nameClient);
 
-	return 0;
+    client->addNetworkHints(ipAddress, port);
+
+    return 0;
+}
+
+int Book::nbClientRooms(string clientName)
+{
+    vector<Room*> roomList = this->getClientRooms(clientName);
+
+    int nb = roomList.size();
+
+    return nb;
 }
 
 vector<Room*> Book::getClientRooms(string clientName) {

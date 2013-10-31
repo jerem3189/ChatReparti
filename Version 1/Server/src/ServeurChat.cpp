@@ -14,6 +14,7 @@ using namespace std;
 #include "ErrorCodes.hpp"
 #include "Socket.hpp"
 #include "NetworkUDP.hpp"
+#include "RFC1664.hpp"
 
 
 
@@ -26,6 +27,7 @@ char message[4096];
 int main(int argc, char** argv) {
     Socket listenSocket;
     NetworkUDP udp;
+    RFC1664 rfc;
 
     listenSocket.create("0.0.0.0", DEFAULT_PORT);
     listenSocket.binding();
@@ -38,6 +40,8 @@ int main(int argc, char** argv) {
                 udp.receiveDatagrams(listenSocket.getSocket(), message, sizeof message, listenSocket.getSockaddr());
 				
 				cout << "Main() -> Message reçu : " << message << endl;
+
+
 
 				/* TRAITEMENT DU MESSAGE
 				if (sendto(listenSocket, message, sizeof message,0,(SOCKADDR *) &clientAddress,clientAddressSize) == -1)

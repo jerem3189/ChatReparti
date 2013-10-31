@@ -5,14 +5,14 @@
 //  @ Project : Projet Chat
 //  @ File Name : RFC1664.cpp
 //  @ Date : 28/10/2013
-//  @ Author : 
+//  @ Author :
 //
 //
 
-using namespace std;
+
 #include "RFC1664.hpp"
 #include "MessagesTypesRFC1664.hpp"
- 
+
 #include <stdio.h>
 
 MessagesTypesRFC1664 RFC1664::type(string msg) {
@@ -79,8 +79,11 @@ string RFC1664::createMsgBookListRqst(string clientName) {
     return retour;
 }
 
-string RFC1664::createMsgBookListResp(string clientName) {
-    string retour = "BOOK_LIST_RESP§" + clientName;
+string RFC1664::createMsgBookListResp(string clientName,string ip,string port,int roomNb,vector<Room*> rooms) {
+
+
+    string s = to_string(roomNb);
+    string retour = "BOOK_LIST_RESP§" + clientName + "§" +ip+"§"+port+"§"+s;
     return retour;
 }
 

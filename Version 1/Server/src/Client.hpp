@@ -11,6 +11,8 @@
 
 #include <string>
 
+class Socket;
+
 class Client {
 public:
     Client();
@@ -26,6 +28,7 @@ public:
     bool operator==(Client & client);
 private:
 	string name;
+    Socket *socket;
 	
 };
 
