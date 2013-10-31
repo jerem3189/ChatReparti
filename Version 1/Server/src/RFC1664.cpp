@@ -12,36 +12,55 @@
 using namespace std;
 #include "RFC1664.hpp"
 #include "MessagesTypesRFC1664.hpp"
+#include <string>    
 
-MessagesTypesRFC1664 RFC1664::type() {
-
-}
-
-string RFC1664::createMsgRoomQuit() {
-
-}
-
-string RFC1664::createMsgRoomJoin() {
+MessagesTypesRFC1664 RFC1664::type(string msg) {
+    std::size_t found = msg.find("CON$");
+    
+    std::cout << "first 'needle' found at: " << found << '\n'; 
 
 }
 
-string RFC1664::createMsgBookListRqst() {
+string RFC1664::createMsgRoomQuit(string clientName,string roomName) {
+    string retour ="ROOM_QUIT"+"§"+clientName+"§"+roomName;
+    return retour;
+}
+
+string RFC1664::createMsgRoomJoin(string clientName,string roomName) {
+    string retour = "ROOM_JOIN"+"§"+clientName+"§"+roomName;
+            return retour;
 
 }
 
-string RFC1664::createMsgBookListResp() {
-
+string RFC1664::createMsgBookListRqst(string clientName) {
+    string retour = "BOOK_LIST_RQST" +"§"+clientName; 
+    return retour;
 }
 
-string RFC1664::createMsgDeco() {
+string RFC1664::createMsgBookListResp(string clientName) {
+    string retour = "BOOK_LIST_RESP"+"§"+clientName;
+    return retour;
+}
+
+string RFC1664::createMsgDeco(string clientName) {
+    
+            string retour = "DECO"+"§"+clientName;
+            return retour;
 
 }
 
 string RFC1664::createMsgCon(string clientName) {
+    string retour = "CON" +"§"+clientName; 
+    return retour;
 
 }
 
-string RFC1664::createMsgCom() {
-
+string RFC1664::createMsgCom(string senderName,string receiverName,string message) {
+        string retour =senderName +"§"+receiverName+"§"+message+"§"+roomName;
+        return retour;
 }
 
+string RFC1664::createMsgKeepAlive(string clientName) {
+    string retour = "KEEP_ALIVE"+"§"+clientName;
+    return retour;
+}
