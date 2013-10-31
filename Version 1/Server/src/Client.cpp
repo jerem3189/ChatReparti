@@ -7,9 +7,10 @@
 using namespace std;
 #include "Client.hpp"
 #include "Socket.hpp"
+
     
 Client::Client() {
-	
+    this->socket = new Socket();
 }
 
 Client::Client(string name) {
@@ -40,4 +41,12 @@ bool Client::operator==(Client & client)
 		return true;
 	
 	return false;
+}
+
+int Client::addNetworkHints(string addressIp, string port)
+{
+    this->socket->create(addressIp, port);
+    this->socket->binding();
+
+    return 0;
 }

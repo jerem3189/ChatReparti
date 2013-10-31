@@ -11,7 +11,8 @@
 
 #include <string>
 
-using namespace std;
+class Socket;
+
 class Client {
 public:
     Client();
@@ -21,10 +22,13 @@ public:
     void setName(string newName);
     bool isMaster();
     void setMaster(bool type);
+
+    int addNetworkHints(string addressIp, string port);
     
     bool operator==(Client & client);
 private:
 	string name;
+    Socket *socket;
 	
 };
 

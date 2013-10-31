@@ -85,7 +85,7 @@ int Book::removeClientFromRoom(string clientName, string roomName) {
 }
 
 int Book::changeClientName(string name, string newName) {
-
+    //A CODER MAIS PAS IMPORTANT
 	return 0;
 }
 
@@ -158,9 +158,21 @@ int Book::addRoom(string name) {
 	return 0;
 }
 
-int Book::addNetworkHints(string nameClient, string ipAddress, int port) {
+int Book::addNetworkHints(string nameClient, string ipAddress, string port) {
+    Client *client = this->findClient(nameClient);
 
-	return 0;
+    client->addNetworkHints(ipAddress, port);
+
+    return 0;
+}
+
+int Book::nbClientRooms(string clientName)
+{
+    vector<Room*> roomList = this->getClientRooms(clientName);
+
+    int nb = roomList.size();
+
+    return nb;
 }
 
 vector<Room*> Book::getClientRooms(string clientName) {
