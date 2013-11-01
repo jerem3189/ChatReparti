@@ -45,11 +45,21 @@ int main(int argc, char** argv) {
 
         cout << "Main() -> Message reçu : " << message << endl;
         string testString(message);
+        string champ1(rfc.fieldFromMesg(testString,1,'§'));
+        string champ2(rfc.fieldFromMesg(testString,2,'§'));
+        string champ3(rfc.fieldFromMesg(testString,3,'§'));
+        string champ4(rfc.fieldFromMesg(testString,4,'§'));
+        cout <<"decoupage : \n"<<champ1<<endl<<champ2<<endl<<champ3<<endl<<champ4<<endl;
+        //string champ5(rfc.RecupererChampMessage(message,5,"§"));
+        vector<string> vstr;
         
                 
         switch (rfc.type(message)) {
             case MSG_CON:
-                //botin.addNewClient("")
+               
+                
+                botin.addNewClient(champ1,vstr);
+                //rfc.createMsgBookListResp(champ1,);
                 break;
 
             case MSG_DECO:
