@@ -9,7 +9,7 @@
 //
 //
 
-using namespace std;
+
 #if !defined(_RFC1664_HPP)
 #define _RFC1664_HPP
 
@@ -19,7 +19,7 @@ using namespace std;
 
 #include <sstream>
 
-
+using namespace std;
 #include <string>
 #include <vector>
 #include "Room.hpp"
