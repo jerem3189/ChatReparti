@@ -43,6 +43,14 @@ bool Client::operator==(Client & client)
 	return false;
 }
 
+void Client::setLastalive(time_t lastalive) {
+    this->lastalive = lastalive;
+}
+
+time_t Client::getLastalive() const {
+    return lastalive;
+}
+
 int Client::addNetworkHints(string addressIp, string port)
 {
     this->socket->create(addressIp, port);

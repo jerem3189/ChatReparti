@@ -26,8 +26,11 @@ public:
     int addNetworkHints(string addressIp, string port);
     
     bool operator==(Client & client);
+    void setLastalive(time_t lastalive);
+    time_t getLastalive() const;
 private:
 	string name;
+        time_t lastalive;
     Socket *socket;
 	
 };
