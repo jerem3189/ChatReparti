@@ -16,6 +16,7 @@ using namespace std;
 #include "NetworkUDP.hpp"
 #include "RFC1664.hpp"
 #include "MessagesTypesRFC1664.hpp"
+#include "Book.hpp"
 
 
 
@@ -28,6 +29,7 @@ int main(int argc, char** argv) {
     Socket listenSocket;
     NetworkUDP udp;
     RFC1664 rfc;
+    Book botin;
 
     cout << listenSocket.create("0.0.0.0", DEFAULT_PORT);
     cout << listenSocket.binding();
@@ -36,15 +38,18 @@ int main(int argc, char** argv) {
         cout << "Main() -> Attente d'un nouveau message" << endl;
         memset(message, 0, sizeof message); //vide le message
 
-        udp.receiveDatagrams(listenSocket.getSocket(), message, sizeof message, listenSocket.getSockaddr());
+                udp.receiveDatagrams(listenSocket.getSocket(), message, sizeof message, listenSocket.getSockaddr());
+				
+				cout << "Main() -> Message reçu : " << message << endl;
+                cout << "Main() -> Type du message reçu : " << rfc.type(message) << endl;
 
         cout << "Main() -> Message reçu : " << message << endl;
         string testString(message);
-        RFC1664 rfc;
+        
                 
         switch (rfc.type(message)) {
             case MSG_CON:
-                
+                //botin.addNewClient("")
                 break;
 
             case MSG_DECO:
@@ -66,6 +71,12 @@ int main(int argc, char** argv) {
                 break;
             case MSG_RCON:
                 break;
+            case ERR_BAD_MESSAGE:
+                break;
+             default :
+                
+                break;
+                
 
         }
 

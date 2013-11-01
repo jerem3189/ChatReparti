@@ -120,3 +120,15 @@ string RFC1664::createMsgKeepAlive(string clientName) {
     string retour = "KEEP_ALIVE§" + clientName;
     return retour;
 }
+
+string RFC1664::fieldFromMesg(string msg,int fieldNb,char delim){
+    std::size_t found = msg.find(delim);
+    string field;
+    if (found!=string::npos && (fieldNb==1)){
+        field=msg.substr(0,found);
+        
+    }
+    
+    //field=string::substr(found,12);
+    return field;
+}

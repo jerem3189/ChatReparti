@@ -43,6 +43,8 @@ public:
     string createMsgCon(string clientName);
     string createMsgCom(string senderName,string receiverName,string message, string roomName);
     string createMsgKeepAlive(string clientName);
+    string fieldFromMesg(string msg,int fieldNb,char delim);
+
 };
 
 #endif  //_RFC1664_HPP
