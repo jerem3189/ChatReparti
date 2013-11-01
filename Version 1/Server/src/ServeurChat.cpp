@@ -40,6 +40,7 @@ int main(int argc, char** argv) {
                 udp.receiveDatagrams(listenSocket.getSocket(), message, sizeof message, listenSocket.getSockaddr());
 				
 				cout << "Main() -> Message reçu : " << message << endl;
+                cout << "Main() -> Type du message reçu : " << rfc.type(message) << endl;
 
 				/* TRAITEMENT DU MESSAGE
 				if (sendto(listenSocket, message, sizeof message,0,(SOCKADDR *) &clientAddress,clientAddressSize) == -1)
