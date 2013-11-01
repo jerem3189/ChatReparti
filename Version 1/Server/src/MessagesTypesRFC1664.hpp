@@ -24,7 +24,8 @@ enum MessagesTypesRFC1664 {
 	MSG_BOOK_LIST_RQST,
 	MSG_BOOK_LIST_RESP,
         MSG_LIVE,
-        ERR_PSEUDO_IN_USE
+        ERR_PSEUDO_IN_USE,
+        ERR_BAD_MESSAGE
                
 };
 

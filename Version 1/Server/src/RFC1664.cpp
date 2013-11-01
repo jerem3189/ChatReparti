@@ -12,6 +12,7 @@
 
 #include "RFC1664.hpp"
 #include "MessagesTypesRFC1664.hpp"
+#include "ErrorCodes.hpp"
 
 #include <stdio.h>
 #include <string>
@@ -48,6 +49,9 @@ MessagesTypesRFC1664 RFC1664::type(string msg) {
                             if (found != string::npos) {
                                 return MSG_LIVE;
 
+                            }
+                            else {
+                                return ERR_BAD_MESSAGE;
                             }
                         }
 
