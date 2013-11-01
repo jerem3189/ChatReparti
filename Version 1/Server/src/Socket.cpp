@@ -9,9 +9,9 @@
 Socket::Socket() {
     this->initialized = false;
 
-   memset(&this->hints, 0, sizeof this->hints);
-   this->hints.ai_family = AF_UNSPEC; /* IPV4 ou V6 */
-   this->hints.ai_socktype = SOCK_DGRAM; /* Mode Datagramme */
+    memset(&this->hints, 0, sizeof this->hints);
+    this->hints.ai_family = AF_UNSPEC; /* IPV4 ou V6 */
+    this->hints.ai_socktype = SOCK_DGRAM; /* Mode Datagramme */
 }
 
 Socket::~Socket() {

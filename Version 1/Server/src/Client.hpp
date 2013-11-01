@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   Client.hpp
  * Author: Arnaud
  *
@@ -24,12 +24,15 @@ public:
     void setMaster(bool type);
 
     int addNetworkHints(string addressIp, string port);
-    
+
     bool operator==(Client & client);
+    void setLastalive(time_t lastalive);
+    time_t getLastalive() const;
 private:
-	string name;
+    string name;
+    time_t lastalive;
     Socket *socket;
-	
+
 };
 
 #endif	/* CLIENT_HPP */

@@ -9,7 +9,7 @@
 //
 //
 
-using namespace std;
+
 #if !defined(_RFC1664_HPP)
 #define _RFC1664_HPP
 
@@ -19,7 +19,7 @@ using namespace std;
 
 #include <sstream>
 
-
+using namespace std;
 #include <string>
 #include <vector>
 #include "Room.hpp"
@@ -43,6 +43,8 @@ public:
     string createMsgCon(string clientName, string addressIp);
     string createMsgCom(string senderName,string receiverName,string message, string roomName);
     string createMsgKeepAlive(string clientName);
+    string fieldFromMesg(string msg,int fieldNb,char delim);
+
 };
 
 #endif  //_RFC1664_HPP

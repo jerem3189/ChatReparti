@@ -13,9 +13,11 @@
 #include "RFC1664.hpp"
 #include "MessagesTypesRFC1664.hpp"
 #include "ErrorCodes.hpp"
-
+#include <cstring>
 #include <stdio.h>
 #include <string>
+#include <sstream>
+#include <iostream>
 
 MessagesTypesRFC1664 RFC1664::type(string msg) {
     std::size_t found = msg.find("CON§", 0);
@@ -49,8 +51,7 @@ MessagesTypesRFC1664 RFC1664::type(string msg) {
                             if (found != string::npos) {
                                 return MSG_LIVE;
 
-                            }
-                            else {
+                            } else {
                                 return ERR_BAD_MESSAGE;
                             }
                         }
@@ -83,13 +84,12 @@ string RFC1664::createMsgBookListRqst(string clientName) {
     return retour;
 }
 
-string RFC1664::createMsgBookListResp(string clientName,string ip,string port,int roomNb,vector<Room*> rooms) {
+string RFC1664::createMsgBookListResp(string clientName, string ip, string port, int roomNb, vector<Room*> rooms) {
     string sRoomNb = to_string(roomNb);
-    string retour = "BOOK_LIST_RESP§" + clientName + "§" +ip+"§"+port+"§"+sRoomNb;
+    string retour = "BOOK_LIST_RESP§" + clientName + "§" + ip + "§" + port + "§" + sRoomNb;
 
     vector<Room*>::iterator it;
-    for(it = rooms.begin(); it != rooms.end(); ++it)
-    {
+    for (it = rooms.begin(); it != rooms.end(); ++it) {
         retour += "§";
         retour += (*it)->getName();
     }
@@ -117,3 +117,24 @@ string RFC1664::createMsgKeepAlive(string clientName) {
     string retour = "KEEP_ALIVE§" + clientName;
     return retour;
 }
+
+string RFC1664::fieldFromMesg(string msg, int fieldNb, char delim) {
+    string retour;
+    istringstream iss(msg);
+    string mot;
+    //char delim = '§';
+    int i = 1;
+    while (std::getline(iss, mot, delim) && (i < fieldNb)) {
+        //cout << i << endl;
+        i++;
+        //cout << i << endl;
+        //cout << mot << endl;
+    }
+    //cout << mot<<endl;
+    mot.erase(mot.size() - 1, 1);
+    retour = mot;
+
+    return retour;
+}
+
+

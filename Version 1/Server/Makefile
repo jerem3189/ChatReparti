@@ -1,5 +1,5 @@
 CC=g++
-CFLAGS=-Wall -g -pthread
+CFLAGS=-Wall -g -pthread 
 LDFLAGS=-pthread
 EXEC=server clean
 SRC=$(wildcard src/*.cpp)
