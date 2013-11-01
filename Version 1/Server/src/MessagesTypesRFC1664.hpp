@@ -15,7 +15,7 @@
 
 
 enum MessagesTypesRFC1664 {
-        MSG_CON,
+        MSG_CON=1,
         MSG_RCON,
         MSG_DECO,
         MSG_COM,

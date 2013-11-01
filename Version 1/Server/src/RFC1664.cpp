@@ -14,37 +14,38 @@
 #include "MessagesTypesRFC1664.hpp"
 
 #include <stdio.h>
+#include <string>
 
 MessagesTypesRFC1664 RFC1664::type(string msg) {
     std::size_t found = msg.find("CON§", 0);
-    if (found >= 0) {
+    if (found != string::npos) {
         //std::cout << "Debug : Connect received"<<endl;
         return MSG_CON;
     } else {
         found = msg.find("DECO§", 0);
-        if (found >= 0) {
+        if (found != string::npos) {
             return MSG_DECO;
         } else {
             found = msg.find("ROOM_QUIT§", 0);
-            if (found >= 0) {
+            if (found != string::npos) {
                 return MSG_ROOM_QUIT;
             } else {
                 found = msg.find("ROOM_JOIN§", 0);
-                if (found >= 0) {
+                if (found != string::npos) {
                     return MSG_ROOM_JOIN;
                 } else {
                     found = msg.find("BOOK_LIST_RQST§", 0);
-                    if (found >= 0) {
+                    if (found != string::npos) {
                         return MSG_BOOK_LIST_RQST;
 
                     } else {
                         found = msg.find("COM§", 0);
-                        if (found >= 0) {
+                        if (found != string::npos) {
                             return MSG_COM;
 
                         } else {
                             found = msg.find("KEEP_ALIVE§", 0);
-                            if (found >= 0) {
+                            if (found != string::npos) {
                                 return MSG_LIVE;
 
                             }
@@ -80,10 +81,16 @@ string RFC1664::createMsgBookListRqst(string clientName) {
 }
 
 string RFC1664::createMsgBookListResp(string clientName,string ip,string port,int roomNb,vector<Room*> rooms) {
+    string sRoomNb = to_string(roomNb);
+    string retour = "BOOK_LIST_RESP§" + clientName + "§" +ip+"§"+port+"§"+sRoomNb;
 
+    vector<Room*>::iterator it;
+    for(it = rooms.begin(); it != rooms.end(); ++it)
+    {
+        retour += "§";
+        retour += (*it)->getName();
+    }
 
-    string s = to_string(roomNb);
-    string retour = "BOOK_LIST_RESP§" + clientName + "§" +ip+"§"+port+"§"+s;
     return retour;
 }
 
