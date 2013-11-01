@@ -9,17 +9,21 @@
 #define KEEP_ALIVE_TIMEOUT 5 // en secondes
 
 #include "Thread.hpp"
+#include <string>
+
+using namespace std;
 
 class Socket;
 
 class Signalisation : public Thread {
 public:
-    Signalisation();
+    Signalisation(string clientName, Socket *socket);
     int sendKeepAlive();
     void run();
 private:
     void sleep(int nbr_seconds);
     Socket *socket;
+    string clientName;
 };
 
 #endif  //_SIGNALISATION_H

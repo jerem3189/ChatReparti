@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 
+class Socket;
+
 namespace Ui {
 class MainWindow;
 }
@@ -17,9 +19,11 @@ public:
     
 private slots:
     void on_button_keep_alive_clicked();
+    void on_button_connect_clicked();
 
 private:
     Ui::MainWindow *ui;
+    Socket *socket;
 };
 
 #endif // MAINWINDOW_HPP

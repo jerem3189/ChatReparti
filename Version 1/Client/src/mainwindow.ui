@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>730</width>
-    <height>627</height>
+    <width>782</width>
+    <height>661</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,6 +15,13 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
+    <item row="3" column="1">
+     <widget class="QPushButton" name="button_keep_alive">
+      <property name="text">
+       <string>Lancer KeepAlive</string>
+      </property>
+     </widget>
+    </item>
     <item row="0" column="0" colspan="2">
      <widget class="QTabWidget" name="QTabWidget_onglets">
       <property name="tabPosition">
@@ -30,24 +37,16 @@
        <attribute name="title">
         <string>Global Room</string>
        </attribute>
-       <widget class="QPushButton" name="button_keep_alive">
-        <property name="geometry">
-         <rect>
-          <x>100</x>
-          <y>200</y>
-          <width>221</width>
-          <height>27</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Lancer KeepAlive</string>
-        </property>
-       </widget>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <widget class="QTextEdit" name="textEdit"/>
+        </item>
+       </layout>
       </widget>
      </widget>
     </item>
     <item row="1" column="0">
-     <widget class="QLabel" name="label">
+     <widget class="QLabel" name="label_pseudo">
       <property name="text">
        <string>Pseudo</string>
       </property>
@@ -56,6 +55,23 @@
     <item row="1" column="1">
      <widget class="QLineEdit" name="lineEdit"/>
     </item>
+    <item row="2" column="1">
+     <widget class="QPushButton" name="button_connect">
+      <property name="text">
+       <string>Connect</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="3" rowspan="4">
+     <widget class="QListView" name="listView">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+     </widget>
+    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menuBar">
@@ -63,14 +79,15 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>730</width>
+     <width>782</width>
      <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_File">
     <property name="title">
-     <string>&amp;File</string>
+     <string>&amp;Menu</string>
     </property>
+    <addaction name="action_Connexion_au_serveur"/>
    </widget>
    <addaction name="menu_File"/>
   </widget>
@@ -83,18 +100,16 @@
    </attribute>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
-  <widget class="QDockWidget" name="dockWidget">
-   <attribute name="dockWidgetArea">
-    <number>2</number>
-   </attribute>
-   <widget class="QWidget" name="dockWidgetContents_3">
-    <layout class="QVBoxLayout" name="verticalLayout">
-     <item>
-      <widget class="QListView" name="listView"/>
-     </item>
-    </layout>
-   </widget>
-  </widget>
+  <action name="action_Connexion_au_serveur">
+   <property name="text">
+    <string>&amp;Connexion au serveur</string>
+   </property>
+  </action>
+  <action name="actionErger">
+   <property name="text">
+    <string>erger</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>

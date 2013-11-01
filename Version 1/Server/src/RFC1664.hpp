@@ -40,7 +40,7 @@ public:
     string createMsgBookListRqst(string clientName);
     string createMsgBookListResp(string clientName,string ip,string port,int roomNb,vector<Room*> rooms);
     string createMsgDeco(string clientName);
-    string createMsgCon(string clientName);
+    string createMsgCon(string clientName, string addressIp);
     string createMsgCom(string senderName,string receiverName,string message, string roomName);
     string createMsgKeepAlive(string clientName);
 };

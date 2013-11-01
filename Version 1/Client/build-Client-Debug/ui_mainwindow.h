@@ -13,7 +13,6 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
-#include <QtWidgets/QDockWidget>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
@@ -26,7 +25,6 @@
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTabWidget>
 #include <QtWidgets/QToolBar>
-#include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -34,55 +32,73 @@ QT_BEGIN_NAMESPACE
 class Ui_MainWindow
 {
 public:
+    QAction *action_Connexion_au_serveur;
     QWidget *centralWidget;
     QGridLayout *gridLayout;
+    QListView *listView;
+    QPushButton *button_keep_alive;
     QTabWidget *QTabWidget_onglets;
     QWidget *QTabWidget_GlobalRoom;
-    QPushButton *button_keep_alive;
-    QLabel *label;
+    QLabel *label_pseudo;
     QLineEdit *lineEdit;
+    QPushButton *button_connect;
     QMenuBar *menuBar;
     QMenu *menu_File;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
-    QDockWidget *dockWidget;
-    QWidget *dockWidgetContents_3;
-    QVBoxLayout *verticalLayout;
-    QListView *listView;
 
     void setupUi(QMainWindow *MainWindow)
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
         MainWindow->resize(730, 627);
+        action_Connexion_au_serveur = new QAction(MainWindow);
+        action_Connexion_au_serveur->setObjectName(QStringLiteral("action_Connexion_au_serveur"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         gridLayout = new QGridLayout(centralWidget);
         gridLayout->setSpacing(6);
         gridLayout->setContentsMargins(11, 11, 11, 11);
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
+        listView = new QListView(centralWidget);
+        listView->setObjectName(QStringLiteral("listView"));
+        QSizePolicy sizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(listView->sizePolicy().hasHeightForWidth());
+        listView->setSizePolicy(sizePolicy);
+
+        gridLayout->addWidget(listView, 0, 3, 2, 1);
+
+        button_keep_alive = new QPushButton(centralWidget);
+        button_keep_alive->setObjectName(QStringLiteral("button_keep_alive"));
+
+        gridLayout->addWidget(button_keep_alive, 3, 1, 1, 1);
+
         QTabWidget_onglets = new QTabWidget(centralWidget);
         QTabWidget_onglets->setObjectName(QStringLiteral("QTabWidget_onglets"));
         QTabWidget_onglets->setTabPosition(QTabWidget::South);
         QTabWidget_onglets->setTabShape(QTabWidget::Rounded);
         QTabWidget_GlobalRoom = new QWidget();
         QTabWidget_GlobalRoom->setObjectName(QStringLiteral("QTabWidget_GlobalRoom"));
-        button_keep_alive = new QPushButton(QTabWidget_GlobalRoom);
-        button_keep_alive->setObjectName(QStringLiteral("button_keep_alive"));
-        button_keep_alive->setGeometry(QRect(100, 200, 221, 27));
         QTabWidget_onglets->addTab(QTabWidget_GlobalRoom, QString());
 
         gridLayout->addWidget(QTabWidget_onglets, 0, 0, 1, 2);
 
-        label = new QLabel(centralWidget);
-        label->setObjectName(QStringLiteral("label"));
+        label_pseudo = new QLabel(centralWidget);
+        label_pseudo->setObjectName(QStringLiteral("label_pseudo"));
 
-        gridLayout->addWidget(label, 1, 0, 1, 1);
+        gridLayout->addWidget(label_pseudo, 1, 0, 1, 1);
 
         lineEdit = new QLineEdit(centralWidget);
         lineEdit->setObjectName(QStringLiteral("lineEdit"));
 
         gridLayout->addWidget(lineEdit, 1, 1, 1, 1);
+
+        button_connect = new QPushButton(centralWidget);
+        button_connect->setObjectName(QStringLiteral("button_connect"));
+
+        gridLayout->addWidget(button_connect, 2, 1, 1, 1);
 
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
@@ -97,23 +113,9 @@ public:
         statusBar = new QStatusBar(MainWindow);
         statusBar->setObjectName(QStringLiteral("statusBar"));
         MainWindow->setStatusBar(statusBar);
-        dockWidget = new QDockWidget(MainWindow);
-        dockWidget->setObjectName(QStringLiteral("dockWidget"));
-        dockWidgetContents_3 = new QWidget();
-        dockWidgetContents_3->setObjectName(QStringLiteral("dockWidgetContents_3"));
-        verticalLayout = new QVBoxLayout(dockWidgetContents_3);
-        verticalLayout->setSpacing(6);
-        verticalLayout->setContentsMargins(11, 11, 11, 11);
-        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
-        listView = new QListView(dockWidgetContents_3);
-        listView->setObjectName(QStringLiteral("listView"));
-
-        verticalLayout->addWidget(listView);
-
-        dockWidget->setWidget(dockWidgetContents_3);
-        MainWindow->addDockWidget(static_cast<Qt::DockWidgetArea>(2), dockWidget);
 
         menuBar->addAction(menu_File->menuAction());
+        menu_File->addAction(action_Connexion_au_serveur);
 
         retranslateUi(MainWindow);
 
@@ -126,10 +128,12 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", 0));
+        action_Connexion_au_serveur->setText(QApplication::translate("MainWindow", "&Connexion au serveur", 0));
         button_keep_alive->setText(QApplication::translate("MainWindow", "Lancer KeepAlive", 0));
         QTabWidget_onglets->setTabText(QTabWidget_onglets->indexOf(QTabWidget_GlobalRoom), QApplication::translate("MainWindow", "Global Room", 0));
-        label->setText(QApplication::translate("MainWindow", "Pseudo", 0));
-        menu_File->setTitle(QApplication::translate("MainWindow", "&File", 0));
+        label_pseudo->setText(QApplication::translate("MainWindow", "Pseudo", 0));
+        button_connect->setText(QApplication::translate("MainWindow", "Connect", 0));
+        menu_File->setTitle(QApplication::translate("MainWindow", "&Menu", 0));
     } // retranslateUi
 
 };

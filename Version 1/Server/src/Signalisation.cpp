@@ -13,17 +13,16 @@
 #include "RFC1664.hpp"
 #include "Socket.hpp"
 
-Signalisation::Signalisation()
+Signalisation::Signalisation(string clientName, Socket *socket)
 {
-    this->socket = new Socket();
-    this->socket->create("127.0.0.1", "1337");
+    this->socket = socket;
 }
 
 int Signalisation::sendKeepAlive() {
     RFC1664 rfc;
     NetworkUDP udp;
 
-    string keepalive = rfc.createMsgKeepAlive("Jeremy");
+    string keepalive = rfc.createMsgKeepAlive(this->clientName);
 
     cout << "Signalisation::sendKeepAlive() -> message a envoyer : " << keepalive << endl;
 

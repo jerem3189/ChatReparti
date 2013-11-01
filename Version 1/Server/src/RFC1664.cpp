@@ -76,7 +76,6 @@ string RFC1664::createMsgRoomQuit(string clientName, string roomName) {
 string RFC1664::createMsgRoomJoin(string clientName, string roomName) {
     string retour = "ROOM_JOIN§" + clientName + "§" + roomName;
     return retour;
-
 }
 
 string RFC1664::createMsgBookListRqst(string clientName) {
@@ -102,13 +101,11 @@ string RFC1664::createMsgDeco(string clientName) {
 
     string retour = "DECO§" + clientName;
     return retour;
-
 }
 
-string RFC1664::createMsgCon(string clientName) {
-    string retour = "CON§" + clientName;
+string RFC1664::createMsgCon(string clientName, string addressIp) {
+    string retour = "CON§" + clientName + "§" + addressIp;
     return retour;
-
 }
 
 string RFC1664::createMsgCom(string senderName, string receiverName, string message, string roomName) {
