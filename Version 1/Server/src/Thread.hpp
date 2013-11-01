@@ -10,16 +10,18 @@
 
 class Thread {
 public:
-  	Thread();
-	virtual ~Thread() {;}
-	void start();
+    Thread();
+    virtual ~Thread() {
+        ;
+    }
+    void start();
     void stop();
-	void waitForEnd();
-	virtual void run() = 0;
+    void waitForEnd();
+    virtual void run() = 0;
 protected:
-	pthread_t thread;
-	bool end;
-	static void* pthread_function(void*);
+    pthread_t thread;
+    bool end;
+    static void* pthread_function(void*);
 };
 
 #endif  //_THREAD_H

@@ -136,7 +136,7 @@ string RFC1664::fieldFromMesg(string msg, int fieldNb, char delim) {
     //cout << mot<<endl;
     mot.erase(mot.size() - 1, 1);
     retour = mot;
-    
+
     return retour;
 }
 

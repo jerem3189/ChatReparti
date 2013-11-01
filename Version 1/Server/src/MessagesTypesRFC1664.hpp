@@ -5,7 +5,7 @@
 //  @ Project : Projet Chat
 //  @ File Name : MessagesTypesRFC1664.h
 //  @ Date : 28/10/2013
-//  @ Author : 
+//  @ Author :
 //
 //
 
@@ -15,18 +15,18 @@
 
 
 enum MessagesTypesRFC1664 {
-        MSG_CON=1,
-        MSG_RCON,
-        MSG_DECO,
-        MSG_COM,
-	MSG_ROOM_QUIT,
-	MSG_ROOM_JOIN,
-	MSG_BOOK_LIST_RQST,
-	MSG_BOOK_LIST_RESP,
-        MSG_LIVE,
-        ERR_PSEUDO_IN_USE,
-        ERR_BAD_MESSAGE
-               
+    MSG_CON=1,
+    MSG_RCON,
+    MSG_DECO,
+    MSG_COM,
+    MSG_ROOM_QUIT,
+    MSG_ROOM_JOIN,
+    MSG_BOOK_LIST_RQST,
+    MSG_BOOK_LIST_RESP,
+    MSG_LIVE,
+    ERR_PSEUDO_IN_USE,
+    ERR_BAD_MESSAGE
+
 };
 
 #endif  //_MESSAGESTYPESRFC1664_HPP
