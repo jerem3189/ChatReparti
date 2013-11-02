@@ -22,6 +22,12 @@ Book::~Book() {
 
 BOOK_ERROR_ENUM Book::addNewClient(string name,string addressIp, string port) {
     Client client = Client(name); // Creation de l'objet Client a partir de son nom
+
+    SOCK_ERROR_ENUM retour = client.addNetworkHints(addressIp,port);
+
+    if (retour != NETWORK_HINTS_OK)
+        return CLIENT_ADD_NOK;
+
     this->rooms.at(0).addClient(&client);
     this->clients.push_back(client);
     return CLIENT_ADD_OK;

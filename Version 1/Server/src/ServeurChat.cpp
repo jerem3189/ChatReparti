@@ -70,7 +70,6 @@ int main(int argc, char** argv) {
                 send = rfc.createMsgBookListResp(champ2, champ3, "1338", botin.getClientRooms(champ2).size(), botin.getClientRooms(champ2));
                 
                 for (it = botin.getClients().begin(); it != botin.getClients().end(); ++it) {
-                    cout << "proutiprout" << endl;
                     cout << udp.sendDatagrams(it->getSocket()->getSocket(), (char*) send.c_str(), sizeof send.c_str(), it->getSocket()->getSockaddr());
                 }
                 }else
