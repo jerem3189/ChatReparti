@@ -21,51 +21,38 @@
 
 MessagesTypesRFC1664 RFC1664::type(string msg) {
     std::size_t found = msg.find("CON§", 0);
-    if (found != string::npos) {
-        //std::cout << "Debug : Connect received"<<endl;
+    if (found != string::npos)
         return MSG_CON;
-    } else {
-        found = msg.find("DECO§", 0);
-        if (found != string::npos) {
-            return MSG_DECO;
-        } else {
-            found = msg.find("ROOM_QUIT§", 0);
-            if (found != string::npos) {
-                return MSG_ROOM_QUIT;
-            } else {
-                found = msg.find("ROOM_JOIN§", 0);
-                if (found != string::npos) {
-                    return MSG_ROOM_JOIN;
-                } else {
-                    found = msg.find("BOOK_LIST_RQST§", 0);
-                    if (found != string::npos) {
-                        return MSG_BOOK_LIST_RQST;
 
-                    } else {
-                        found = msg.find("COM§", 0);
-                        if (found != string::npos) {
-                            return MSG_COM;
+    found = msg.find("DECO§", 0);
+    if (found != string::npos)
+        return MSG_DECO;
 
-                        } else {
-                            found = msg.find("KEEP_ALIVE§", 0);
-                            if (found != string::npos) {
-                                return MSG_LIVE;
+    found = msg.find("ROOM_QUIT§", 0);
+    if (found != string::npos)
+        return MSG_ROOM_QUIT;
 
-                            } else {
-                                return ERR_BAD_MESSAGE;
-                            }
-                        }
+    found = msg.find("ROOM_CREATE§", 0);
+    if (found != string::npos)
+        return MSG_ROOM_CREATE;
 
+    found = msg.find("ROOM_JOIN§", 0);
+    if (found != string::npos)
+        return MSG_ROOM_JOIN;
 
-                    }
-                }
+    found = msg.find("BOOK_LIST_RQST§", 0);
+    if (found != string::npos)
+        return MSG_BOOK_LIST_RQST;
 
-            }
+    found = msg.find("COM§", 0);
+    if (found != string::npos)
+        return MSG_COM;
 
-        }
+    found = msg.find("KEEP_ALIVE§", 0);
+    if (found != string::npos)
+        return MSG_LIVE;
 
-    }
-
+    return ERR_BAD_MESSAGE;
 
 }
 
@@ -76,6 +63,11 @@ string RFC1664::createMsgRoomQuit(string clientName, string roomName) {
 
 string RFC1664::createMsgRoomJoin(string clientName, string roomName) {
     string retour = "ROOM_JOIN§" + clientName + "§" + roomName+"§";
+    return retour;
+}
+
+string RFC1664::createMsgRoomCreate(string clientName, string roomName) {
+    string retour = "ROOM_CREATE§" + clientName + "§" + roomName + "§";
     return retour;
 }
 
