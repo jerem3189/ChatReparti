@@ -104,7 +104,7 @@ string RFC1664::createMsgDeco(string clientName) {
 }
 
 string RFC1664::createMsgCon(string clientName, string addressIp) {
-    string retour = "CON§" + clientName + "§" + addressIp;
+    string retour = "CON§" + clientName + "§" + addressIp +"\n";
     return retour;
 }
 
@@ -117,6 +117,7 @@ string RFC1664::createMsgKeepAlive(string clientName) {
     string retour = "KEEP_ALIVE§" + clientName;
     return retour;
 }
+
 
 string RFC1664::fieldFromMesg(string msg, int fieldNb, char delim) {
     string retour;
@@ -136,5 +137,23 @@ string RFC1664::fieldFromMesg(string msg, int fieldNb, char delim) {
 
     return retour;
 }
+ /*
+string RFC1664::fieldFromMesg(string msg, int fieldNb, char delim) {
+    
+    string delimiter = "§";
+    string retour;
+    size_t pos = 0;
+    std::string token;
+    int i = 0;
+    while ((pos = msg.find(delimiter)) != std::string::npos && (i < fieldNb)) {
+        i++;
+        token = msg.substr(0, pos);
+        //retour=token; 
+        msg.erase(0, pos + delimiter.length());
+    }
+    retour=token;
+    cout<<retour;
 
-
+    return retour;
+}
+*/
