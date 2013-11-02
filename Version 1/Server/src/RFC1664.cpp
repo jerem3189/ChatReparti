@@ -90,7 +90,7 @@ string RFC1664::createMsgBookListResp(string clientName, string ip, string port,
 
     vector<Room*>::iterator it;
     for (it = rooms.begin(); it != rooms.end(); ++it) {
-        
+
         retour += (*it)->getName();
         retour += "§";
     }
@@ -138,9 +138,9 @@ string RFC1664::fieldFromMesg(string msg, int fieldNb, char delim) {
 
     return retour;
 }*/
- 
+
 string RFC1664::fieldFromMesg(string msg, int fieldNb, char delim) {
-    
+
     string delimiter = "§";
     string retour;
     size_t pos = 0;
@@ -149,7 +149,7 @@ string RFC1664::fieldFromMesg(string msg, int fieldNb, char delim) {
     while ((pos = msg.find(delimiter)) != std::string::npos && (i < fieldNb)) {
         i++;
         token = msg.substr(0, pos);
-        //retour=token; 
+        //retour=token;
         msg.erase(0, pos + delimiter.length());
     }
     retour=token;
