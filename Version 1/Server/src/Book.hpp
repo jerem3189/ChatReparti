@@ -22,6 +22,7 @@ public:
     Book();
     virtual ~Book();
     BOOK_ERROR_ENUM addNewClient(string name,string addressIp,string port, vector<string> roomList);
+    BOOK_ERROR_ENUM addNewClient(string name,string addressIp,string port);
     int removeClient(string name);
     int addClientToRoom(string clientName, string roomName);
     int removeClientFromRoom(string clientName, string roomName);

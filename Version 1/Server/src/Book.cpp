@@ -12,13 +12,24 @@ using namespace std;
 #include "../../Server/src/ErrorCodes.hpp"
 
 Book::Book() {
+    Room room("global");
+
+    this->rooms.push_back(room);
 }
 
 Book::~Book() {
 }
 
+BOOK_ERROR_ENUM Book::addNewClient(string name,string addressIp, string port) {
+    Client client = Client(name); // Creation de l'objet Client a partir de son nom
+    this->rooms.at(0).addClient(&client);
+    this->clients.push_back(client);
+    return CLIENT_ADD_OK;
+}
+
 BOOK_ERROR_ENUM Book::addNewClient(string name,string addressIp, string port, vector<string> roomList) {
     Client client = Client(name); // Creation de l'objet Client a partir de son nom
+    int test = -1;
 
     for (vector<string>::iterator i = roomList.begin(); i != roomList.end(); ++i)
     {
@@ -31,6 +42,7 @@ BOOK_ERROR_ENUM Book::addNewClient(string name,string addressIp, string port, ve
             {
                 result = true;
                 it->addClient(&client);
+                test++;
 
                 SOCK_ERROR_ENUM retour = client.addNetworkHints(addressIp,port);
 
@@ -46,7 +58,14 @@ BOOK_ERROR_ENUM Book::addNewClient(string name,string addressIp, string port, ve
         }
     }
 
-    this->clients.push_back(client);
+    if (test < 0)
+    {
+        this->rooms.at(0).addClient(&client);
+        this->clients.push_back(client);
+        return CLIENT_ADD_OK;
+    }
+    else
+        this->clients.push_back(client);
 
     return CLIENT_ADD_OK;
 }
