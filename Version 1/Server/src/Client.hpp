@@ -10,6 +10,7 @@
 #define	CLIENT_HPP
 
 #include <string>
+#include "../../Server/src/ErrorCodes.hpp"
 
 class Socket;
 
@@ -23,7 +24,7 @@ public:
     bool isMaster();
     void setMaster(bool type);
 
-    int addNetworkHints(string addressIp, string port);
+    SOCK_ERROR_ENUM addNetworkHints(string addressIp, string port);
     Socket* getSocket();
     bool operator==(Client & client);
     void setLastalive(time_t lastalive);

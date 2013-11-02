@@ -51,12 +51,21 @@ time_t Client::getLastalive() const {
     return lastalive;
 }
 
-int Client::addNetworkHints(string addressIp, string port)
+SOCK_ERROR_ENUM Client::addNetworkHints(string addressIp, string port)
 {
-    this->socket->create(addressIp, port);
-    this->socket->binding();
+    SOCK_ERROR_ENUM retour;
 
-    return 0;
+    retour = this->socket->create(addressIp, port);
+
+    if (retour != SOCK_OK)
+        return retour;
+
+    retour = this->socket->binding();
+
+    if (retour != SOCK_BIND_OK)
+        return retour;
+
+    return NETWORK_HINTS_OK;
 }
 Socket* Client::getSocket(){
     return this->socket;

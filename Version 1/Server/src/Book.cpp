@@ -9,6 +9,7 @@ using namespace std;
 #include "Client.hpp"
 
 #include <utility>
+#include "../../Server/src/ErrorCodes.hpp"
 
 Book::Book() {
 }
@@ -16,7 +17,7 @@ Book::Book() {
 Book::~Book() {
 }
 
-int Book::addNewClient(string name,string addressIp, string port, vector<string> roomList) {
+BOOK_ERROR_ENUM Book::addNewClient(string name,string addressIp, string port, vector<string> roomList) {
     Client client = Client(name); // Creation de l'objet Client a partir de son nom
 
     for (vector<string>::iterator i = roomList.begin(); i != roomList.end(); ++i)
@@ -30,15 +31,24 @@ int Book::addNewClient(string name,string addressIp, string port, vector<string>
             {
                 result = true;
                 it->addClient(&client);
-                cout << "La room existe et le client a été ajouté" << endl;
+
+                SOCK_ERROR_ENUM retour = client.addNetworkHints(addressIp,port);
+
+                if (retour != NETWORK_HINTS_OK)
+                {
+                    it->delClient(&client);
+                    return CLIENT_ADD_NOK;
+                }
+
+                cout << "Book::addNewClient() -> La room existe et le client a été ajouté" << endl;
                 break;
             }
         }
     }
-    client.addNetworkHints(addressIp,port);
+
     this->clients.push_back(client);
 
-    return 0;
+    return CLIENT_ADD_OK;
 }
 
 int Book::removeClient(string name) {
