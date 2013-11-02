@@ -8,6 +8,9 @@
 
 #include "Thread.hpp"
 #include "Socket.hpp"
+#include <sys/types.h>
+#include <ifaddrs.h>
+#include <string.h>
 #include <sys/unistd.h>
 #include <sys/socket.h>
 #include <netdb.h>
