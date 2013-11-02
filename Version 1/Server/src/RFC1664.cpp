@@ -70,28 +70,29 @@ MessagesTypesRFC1664 RFC1664::type(string msg) {
 }
 
 string RFC1664::createMsgRoomQuit(string clientName, string roomName) {
-    string retour = "ROOM_QUIT§" + clientName + "§" + roomName;
+    string retour = "ROOM_QUIT§" + clientName + "§" + roomName+"§";
     return retour;
 }
 
 string RFC1664::createMsgRoomJoin(string clientName, string roomName) {
-    string retour = "ROOM_JOIN§" + clientName + "§" + roomName;
+    string retour = "ROOM_JOIN§" + clientName + "§" + roomName+"§";
     return retour;
 }
 
 string RFC1664::createMsgBookListRqst(string clientName) {
-    string retour = "BOOK_LIST_RQST§" + clientName;
+    string retour = "BOOK_LIST_RQST§" + clientName+"§";
     return retour;
 }
 
 string RFC1664::createMsgBookListResp(string clientName, string ip, string port, int roomNb, vector<Room*> rooms) {
     string sRoomNb = to_string(roomNb);
-    string retour = "BOOK_LIST_RESP§" + clientName + "§" + ip + "§" + port + "§" + sRoomNb;
+    string retour = "BOOK_LIST_RESP§" + clientName + "§" + ip + "§" + port + "§" + sRoomNb+"§";
 
     vector<Room*>::iterator it;
     for (it = rooms.begin(); it != rooms.end(); ++it) {
-        retour += "§";
+        
         retour += (*it)->getName();
+        retour += "§";
     }
 
     return retour;
@@ -99,26 +100,26 @@ string RFC1664::createMsgBookListResp(string clientName, string ip, string port,
 
 string RFC1664::createMsgDeco(string clientName) {
 
-    string retour = "DECO§" + clientName;
+    string retour = "DECO§" + clientName+"§";
     return retour;
 }
 
 string RFC1664::createMsgCon(string clientName, string addressIp) {
-    string retour = "CON§" + clientName + "§" + addressIp +"\n";
+    string retour = "CON§" + clientName + "§" + addressIp +"§";
     return retour;
 }
 
 string RFC1664::createMsgCom(string senderName, string receiverName, string message, string roomName) {
-    string retour = "COM§" + senderName + "§" + receiverName + "§" + message + "§" + roomName;
+    string retour = "COM§" + senderName + "§" + receiverName + "§" + message + "§" + roomName+"§";
     return retour;
 }
 
 string RFC1664::createMsgKeepAlive(string clientName) {
-    string retour = "KEEP_ALIVE§" + clientName;
+    string retour = "KEEP_ALIVE§" + clientName+"§";
     return retour;
 }
 
-
+/*
 string RFC1664::fieldFromMesg(string msg, int fieldNb, char delim) {
     string retour;
     istringstream iss(msg);
@@ -136,8 +137,8 @@ string RFC1664::fieldFromMesg(string msg, int fieldNb, char delim) {
     retour = mot;
 
     return retour;
-}
- /*
+}*/
+ 
 string RFC1664::fieldFromMesg(string msg, int fieldNb, char delim) {
     
     string delimiter = "§";
@@ -152,8 +153,8 @@ string RFC1664::fieldFromMesg(string msg, int fieldNb, char delim) {
         msg.erase(0, pos + delimiter.length());
     }
     retour=token;
-    cout<<retour;
+    //cout<<retour;
 
     return retour;
 }
-*/
+

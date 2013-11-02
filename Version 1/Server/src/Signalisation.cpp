@@ -16,6 +16,7 @@
 Signalisation::Signalisation(string clientName, Socket *socket)
 {
     this->socket = socket;
+    this->clientName =clientName;
 }
 
 int Signalisation::sendKeepAlive() {

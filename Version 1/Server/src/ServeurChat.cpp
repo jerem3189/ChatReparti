@@ -30,7 +30,7 @@ int main(int argc, char** argv) {
     NetworkUDP udp;
     RFC1664 rfc;
     Book botin;
-    Client john;
+    
     cout << listenSocket.create("0.0.0.0", DEFAULT_PORT);
     cout << listenSocket.binding();
 
@@ -83,9 +83,9 @@ int main(int argc, char** argv) {
 
             case MSG_COM:
                 cout << "Debug :" << champ2 << " à envoyé un message à redispatcher" << endl;
-                //botin.getClients();
-
-                //cout<<udp.sendDatagrams(listenSocket.getSocket(), message, sizeof message, listenSocket.getSockaddr());
+                for (it = botin.getClients().begin(); it != botin.getClients().end(); ++it) {
+                    cout << udp.sendDatagrams(it->getSocket()->getSocket(), message, sizeof message, it->getSocket()->getSockaddr());
+                }
                 break;
             case MSG_LIVE:
                 cout << "Debug :" << champ2 << " signale qu'il est encore actif" << endl;
@@ -97,21 +97,30 @@ int main(int argc, char** argv) {
                 botin.addRoom(champ3);
                 botin.addClientToRoom(champ2, champ3);
                 cout << "Debug :" << champ2 << " à rejoint le salon " << champ3 << endl;
-                //rfc.createMsgBookListResp()
-                //udp.sendDatagrams();
+                send = rfc.createMsgBookListResp(champ2, champ3, "1338", botin.getClientRooms(champ2).size(), botin.getClientRooms(champ2));
+                
+                for (it = botin.getClients().begin(); it != botin.getClients().end(); ++it) {
+                    cout << udp.sendDatagrams(it->getSocket()->getSocket(), (char*) send.c_str(), sizeof send.c_str(), it->getSocket()->getSockaddr());
+                }
                 break;
 
             case MSG_ROOM_QUIT:
                 botin.removeClientFromRoom(champ2, champ3);
                 cout << "Debug :" << champ2 << " à quitté le salon " << champ3 << endl;
-                //rfc.createMsgBookListResp();
-                //udp.sendDatagrams();
+                send = rfc.createMsgBookListResp(champ2, champ3, "1338", botin.getClientRooms(champ2).size(), botin.getClientRooms(champ2));
+                
+                for (it = botin.getClients().begin(); it != botin.getClients().end(); ++it) {
+                    cout << udp.sendDatagrams(it->getSocket()->getSocket(), (char*) send.c_str(), sizeof send.c_str(), it->getSocket()->getSockaddr());
+                }
                 break;
 
             case MSG_BOOK_LIST_RQST:
                 cout << "Debug :" << champ2 << "à demandé l'annuaire" << endl;
-                //rfc.createMsgBookListResp();
-                //udp.sendDatagrams();
+                send = rfc.createMsgBookListResp(champ2, champ3, "1338", botin.getClientRooms(champ2).size(), botin.getClientRooms(champ2));
+                
+                
+                    cout << udp.sendDatagrams(botin.findClient(champ2)->getSocket()->getSocket(), (char*) send.c_str(), sizeof send.c_str(), botin.findClient(champ2)->getSocket()->getSockaddr());
+                
                 break;
 
 
