@@ -8,11 +8,23 @@
 
 #include "Thread.hpp"
 #include "Socket.hpp"
+#include <sys/unistd.h>
+#include <sys/socket.h>
+#include <netdb.h>
+#include <stdio.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <string>
+#include <iostream>
+#include <fstream>
+using namespace std;
 
 class NetworkUDP {
 public:
     int sendDatagrams(SOCKET sock, char *data, size_t len, SOCKADDR *address);
     int receiveDatagrams(SOCKET sock, char *data, size_t maxLen, SOCKADDR *address);
+    int getIp_static();
+    int getIp_interface();
 };
 
 #endif  //_SENDINGUDP_H
