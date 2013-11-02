@@ -44,7 +44,7 @@ public:
     string createMsgCom(string senderName,string receiverName,string message, string roomName);
     string createMsgKeepAlive(string clientName);
     string fieldFromMesg(string msg,int fieldNb,char delim);
-
+    string createMsgRoomCreate(string clientName, string roomName);
 };
 
 #endif  //_RFC1664_HPP
