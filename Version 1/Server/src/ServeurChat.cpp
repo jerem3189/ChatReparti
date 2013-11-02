@@ -54,7 +54,7 @@ int main(int argc, char** argv) {
 
 
         //string champ5(rfc.RecupererChampMessage(message,5,"§"));
-        vector<string> vstr;
+        
         string send;
         vector<Client>::iterator it;
 
@@ -64,7 +64,7 @@ int main(int argc, char** argv) {
                 cout << "Debug :" << champ2 << " s'est connecté au serveur" << endl;
 
 
-                if(botin.addNewClient(champ2, champ3, "1338", vstr)==CLIENT_ADD_OK){
+                if(botin.addNewClient(champ2, champ3, "1338")==CLIENT_ADD_OK){
                     cout << "Debug :" << champ2 << " a été ajouté à l'annuaire" << endl;
                     cout << "size : " << botin.getClientRooms(champ2).size() << endl;
                 send = rfc.createMsgBookListResp(champ2, champ3, "1338", botin.getClientRooms(champ2).size(), botin.getClientRooms(champ2));
