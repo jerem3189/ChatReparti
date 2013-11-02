@@ -24,7 +24,7 @@ public:
     void setMaster(bool type);
 
     int addNetworkHints(string addressIp, string port);
-
+    Socket* getSocket();
     bool operator==(Client & client);
     void setLastalive(time_t lastalive);
     time_t getLastalive() const;

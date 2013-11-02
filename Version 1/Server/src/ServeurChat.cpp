@@ -49,8 +49,10 @@ int main(int argc, char** argv) {
         string champ2(rfc.fieldFromMesg(testString,2,'§'));
         string champ3(rfc.fieldFromMesg(testString,3,'§'));
         string champ4(rfc.fieldFromMesg(testString,4,'§'));
-
-        //cout <<"decoupage : \n"<<champ1<<endl<<champ2<<endl<<champ3<<endl<<champ4<<endl;
+        string champ5(rfc.fieldFromMesg(testString,5,'§'));
+        cout <<"decoupage : \n"<<champ1<<endl<<champ2<<endl<<champ3<<endl<<champ4<<endl<<champ5<<endl;
+        
+        
         //string champ5(rfc.RecupererChampMessage(message,5,"§"));
         vector<string> vstr;
 
@@ -59,8 +61,8 @@ int main(int argc, char** argv) {
         case MSG_CON:
             cout <<"Debug :"<<champ2<<" s'est connecté au serveur"<<endl;
 
-            botin.addNewClient(champ2,vstr);
-            //rfc.createMsgBookListResp(champ1,);
+            botin.addNewClient(champ2,champ3,"1338",vstr);
+            //rfc.createMsgBookListResp(champ2,champ3,"1338");
             break;
 
         case MSG_DECO:
@@ -71,12 +73,14 @@ int main(int argc, char** argv) {
         case MSG_COM:
             cout <<"Debug :"<<champ2<<" à envoyé un message à redispatcher"<<endl;
             //botin.getClients();
-            udp.sendDatagrams(listenSocket.getSocket(), message, sizeof message, listenSocket.getSockaddr());
+                        
+            //cout<<udp.sendDatagrams(listenSocket.getSocket(), message, sizeof message, listenSocket.getSockaddr());
             break;
         case MSG_LIVE:
             cout <<"Debug :"<<champ2<<" signale qu'il est encore actif"<<endl;
-            john.setLastalive(time(0));
-            cout << john.getLastalive();
+            botin.findClient(champ2)->setLastalive(time(0));
+            
+            cout << botin.findClient(champ2)->getLastalive()<<endl;
             break;
         case MSG_ROOM_JOIN:
             botin.addRoom(champ3);
