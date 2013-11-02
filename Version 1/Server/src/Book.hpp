@@ -21,7 +21,7 @@ class Book {
 public:
     Book();
     virtual ~Book();
-    int addNewClient(string name, vector<string> roomList);
+    int addNewClient(string name,string addressIp,string port, vector<string> roomList);
     int removeClient(string name);
     int addClientToRoom(string clientName, string roomName);
     int removeClientFromRoom(string clientName, string roomName);

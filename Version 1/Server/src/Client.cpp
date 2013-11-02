@@ -58,3 +58,6 @@ int Client::addNetworkHints(string addressIp, string port)
 
     return 0;
 }
+Socket* Client::getSocket(){
+    return this->socket;
+}

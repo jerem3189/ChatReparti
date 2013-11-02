@@ -16,7 +16,7 @@ Book::Book() {
 Book::~Book() {
 }
 
-int Book::addNewClient(string name, vector<string> roomList) {
+int Book::addNewClient(string name,string addressIp, string port, vector<string> roomList) {
     Client client = Client(name); // Creation de l'objet Client a partir de son nom
 
     for (vector<string>::iterator i = roomList.begin(); i != roomList.end(); ++i)
@@ -35,7 +35,7 @@ int Book::addNewClient(string name, vector<string> roomList) {
             }
         }
     }
-
+    client.addNetworkHints(addressIp,port);
     this->clients.push_back(client);
 
     return 0;
