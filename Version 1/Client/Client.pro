@@ -21,7 +21,8 @@ SOURCES += src/main.cpp\
     ../Server/src/Thread.cpp \
     ../Server/src/Client.cpp \
     ../Server/src/RFC1664.cpp \
-    ../Server/src/Signalisation.cpp
+    ../Server/src/Signalisation.cpp \
+    src/Listening.cpp
 
 HEADERS  += src/mainwindow.hpp \
     ../Server/src/Book.hpp \
@@ -31,6 +32,7 @@ HEADERS  += src/mainwindow.hpp \
     ../Server/src/Thread.hpp \
     ../Server/src/Client.hpp \
     ../Server/src/RFC1664.hpp \
-    ../Server/src/Signalisation.hpp
+    ../Server/src/Signalisation.hpp \
+    src/Listening.hpp
 
 FORMS    += src/mainwindow.ui

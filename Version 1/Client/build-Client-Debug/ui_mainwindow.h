@@ -24,7 +24,9 @@
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTabWidget>
+#include <QtWidgets/QTextEdit>
 #include <QtWidgets/QToolBar>
+#include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -33,15 +35,18 @@ class Ui_MainWindow
 {
 public:
     QAction *action_Connexion_au_serveur;
+    QAction *actionErger;
     QWidget *centralWidget;
     QGridLayout *gridLayout;
-    QListView *listView;
     QPushButton *button_keep_alive;
     QTabWidget *QTabWidget_onglets;
     QWidget *QTabWidget_GlobalRoom;
+    QVBoxLayout *verticalLayout_2;
+    QTextEdit *textEdit;
     QLabel *label_pseudo;
     QLineEdit *lineEdit;
     QPushButton *button_connect;
+    QListView *listView;
     QMenuBar *menuBar;
     QMenu *menu_File;
     QToolBar *mainToolBar;
@@ -51,25 +56,17 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(730, 627);
+        MainWindow->resize(782, 661);
         action_Connexion_au_serveur = new QAction(MainWindow);
         action_Connexion_au_serveur->setObjectName(QStringLiteral("action_Connexion_au_serveur"));
+        actionErger = new QAction(MainWindow);
+        actionErger->setObjectName(QStringLiteral("actionErger"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         gridLayout = new QGridLayout(centralWidget);
         gridLayout->setSpacing(6);
         gridLayout->setContentsMargins(11, 11, 11, 11);
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
-        listView = new QListView(centralWidget);
-        listView->setObjectName(QStringLiteral("listView"));
-        QSizePolicy sizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
-        sizePolicy.setHorizontalStretch(0);
-        sizePolicy.setVerticalStretch(0);
-        sizePolicy.setHeightForWidth(listView->sizePolicy().hasHeightForWidth());
-        listView->setSizePolicy(sizePolicy);
-
-        gridLayout->addWidget(listView, 0, 3, 2, 1);
-
         button_keep_alive = new QPushButton(centralWidget);
         button_keep_alive->setObjectName(QStringLiteral("button_keep_alive"));
 
@@ -81,6 +78,15 @@ public:
         QTabWidget_onglets->setTabShape(QTabWidget::Rounded);
         QTabWidget_GlobalRoom = new QWidget();
         QTabWidget_GlobalRoom->setObjectName(QStringLiteral("QTabWidget_GlobalRoom"));
+        verticalLayout_2 = new QVBoxLayout(QTabWidget_GlobalRoom);
+        verticalLayout_2->setSpacing(6);
+        verticalLayout_2->setContentsMargins(11, 11, 11, 11);
+        verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
+        textEdit = new QTextEdit(QTabWidget_GlobalRoom);
+        textEdit->setObjectName(QStringLiteral("textEdit"));
+
+        verticalLayout_2->addWidget(textEdit);
+
         QTabWidget_onglets->addTab(QTabWidget_GlobalRoom, QString());
 
         gridLayout->addWidget(QTabWidget_onglets, 0, 0, 1, 2);
@@ -100,10 +106,20 @@ public:
 
         gridLayout->addWidget(button_connect, 2, 1, 1, 1);
 
+        listView = new QListView(centralWidget);
+        listView->setObjectName(QStringLiteral("listView"));
+        QSizePolicy sizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(listView->sizePolicy().hasHeightForWidth());
+        listView->setSizePolicy(sizePolicy);
+
+        gridLayout->addWidget(listView, 0, 3, 4, 1);
+
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 730, 25));
+        menuBar->setGeometry(QRect(0, 0, 782, 25));
         menu_File = new QMenu(menuBar);
         menu_File->setObjectName(QStringLiteral("menu_File"));
         MainWindow->setMenuBar(menuBar);
@@ -129,6 +145,7 @@ public:
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", 0));
         action_Connexion_au_serveur->setText(QApplication::translate("MainWindow", "&Connexion au serveur", 0));
+        actionErger->setText(QApplication::translate("MainWindow", "erger", 0));
         button_keep_alive->setText(QApplication::translate("MainWindow", "Lancer KeepAlive", 0));
         QTabWidget_onglets->setTabText(QTabWidget_onglets->indexOf(QTabWidget_GlobalRoom), QApplication::translate("MainWindow", "Global Room", 0));
         label_pseudo->setText(QApplication::translate("MainWindow", "Pseudo", 0));
