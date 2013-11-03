@@ -191,6 +191,16 @@ p, li { white-space: pre-wrap; }
     <string>&amp;Joindre un salon</string>
    </property>
   </action>
+  <action name="actionAjouter">
+   <property name="text">
+    <string>Ajouter</string>
+   </property>
+  </action>
+  <action name="actionAjouter_Ligne">
+   <property name="text">
+    <string>Ajouter Ligne</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
