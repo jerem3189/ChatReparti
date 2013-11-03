@@ -12,14 +12,18 @@
 #include "../../Server/src/Socket.hpp"
 #include "../../Server/src/NetworkUDP.hpp"
 #include "../../Server/src/RFC1664.hpp"
+#include "mainwindow.hpp"
 
-Listening::Listening(QMainWindow *mainWindow)
+Listening::Listening(MainWindow *mainWindow)
 {
     this->mainWindow = mainWindow;
     this->listenSocket = new Socket();
 
     cout << listenSocket->create("NULL", DEFAULT_PORT) << endl;
     cout << listenSocket->binding() << endl;
+
+    //this->listenSocket = mainWindow->getSocket();
+
     this->udp = new NetworkUDP();
     this->rfc = new RFC1664();
 }

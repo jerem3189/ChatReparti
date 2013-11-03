@@ -53,17 +53,7 @@ time_t Client::getLastalive() const {
 
 SOCK_ERROR_ENUM Client::addNetworkHints(string addressIp, string port)
 {
-    SOCK_ERROR_ENUM retour;
-
-    retour = this->socket->create(addressIp, port);
-
-    if (retour != SOCK_OK)
-        return retour;
-
-    retour = this->socket->binding();
-
-    if (retour != SOCK_BIND_OK)
-        return retour;
+    this->socket->setIpPort(addressIp, port);
 
     return NETWORK_HINTS_OK;
 }

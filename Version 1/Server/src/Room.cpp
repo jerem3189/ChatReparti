@@ -49,21 +49,6 @@ void Room::setClients(vector<Client*> clients) {
     this->clients = clients;
 }
 
-/*
-Client* Room::findClient(string name) {
-		vector<Client*>::iterator it;
-		for(it = this->clients.begin(); it != this->clients.end(); ++it)
-		{
-			if((*it)->getName() == name)
-			{
-				cout << "Client trouvé !!!" << endl;
-				return &(*it);
-			}
-		}
-
-		return NULL;
-}*/
-
 vector<Client*>::iterator Room::findClient(string name) {
     vector<Client*>::iterator it;
     for(it = this->clients.begin(); it != this->clients.end(); ++it)

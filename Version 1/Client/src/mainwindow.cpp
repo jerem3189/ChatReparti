@@ -18,6 +18,11 @@ MainWindow::MainWindow(QWidget *parent) :
     this->socket->create("127.0.0.1", "1337");
 }
 
+Socket *MainWindow::getSocket()
+{
+    return this->socket;
+}
+
 MainWindow::~MainWindow()
 {
     delete ui;
@@ -34,7 +39,7 @@ void MainWindow::on_action_Connexion_au_serveur_triggered()
 
     ui->label_pseudo->setText(pseudo);
 
-    string msgcon = rfc.createMsgCon(ui->label_pseudo->text().toStdString(), NetworkUDP::getIp_static());
+    string msgcon = rfc.createMsgCon(ui->label_pseudo->text().toStdString(), "127.0.0.1");
     udp.sendDatagrams(this->socket->getSocket(),(char*)msgcon.c_str(), strlen(msgcon.c_str()),socket->getSockaddr(), this->socket->getAddrinfo());
 }
 

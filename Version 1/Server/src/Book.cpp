@@ -21,20 +21,21 @@ Book::~Book() {
 }
 
 BOOK_ERROR_ENUM Book::addNewClient(string name,string addressIp, string port) {
-    Client client = Client(name); // Creation de l'objet Client a partir de son nom
+    Client *client = new Client(name); // Creation de l'objet Client a partir de son nom
 
-    SOCK_ERROR_ENUM retour = client.addNetworkHints(addressIp,port);
+    //SOCK_ERROR_ENUM retour = client->addNetworkHints(addressIp,port);
 
-    if (retour != NETWORK_HINTS_OK)
-        return CLIENT_ADD_NOK;
+    //if (retour != NETWORK_HINTS_OK)
+    //    return CLIENT_ADD_NOK;
 
-    this->rooms.at(0).addClient(&client);
-    this->clients.push_back(client);
+    this->rooms.at(0).addClient(client);
+    this->clients.push_back(*client);
+
     return CLIENT_ADD_OK;
 }
 
 BOOK_ERROR_ENUM Book::addNewClient(string name,string addressIp, string port, vector<string> roomList) {
-    Client client = Client(name); // Creation de l'objet Client a partir de son nom
+    /*Client client = Client(name); // Creation de l'objet Client a partir de son nom
     int test = -1;
 
     for (vector<string>::iterator i = roomList.begin(); i != roomList.end(); ++i)
@@ -72,6 +73,7 @@ BOOK_ERROR_ENUM Book::addNewClient(string name,string addressIp, string port, ve
     }
     else
         this->clients.push_back(client);
+        */
 
     return CLIENT_ADD_OK;
 }
@@ -84,7 +86,7 @@ int Book::removeClient(string name) {
     {
         if(it->getName() == name)
         {
-            cout << "Client trouvé !!!" << endl;
+            cout << "Book::removeClient() -> Client trouvé !" << endl;
             vector<Room*> roomList = this->getClientRooms(name);
             vector<Room*>::iterator it2;
             // supprimer le client de chaque room dans lequel il est
@@ -93,7 +95,7 @@ int Book::removeClient(string name) {
                 (*it2)->delClient(client);
             }
             this->clients.erase(it);
-            cout << "Client supprimé !!!" << endl;
+            cout << "Book::removeClient() -> Client supprimé !!!" << endl;
             break;
         }
     }
@@ -138,20 +140,6 @@ Client* Book::findClient(string name) {
 
     return NULL;
 }
-/*
-vector<Client*>::iterator Book::findClient(string name) {
-		vector<Client*>::iterator it;
-		for(it = this->clients.begin(); it != this->clients.end(); ++it)
-		{
-			if((*it)->getName() == name)
-			{
-				cout << "Book::findClient() -> Client trouvé." << endl;
-				return it;
-			}
-		}
-
-		return NULL;
-}*/
 
 Room* Book::findRoom(string name) {
     vector<Room>::iterator it;
@@ -194,14 +182,6 @@ int Book::addRoom(string name) {
     return 0;
 }
 
-int Book::addNetworkHints(string nameClient, string ipAddress, string port) {
-    Client *client = this->findClient(nameClient);
-
-    client->addNetworkHints(ipAddress, port);
-
-    return 0;
-}
-
 int Book::nbClientRooms(string clientName)
 {
     vector<Room*> roomList = this->getClientRooms(clientName);
@@ -212,20 +192,41 @@ int Book::nbClientRooms(string clientName)
 }
 
 vector<Room*> Book::getClientRooms(string clientName) {
-    vector<Room*> vector_roomList = vector<Room*>();
+    vector<Room*> vector_roomList;
+    //cout << "test1" << endl;
 
     vector<Room>::iterator it;
+    //cout << "test1" << endl;
     for(it = this->rooms.begin(); it != this->rooms.end(); ++it)
     {
-        vector<Client*>::iterator it2;
+        //cout << "test2" << endl;
+        //vector<Client*>::iterator it2;
+        //cout << "test2" << endl;
+        /*
         for(it2 = it->getClients().begin(); it2 != it->getClients().end(); ++it2)
         {
+            cout << "test3" << endl;
+            cout << "Nombre de clients dans la room " << it->getName() << " : " << it->getClients().size() << endl;
+            Client *client = *it2;
+            cout << "nom du client" << client->getName() << endl;
             if ((*it2)->getName() == clientName)
             {
                 vector_roomList.push_back(&(*it));
                 break;
             }
         }
+        */
+
+        for(int i=0; i<it->getClients().size(); i++)
+        {
+            if (it->getClients().at(i)->getName() == clientName)
+            {
+                Room *room = &(*it);
+                vector_roomList.push_back(room);
+                break;
+            }
+        }
+
     }
 
     return vector_roomList;

@@ -9,8 +9,16 @@
 #ifndef CLIENT_HPP
 #define	CLIENT_HPP
 
+#include <sys/socket.h>
+#include <arpa/inet.h>
+#include <sys/types.h>
+#include <netdb.h>
+#include <netinet/in.h>
+
 #include <string>
 #include "../../Server/src/ErrorCodes.hpp"
+
+typedef sockaddr SOCKADDR;
 
 class Socket;
 
