@@ -26,9 +26,8 @@ int NetworkUDP::receiveDatagrams(SOCKET sock, char *data, size_t maxLen, SOCKADD
         host = gethostbyname(hostname);
 
         std::string ss(inet_ntoa(*(struct in_addr*)host->h_addr));
-        cout << ss << "\n" << endl;
 
-        return 0;
+        return ss;
     }
 
     string NetworkUDP::getIp_interface(string interface) {
