@@ -17,7 +17,7 @@
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
-#include <QtWidgets/QListView>
+#include <QtWidgets/QListWidget>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
@@ -36,19 +36,22 @@ class Ui_MainWindow
 public:
     QAction *action_Connexion_au_serveur;
     QAction *actionErger;
+    QAction *action_Lancer_le_KeepAlive;
+    QAction *action_Cr_er_un_nouveau_salon;
     QWidget *centralWidget;
     QGridLayout *gridLayout;
-    QPushButton *button_keep_alive;
+    QLabel *label_pseudo;
+    QLabel *label;
+    QLineEdit *lineEdit;
+    QListWidget *listWidget;
+    QPushButton *pushButton;
     QTabWidget *QTabWidget_onglets;
     QWidget *QTabWidget_GlobalRoom;
     QVBoxLayout *verticalLayout_2;
     QTextEdit *textEdit;
-    QLabel *label_pseudo;
-    QLineEdit *lineEdit;
-    QPushButton *button_connect;
-    QListView *listView;
     QMenuBar *menuBar;
     QMenu *menu_File;
+    QMenu *menu_Salons;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
 
@@ -56,25 +59,68 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(782, 661);
+        MainWindow->resize(763, 639);
         action_Connexion_au_serveur = new QAction(MainWindow);
         action_Connexion_au_serveur->setObjectName(QStringLiteral("action_Connexion_au_serveur"));
         actionErger = new QAction(MainWindow);
         actionErger->setObjectName(QStringLiteral("actionErger"));
+        action_Lancer_le_KeepAlive = new QAction(MainWindow);
+        action_Lancer_le_KeepAlive->setObjectName(QStringLiteral("action_Lancer_le_KeepAlive"));
+        action_Cr_er_un_nouveau_salon = new QAction(MainWindow);
+        action_Cr_er_un_nouveau_salon->setObjectName(QStringLiteral("action_Cr_er_un_nouveau_salon"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         gridLayout = new QGridLayout(centralWidget);
         gridLayout->setSpacing(6);
         gridLayout->setContentsMargins(11, 11, 11, 11);
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
-        button_keep_alive = new QPushButton(centralWidget);
-        button_keep_alive->setObjectName(QStringLiteral("button_keep_alive"));
+        label_pseudo = new QLabel(centralWidget);
+        label_pseudo->setObjectName(QStringLiteral("label_pseudo"));
 
-        gridLayout->addWidget(button_keep_alive, 3, 1, 1, 1);
+        gridLayout->addWidget(label_pseudo, 2, 0, 1, 1);
+
+        label = new QLabel(centralWidget);
+        label->setObjectName(QStringLiteral("label"));
+        QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Maximum);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(label->sizePolicy().hasHeightForWidth());
+        label->setSizePolicy(sizePolicy);
+        label->setFrameShape(QFrame::StyledPanel);
+        label->setAlignment(Qt::AlignCenter);
+
+        gridLayout->addWidget(label, 0, 4, 1, 1);
+
+        lineEdit = new QLineEdit(centralWidget);
+        lineEdit->setObjectName(QStringLiteral("lineEdit"));
+        lineEdit->setMaxLength(3000);
+        lineEdit->setFrame(true);
+
+        gridLayout->addWidget(lineEdit, 2, 1, 1, 1);
+
+        listWidget = new QListWidget(centralWidget);
+        listWidget->setObjectName(QStringLiteral("listWidget"));
+        QSizePolicy sizePolicy1(QSizePolicy::Fixed, QSizePolicy::Expanding);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(listWidget->sizePolicy().hasHeightForWidth());
+        listWidget->setSizePolicy(sizePolicy1);
+        listWidget->setMaximumSize(QSize(160, 16777215));
+
+        gridLayout->addWidget(listWidget, 1, 4, 2, 1);
+
+        pushButton = new QPushButton(centralWidget);
+        pushButton->setObjectName(QStringLiteral("pushButton"));
+        pushButton->setMaximumSize(QSize(40, 25));
+        pushButton->setAutoDefault(true);
+        pushButton->setDefault(true);
+        pushButton->setFlat(true);
+
+        gridLayout->addWidget(pushButton, 2, 2, 1, 1);
 
         QTabWidget_onglets = new QTabWidget(centralWidget);
         QTabWidget_onglets->setObjectName(QStringLiteral("QTabWidget_onglets"));
-        QTabWidget_onglets->setTabPosition(QTabWidget::South);
+        QTabWidget_onglets->setTabPosition(QTabWidget::North);
         QTabWidget_onglets->setTabShape(QTabWidget::Rounded);
         QTabWidget_GlobalRoom = new QWidget();
         QTabWidget_GlobalRoom->setObjectName(QStringLiteral("QTabWidget_GlobalRoom"));
@@ -84,44 +130,22 @@ public:
         verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
         textEdit = new QTextEdit(QTabWidget_GlobalRoom);
         textEdit->setObjectName(QStringLiteral("textEdit"));
+        textEdit->setTextInteractionFlags(Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse);
 
         verticalLayout_2->addWidget(textEdit);
 
         QTabWidget_onglets->addTab(QTabWidget_GlobalRoom, QString());
 
-        gridLayout->addWidget(QTabWidget_onglets, 0, 0, 1, 2);
-
-        label_pseudo = new QLabel(centralWidget);
-        label_pseudo->setObjectName(QStringLiteral("label_pseudo"));
-
-        gridLayout->addWidget(label_pseudo, 1, 0, 1, 1);
-
-        lineEdit = new QLineEdit(centralWidget);
-        lineEdit->setObjectName(QStringLiteral("lineEdit"));
-
-        gridLayout->addWidget(lineEdit, 1, 1, 1, 1);
-
-        button_connect = new QPushButton(centralWidget);
-        button_connect->setObjectName(QStringLiteral("button_connect"));
-
-        gridLayout->addWidget(button_connect, 2, 1, 1, 1);
-
-        listView = new QListView(centralWidget);
-        listView->setObjectName(QStringLiteral("listView"));
-        QSizePolicy sizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
-        sizePolicy.setHorizontalStretch(0);
-        sizePolicy.setVerticalStretch(0);
-        sizePolicy.setHeightForWidth(listView->sizePolicy().hasHeightForWidth());
-        listView->setSizePolicy(sizePolicy);
-
-        gridLayout->addWidget(listView, 0, 3, 4, 1);
+        gridLayout->addWidget(QTabWidget_onglets, 0, 0, 2, 3);
 
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 782, 25));
+        menuBar->setGeometry(QRect(0, 0, 763, 25));
         menu_File = new QMenu(menuBar);
         menu_File->setObjectName(QStringLiteral("menu_File"));
+        menu_Salons = new QMenu(menuBar);
+        menu_Salons->setObjectName(QStringLiteral("menu_Salons"));
         MainWindow->setMenuBar(menuBar);
         mainToolBar = new QToolBar(MainWindow);
         mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
@@ -131,7 +155,11 @@ public:
         MainWindow->setStatusBar(statusBar);
 
         menuBar->addAction(menu_File->menuAction());
+        menuBar->addAction(menu_Salons->menuAction());
         menu_File->addAction(action_Connexion_au_serveur);
+        menu_File->addSeparator();
+        menu_File->addAction(action_Lancer_le_KeepAlive);
+        menu_Salons->addAction(action_Cr_er_un_nouveau_salon);
 
         retranslateUi(MainWindow);
 
@@ -146,11 +174,25 @@ public:
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", 0));
         action_Connexion_au_serveur->setText(QApplication::translate("MainWindow", "&Connexion au serveur", 0));
         actionErger->setText(QApplication::translate("MainWindow", "erger", 0));
-        button_keep_alive->setText(QApplication::translate("MainWindow", "Lancer KeepAlive", 0));
-        QTabWidget_onglets->setTabText(QTabWidget_onglets->indexOf(QTabWidget_GlobalRoom), QApplication::translate("MainWindow", "Global Room", 0));
+        action_Lancer_le_KeepAlive->setText(QApplication::translate("MainWindow", "&Lancer le KeepAlive", 0));
+        action_Cr_er_un_nouveau_salon->setText(QApplication::translate("MainWindow", "Cr\303\251er un &nouveau salon", 0));
         label_pseudo->setText(QApplication::translate("MainWindow", "Pseudo", 0));
-        button_connect->setText(QApplication::translate("MainWindow", "Connect", 0));
+        label->setText(QApplication::translate("MainWindow", "Liste des clients", 0));
+        pushButton->setText(QApplication::translate("MainWindow", "send", 0));
+        textEdit->setHtml(QApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'Sans'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">jeremy - salut</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">jeremy - je m'ennuie ici</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Arno - ah oui ?</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">jeremy - oui s'trop nul</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent"
+                        ":0; text-indent:0px;\">arno - en fait t'as pas d'inspiration quoi</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">jeremy - ouais... :/</p></body></html>", 0));
+        QTabWidget_onglets->setTabText(QTabWidget_onglets->indexOf(QTabWidget_GlobalRoom), QApplication::translate("MainWindow", "Global Room", 0));
         menu_File->setTitle(QApplication::translate("MainWindow", "&Menu", 0));
+        menu_Salons->setTitle(QApplication::translate("MainWindow", "&Salons", 0));
     } // retranslateUi
 
 };

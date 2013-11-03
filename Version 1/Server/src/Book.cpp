@@ -189,6 +189,7 @@ vector<Room> Book::getRooms() {
 int Book::addRoom(string name) {
     Room room = Room(name);
     this->rooms.push_back(room);
+    cout << "Book::addRoom() -> le salon " << name << " a été ajouté à l'annuaire" << endl;
 
     return 0;
 }

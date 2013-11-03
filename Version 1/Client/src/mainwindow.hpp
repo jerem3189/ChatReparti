@@ -18,8 +18,14 @@ public:
     ~MainWindow();
     
 private slots:
-    void on_button_keep_alive_clicked();
-    void on_button_connect_clicked();
+
+    void on_action_Connexion_au_serveur_triggered();
+
+    void on_action_Lancer_le_KeepAlive_triggered();
+
+    void on_pushButton_clicked();
+
+    void on_action_Cr_er_un_nouveau_salon_triggered();
 
 private:
     Ui::MainWindow *ui;

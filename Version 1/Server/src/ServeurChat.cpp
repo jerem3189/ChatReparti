@@ -116,7 +116,7 @@ int main(int argc, char** argv) {
             break;
 
         case MSG_ROOM_CREATE:
-            botin.addRoom(champ2);
+            botin.addRoom(champ3);
             break;
 
         case MSG_BOOK_LIST_RQST:
