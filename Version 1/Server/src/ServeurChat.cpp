@@ -95,7 +95,6 @@ int main(int argc, char** argv) {
             cout << botin.findClient(champ2)->getLastalive() << endl;
             break;
         case MSG_ROOM_JOIN:
-            botin.addRoom(champ3);
             botin.addClientToRoom(champ2, champ3);
             cout << "Debug :" << champ2 << " à rejoint le salon " << champ3 << endl;
             send = rfc.createMsgBookListResp(champ2, champ3, "1338", botin.getClientRooms(champ2).size(), botin.getClientRooms(champ2));

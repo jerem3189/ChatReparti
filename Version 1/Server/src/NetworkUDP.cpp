@@ -17,22 +17,12 @@ int NetworkUDP::receiveDatagrams(SOCKET sock, char *data, size_t maxLen, SOCKADD
     return recvfrom(sock, data, maxLen, 0, address, &addr_size);
 }
 
-<<<<<<< HEAD
-int NetworkUDP::getIp_static() {
-    =======
     string NetworkUDP::getIp_static() {
-
-        char hostname[128];
-        struct hostent *host;
-        >>>>>>> e1cf4ab071c09a28fc46c394490a9782c53f58b8
 
         char hostname[128];
         struct hostent *host;
 
         gethostname(hostname, sizeof hostname);
-
-
-        <<<<<<< HEAD
         host = gethostbyname(hostname);
 
         std::string ss(inet_ntoa(*(struct in_addr*)host->h_addr));
@@ -41,19 +31,9 @@ int NetworkUDP::getIp_static() {
         return 0;
     }
 
-    int NetworkUDP::getIp_interface() {
-
-        struct ifaddrs * ifAddrStruct=NULL;
-        =======
-            std::string ss(inet_ntoa(*(struct in_addr*)host->h_addr));
-
-        return ss;
-    }
-
     string NetworkUDP::getIp_interface(string interface) {
 
         struct ifaddrs * ifAddrStruct=NULL;
-        >>>>>>> e1cf4ab071c09a28fc46c394490a9782c53f58b8
         struct ifaddrs * ifa=NULL;
         void * tmpAddrPtr=NULL;
         std::string etc = interface;
@@ -68,12 +48,8 @@ int NetworkUDP::getIp_static() {
                 char addressBuffer[INET_ADDRSTRLEN];
                 inet_ntop(AF_INET, tmpAddrPtr, addressBuffer, INET_ADDRSTRLEN);
                 std::string ss(addressBuffer);
-                <<<<<<< HEAD
                 cout << ss << "\n" << endl;
-
-                =======
                     ss2 = ss;
-                >>>>>>> e1cf4ab071c09a28fc46c394490a9782c53f58b8
             }
         }
         if (ifAddrStruct!=NULL) freeifaddrs(ifAddrStruct);

@@ -27,6 +27,8 @@ private slots:
 
     void on_action_Cr_er_un_nouveau_salon_triggered();
 
+    void on_action_Joindre_un_salon_triggered();
+
 private:
     Ui::MainWindow *ui;
     Socket *socket;

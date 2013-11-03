@@ -38,6 +38,7 @@ public:
     QAction *actionErger;
     QAction *action_Lancer_le_KeepAlive;
     QAction *action_Cr_er_un_nouveau_salon;
+    QAction *action_Joindre_un_salon;
     QWidget *centralWidget;
     QGridLayout *gridLayout;
     QLabel *label_pseudo;
@@ -68,6 +69,8 @@ public:
         action_Lancer_le_KeepAlive->setObjectName(QStringLiteral("action_Lancer_le_KeepAlive"));
         action_Cr_er_un_nouveau_salon = new QAction(MainWindow);
         action_Cr_er_un_nouveau_salon->setObjectName(QStringLiteral("action_Cr_er_un_nouveau_salon"));
+        action_Joindre_un_salon = new QAction(MainWindow);
+        action_Joindre_un_salon->setObjectName(QStringLiteral("action_Joindre_un_salon"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         gridLayout = new QGridLayout(centralWidget);
@@ -160,6 +163,7 @@ public:
         menu_File->addSeparator();
         menu_File->addAction(action_Lancer_le_KeepAlive);
         menu_Salons->addAction(action_Cr_er_un_nouveau_salon);
+        menu_Salons->addAction(action_Joindre_un_salon);
 
         retranslateUi(MainWindow);
 
@@ -176,6 +180,7 @@ public:
         actionErger->setText(QApplication::translate("MainWindow", "erger", 0));
         action_Lancer_le_KeepAlive->setText(QApplication::translate("MainWindow", "&Lancer le KeepAlive", 0));
         action_Cr_er_un_nouveau_salon->setText(QApplication::translate("MainWindow", "Cr\303\251er un &nouveau salon", 0));
+        action_Joindre_un_salon->setText(QApplication::translate("MainWindow", "&Joindre un salon", 0));
         label_pseudo->setText(QApplication::translate("MainWindow", "Pseudo", 0));
         label->setText(QApplication::translate("MainWindow", "Liste des clients", 0));
         pushButton->setText(QApplication::translate("MainWindow", "send", 0));

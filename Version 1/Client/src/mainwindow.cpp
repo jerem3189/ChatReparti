@@ -61,3 +61,16 @@ void MainWindow::on_action_Cr_er_un_nouveau_salon_triggered()
     string msg = rfc.createMsgRoomCreate(ui->label_pseudo->text().toStdString(),roomName.toStdString());
     udp.sendDatagrams(this->socket->getSocket(),(char*)msg.c_str(), strlen(msg.c_str()),socket->getSockaddr());
 }
+
+void MainWindow::on_action_Joindre_un_salon_triggered()
+{
+    RFC1664 rfc;
+    NetworkUDP udp;
+
+    QString roomName = QInputDialog::getText(this, "Création d'un salon", "Veuillez saisir le nom du salon");
+    if ((roomName == "Veuillez saisir le nom du salon") || (roomName == ""))
+        return;
+
+    string msg = rfc.createMsgRoomJoin(ui->label_pseudo->text().toStdString(), roomName.toStdString());
+    udp.sendDatagrams(this->socket->getSocket(),(char*)msg.c_str(), strlen(msg.c_str()),socket->getSockaddr());
+}

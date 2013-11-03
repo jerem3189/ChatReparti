@@ -152,6 +152,7 @@ p, li { white-space: pre-wrap; }
      <string>&amp;Salons</string>
     </property>
     <addaction name="action_Cr_er_un_nouveau_salon"/>
+    <addaction name="action_Joindre_un_salon"/>
    </widget>
    <addaction name="menu_File"/>
    <addaction name="menu_Salons"/>
@@ -183,6 +184,11 @@ p, li { white-space: pre-wrap; }
   <action name="action_Cr_er_un_nouveau_salon">
    <property name="text">
     <string>Créer un &amp;nouveau salon</string>
+   </property>
+  </action>
+  <action name="action_Joindre_un_salon">
+   <property name="text">
+    <string>&amp;Joindre un salon</string>
    </property>
   </action>
  </widget>
