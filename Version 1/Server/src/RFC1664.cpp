@@ -116,7 +116,7 @@ string RFC1664::createMsgKeepAlive(string clientName) {
 }
 
 string RFC1664::createMsgAck(string message) {
-    string retour = "ACK§" + "§" + message + "§";
+    string retour = "ACK§" + message + "§";
     return retour;
 }
 

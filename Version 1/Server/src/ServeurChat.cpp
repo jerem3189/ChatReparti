@@ -64,13 +64,13 @@ int main(int argc, char** argv) {
             cout << "Main() -> Debug :" << champ2 << " s'est connecté au serveur" << endl;
 
             if(botin.addNewClient(champ2, champ3, "1338")==CLIENT_ADD_OK) {
-<<<<<<< HEAD
+//<<<<<<< HEAD
                 cout << "Debug :" << champ2 << " a été ajouté à l'annuaire" << endl;
                 cout << "size : " << botin.getClientRooms(champ2).size() << endl;
                 ack = rfc.createMsgAck("Connexion réussie");
                 send = rfc.createMsgBookListResp(champ2, champ3, "1338", botin.getClientRooms(champ2).size(), botin.getClientRooms(champ2));
-=======
->>>>>>> 300dc7178895e8874756a334fbfc6e32d0bc6a83
+//=======
+//>>>>>>> 300dc7178895e8874756a334fbfc6e32d0bc6a83
 
                 cout << "Main() -> Debug :" << champ2 << " a été ajouté à l'annuaire" << endl;
 
@@ -81,9 +81,11 @@ int main(int argc, char** argv) {
                 send = rfc.createMsgBookListResp(champ2, champ3, "1338", roomList.size(), roomList);
                 cout << "Main() -> Message a renvoyer : [" << send << "]" << endl;
 
-                //for (it = botin.getClients().begin(); it != botin.getClients().end(); ++it) {
-                  //  cout << udp.sendDatagrams(it->getSocket()->getSocket(), (char*) send.c_str(), sizeof send.c_str(), it->getSocket()->getSockaddr(), it->getSocket()->getAddrinfo());
-                //}
+                for (it = botin.getClients().begin(); it != botin.getClients().end(); ++it) {
+                   cout << udp.sendDatagrams(it->getSocket()->getSocket(), (char*) send.c_str(), sizeof send.c_str(), it->getSocket()->getSockaddr(), it->getSocket()->getAddrinfo());
+                
+		  cout << udp.sendDatagrams(botin.findClient(champ2)->getSocket()->getSocket(), (char*) ack.c_str(), sizeof ack.c_str(), botin.findClient(champ2)->getSocket()->getSockaddr(), botin.findClient(champ2)->getSocket()->getAddrinfo());
+		}
             } else
                 cout << "Main() -> Debug :" << champ2 << " n'a pas pu etre ajouté à l'annuaire" << endl;
 
@@ -107,13 +109,13 @@ int main(int argc, char** argv) {
             break;
         case MSG_ROOM_JOIN:
             botin.addClientToRoom(champ2, champ3);
-<<<<<<< HEAD
+//<<<<<<< HEAD
             cout << "Debug :" << champ2 << " à rejoint le salon " << champ3 << endl;
             ack = rfc.createMsgAck("Room joined");
             send = rfc.createMsgBookListResp(champ2, champ3, "1338", botin.getClientRooms(champ2).size(), botin.getClientRooms(champ2));
-=======
+//=======
             cout << "Main() -> Debug :" << champ2 << " à rejoint le salon " << champ3 << endl;
->>>>>>> 300dc7178895e8874756a334fbfc6e32d0bc6a83
+//>>>>>>> 300dc7178895e8874756a334fbfc6e32d0bc6a83
 
             roomList = botin.getClientRooms(champ2);
 
@@ -137,6 +139,7 @@ int main(int argc, char** argv) {
         case MSG_ROOM_CREATE:
             botin.addRoom(champ3);
             ack = rfc.createMsgAck("Room créée");
+	    cout << udp.sendDatagrams(botin.findClient(champ2)->getSocket()->getSocket(), (char*) ack.c_str(), sizeof ack.c_str(), botin.findClient(champ2)->getSocket()->getSockaddr(), botin.findClient(champ2)->getSocket()->getAddrinfo());
             break;
 
         case MSG_BOOK_LIST_RQST:
