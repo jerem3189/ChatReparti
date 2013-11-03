@@ -52,6 +52,10 @@ MessagesTypesRFC1664 RFC1664::type(string msg) {
     if (found != string::npos)
         return MSG_LIVE;
 
+    found = msg.find("ACK§", 0);
+    if (found != string::npos)
+        return MSG_ACK;
+
     return ERR_BAD_MESSAGE;
 
 }
@@ -113,6 +117,11 @@ string RFC1664::createMsgCom(string senderName, string receiverName, string mess
 
 string RFC1664::createMsgKeepAlive(string clientName) {
     string retour = "KEEP_ALIVE§" + clientName+"§";
+    return retour;
+}
+
+string RFC1664::createMsgAck(string message) {
+    string retour = "ACK§" + "§" + message + "§";
     return retour;
 }
 

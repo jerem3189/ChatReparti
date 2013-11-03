@@ -56,6 +56,7 @@ int main(int argc, char** argv) {
         //string champ5(rfc.RecupererChampMessage(message,5,"§"));
 
         string send;
+        string ack;
         vector<Client>::iterator it;
 
 
@@ -67,6 +68,7 @@ int main(int argc, char** argv) {
             if(botin.addNewClient(champ2, champ3, "1338")==CLIENT_ADD_OK) {
                 cout << "Debug :" << champ2 << " a été ajouté à l'annuaire" << endl;
                 cout << "size : " << botin.getClientRooms(champ2).size() << endl;
+                ack = rfc.createMsgAck("Connexion réussie");
                 send = rfc.createMsgBookListResp(champ2, champ3, "1338", botin.getClientRooms(champ2).size(), botin.getClientRooms(champ2));
 
                 for (it = botin.getClients().begin(); it != botin.getClients().end(); ++it) {
@@ -97,6 +99,7 @@ int main(int argc, char** argv) {
         case MSG_ROOM_JOIN:
             botin.addClientToRoom(champ2, champ3);
             cout << "Debug :" << champ2 << " à rejoint le salon " << champ3 << endl;
+            ack = rfc.createMsgAck("Room joined");
             send = rfc.createMsgBookListResp(champ2, champ3, "1338", botin.getClientRooms(champ2).size(), botin.getClientRooms(champ2));
 
             for (it = botin.getClients().begin(); it != botin.getClients().end(); ++it) {
@@ -116,6 +119,7 @@ int main(int argc, char** argv) {
 
         case MSG_ROOM_CREATE:
             botin.addRoom(champ3);
+            ack = rfc.createMsgAck("Room créée");
             break;
 
         case MSG_BOOK_LIST_RQST:
