@@ -16,6 +16,7 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     Socket *getSocket();
+    Ui::MainWindow *getUi() { return this->ui; }
     ~MainWindow();
     
 private slots:

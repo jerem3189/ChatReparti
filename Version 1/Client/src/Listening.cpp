@@ -13,6 +13,7 @@
 #include "../../Server/src/NetworkUDP.hpp"
 #include "../../Server/src/RFC1664.hpp"
 #include "mainwindow.hpp"
+#include <ui_mainwindow.h>
 
 Listening::Listening(MainWindow *mainWindow)
 {
@@ -23,6 +24,8 @@ Listening::Listening(MainWindow *mainWindow)
     cout << listenSocket->binding() << endl;
 
     //this->listenSocket = mainWindow->getSocket();
+
+    mainWindow->getUi()->textEdit->insertPlainText("toto");
 
     this->udp = new NetworkUDP();
     this->rfc = new RFC1664();
