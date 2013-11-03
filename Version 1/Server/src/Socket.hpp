@@ -38,6 +38,7 @@ public:
 
     SOCKET getSocket();
     SOCKADDR *getSockaddr();
+    ADDRINFO *getAddrinfo();
 
     SOCK_ERROR_ENUM create(string adressIp, string port);
     SOCK_ERROR_ENUM binding();

@@ -35,7 +35,7 @@ void MainWindow::on_action_Connexion_au_serveur_triggered()
     ui->label_pseudo->setText(pseudo);
 
     string msgcon = rfc.createMsgCon(ui->label_pseudo->text().toStdString(), NetworkUDP::getIp_static());
-    udp.sendDatagrams(this->socket->getSocket(),(char*)msgcon.c_str(), strlen(msgcon.c_str()),socket->getSockaddr());
+    udp.sendDatagrams(this->socket->getSocket(),(char*)msgcon.c_str(), strlen(msgcon.c_str()),socket->getSockaddr(), this->socket->getAddrinfo());
 }
 
 void MainWindow::on_action_Lancer_le_KeepAlive_triggered()
@@ -59,7 +59,7 @@ void MainWindow::on_action_Cr_er_un_nouveau_salon_triggered()
         return;
 
     string msg = rfc.createMsgRoomCreate(ui->label_pseudo->text().toStdString(),roomName.toStdString());
-    udp.sendDatagrams(this->socket->getSocket(),(char*)msg.c_str(), strlen(msg.c_str()),socket->getSockaddr());
+    udp.sendDatagrams(this->socket->getSocket(),(char*)msg.c_str(), strlen(msg.c_str()),socket->getSockaddr(), this->socket->getAddrinfo());
 }
 
 void MainWindow::on_action_Joindre_un_salon_triggered()
@@ -72,5 +72,5 @@ void MainWindow::on_action_Joindre_un_salon_triggered()
         return;
 
     string msg = rfc.createMsgRoomJoin(ui->label_pseudo->text().toStdString(), roomName.toStdString());
-    udp.sendDatagrams(this->socket->getSocket(),(char*)msg.c_str(), strlen(msg.c_str()),socket->getSockaddr());
+    udp.sendDatagrams(this->socket->getSocket(),(char*)msg.c_str(), strlen(msg.c_str()),socket->getSockaddr(), this->socket->getAddrinfo());
 }

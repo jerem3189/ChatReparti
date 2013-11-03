@@ -10,8 +10,9 @@ Socket::Socket() {
     this->initialized = false;
 
     memset(&this->hints, 0, sizeof this->hints);
-    this->hints.ai_family = AF_UNSPEC; /* IPV4 ou V6 */
+    this->hints.ai_family = AF_INET; /* IPV4 ou V6 */
     this->hints.ai_socktype = SOCK_DGRAM; /* Mode Datagramme */
+    //this->hints.ai_flags = AI_PASSIVE;
 }
 
 Socket::~Socket() {
@@ -29,6 +30,7 @@ SOCK_ERROR_ENUM Socket::create(string addressIp, string port) {
     if (ret != 0)
     {
         cout << "Socket::create() -> Erreur lors de la récupération des informations du serveur" << endl;
+        cout << "retour de getaddrinfo" << gai_strerror(ret) << endl;
         return ERR_SOCK_HINTS;
     }
 
@@ -70,6 +72,11 @@ void Socket::terminate() {
 
 SOCKADDR *Socket::getSockaddr() {
     return this->server_info->ai_addr;
+}
+
+ADDRINFO *Socket::getAddrinfo()
+{
+    return this->server_info;
 }
 
 SOCKET Socket::getSocket() {

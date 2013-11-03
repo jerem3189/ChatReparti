@@ -78,19 +78,14 @@ string RFC1664::createMsgBookListRqst(string clientName) {
 
 string RFC1664::createMsgBookListResp(string clientName, string ip, string port, int roomNb, vector<Room*> rooms) {
     string sRoomNb = to_string(roomNb);
-    cout << "prout" << endl;
     string retour = "BOOK_LIST_RESP§" + clientName + "§" + ip + "§" + port + "§" + sRoomNb+"§";
-    cout << "prout" << endl;
 
     vector<Room*>::iterator it;
-    cout << "prout" << endl;
     for (it = rooms.begin(); it != rooms.end(); ++it) {
-        cout << "prout1" << endl;
 
         retour += (*it)->getName();
         retour += "§";
     }
-    cout << "prout2" << endl;
 
     return retour;
 }

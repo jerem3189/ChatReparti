@@ -5,10 +5,11 @@
 
 #include "NetworkUDP.hpp"
 
-int NetworkUDP::sendDatagrams(SOCKET sock, char *data, size_t len, SOCKADDR *address) {
+int NetworkUDP::sendDatagrams(SOCKET sock, char *data, size_t len, SOCKADDR *address, ADDRINFO *infos) {
     socklen_t addr_size = sizeof *address;
 
-    return sendto(sock, data, len, 0, address, addr_size);
+    //return sendto(sock, data, len, 0, address, addr_size);
+    return sendto(sock, data, len, 0, address, infos->ai_addrlen);
 }
 
 int NetworkUDP::receiveDatagrams(SOCKET sock, char *data, size_t maxLen, SOCKADDR *address) {
