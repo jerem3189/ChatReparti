@@ -24,7 +24,7 @@ using namespace std;
 
 class NetworkUDP {
 public:
-    int sendDatagrams(SOCKET sock, char *data, size_t len, SOCKADDR *address);
+    int sendDatagrams(SOCKET sock, char *data, size_t len, SOCKADDR *address, ADDRINFO *infos);
     int receiveDatagrams(SOCKET sock, char *data, size_t maxLen, SOCKADDR *address);
     static string getIp_static();
     static string getIp_interface(string interface);

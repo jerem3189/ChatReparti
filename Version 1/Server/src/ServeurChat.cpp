@@ -31,7 +31,7 @@ int main(int argc, char** argv) {
     RFC1664 rfc;
     Book botin;
 
-    listenSocket.create("0.0.0.0", DEFAULT_PORT);
+    listenSocket.create("NULL", DEFAULT_PORT);
     listenSocket.binding();
 
     while (1) {
@@ -72,7 +72,7 @@ int main(int argc, char** argv) {
                 send = rfc.createMsgBookListResp(champ2, champ3, "1338", botin.getClientRooms(champ2).size(), botin.getClientRooms(champ2));
 
                 for (it = botin.getClients().begin(); it != botin.getClients().end(); ++it) {
-                    cout << udp.sendDatagrams(it->getSocket()->getSocket(), (char*) send.c_str(), sizeof send.c_str(), it->getSocket()->getSockaddr());
+                    cout << udp.sendDatagrams(it->getSocket()->getSocket(), (char*) send.c_str(), sizeof send.c_str(), it->getSocket()->getSockaddr(), it->getSocket()->getAddrinfo());
                 }
             } else
                 cout << "Debug :" << champ2 << " n'a pas pu etre ajouté à l'annuaire" << endl;
@@ -87,13 +87,12 @@ int main(int argc, char** argv) {
         case MSG_COM:
             cout << "Debug :" << champ2 << " à envoyé un message à redispatcher" << endl;
             for (it = botin.getClients().begin(); it != botin.getClients().end(); ++it) {
-                cout << udp.sendDatagrams(it->getSocket()->getSocket(), message, sizeof message, it->getSocket()->getSockaddr());
+                cout << udp.sendDatagrams(it->getSocket()->getSocket(), message, sizeof message, it->getSocket()->getSockaddr(), it->getSocket()->getAddrinfo());
             }
             break;
         case MSG_LIVE:
             cout << "Debug :" << champ2 << " signale qu'il est encore actif" << endl;
             botin.findClient(champ2)->setLastalive(time(0));
-
             cout << botin.findClient(champ2)->getLastalive() << endl;
             break;
         case MSG_ROOM_JOIN:
@@ -103,7 +102,7 @@ int main(int argc, char** argv) {
             send = rfc.createMsgBookListResp(champ2, champ3, "1338", botin.getClientRooms(champ2).size(), botin.getClientRooms(champ2));
 
             for (it = botin.getClients().begin(); it != botin.getClients().end(); ++it) {
-                cout << udp.sendDatagrams(it->getSocket()->getSocket(), (char*) send.c_str(), sizeof send.c_str(), it->getSocket()->getSockaddr());
+                cout << udp.sendDatagrams(it->getSocket()->getSocket(), (char*) send.c_str(), sizeof send.c_str(), it->getSocket()->getSockaddr(), it->getSocket()->getAddrinfo());
             }
             break;
 
@@ -113,7 +112,7 @@ int main(int argc, char** argv) {
             send = rfc.createMsgBookListResp(champ2, champ3, "1338", botin.getClientRooms(champ2).size(), botin.getClientRooms(champ2));
 
             for (it = botin.getClients().begin(); it != botin.getClients().end(); ++it) {
-                cout << udp.sendDatagrams(it->getSocket()->getSocket(), (char*) send.c_str(), sizeof send.c_str(), it->getSocket()->getSockaddr());
+                cout << udp.sendDatagrams(it->getSocket()->getSocket(), (char*) send.c_str(), sizeof send.c_str(), it->getSocket()->getSockaddr(), it->getSocket()->getAddrinfo());
             }
             break;
 
@@ -127,7 +126,7 @@ int main(int argc, char** argv) {
             send = rfc.createMsgBookListResp(champ2, champ3, "1338", botin.getClientRooms(champ2).size(), botin.getClientRooms(champ2));
 
 
-            cout << udp.sendDatagrams(botin.findClient(champ2)->getSocket()->getSocket(), (char*) send.c_str(), sizeof send.c_str(), botin.findClient(champ2)->getSocket()->getSockaddr());
+            cout << udp.sendDatagrams(botin.findClient(champ2)->getSocket()->getSocket(), (char*) send.c_str(), sizeof send.c_str(), botin.findClient(champ2)->getSocket()->getSockaddr(), botin.findClient(champ2)->getSocket()->getAddrinfo());
 
             break;
 

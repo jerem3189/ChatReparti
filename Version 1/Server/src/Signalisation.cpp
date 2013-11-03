@@ -27,7 +27,7 @@ int Signalisation::sendKeepAlive() {
 
     cout << "Signalisation::sendKeepAlive() -> message a envoyer : " << keepalive << endl;
 
-    udp.sendDatagrams(this->socket->getSocket(), (char*)keepalive.c_str(), strlen(keepalive.c_str()),this->socket->getSockaddr());
+    udp.sendDatagrams(this->socket->getSocket(), (char*)keepalive.c_str(), strlen(keepalive.c_str()),this->socket->getSockaddr(), this->socket->getAddrinfo());
 
     return 0;
 }

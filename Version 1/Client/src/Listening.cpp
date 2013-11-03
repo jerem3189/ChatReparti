@@ -18,7 +18,7 @@ Listening::Listening(QMainWindow *mainWindow)
     this->mainWindow = mainWindow;
     this->listenSocket = new Socket();
 
-    cout << listenSocket->create("0.0.0.0", DEFAULT_PORT) << endl;
+    cout << listenSocket->create("NULL", DEFAULT_PORT) << endl;
     cout << listenSocket->binding() << endl;
     this->udp = new NetworkUDP();
     this->rfc = new RFC1664();
