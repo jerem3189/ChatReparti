@@ -50,65 +50,83 @@ int main(int argc, char** argv) {
         string champ3(rfc.fieldFromMesg(testString, 3, '§'));
         string champ4(rfc.fieldFromMesg(testString, 4, '§'));
         string champ5(rfc.fieldFromMesg(testString, 5, '§'));
+
         cout << "Main() -> decoupage : \n" << champ1 << endl << champ2 << endl << champ3 << endl << champ4 << endl << champ5 << endl;
-
-
-        //string champ5(rfc.RecupererChampMessage(message,5,"§"));
 
         string send;
         string ack;
         vector<Client>::iterator it;
+        vector<Room*> roomList;
 
 
         switch (rfc.type(message)) {
         case MSG_CON:
-            cout << "Debug :" << champ2 << " s'est connecté au serveur" << endl;
-
+            cout << "Main() -> Debug :" << champ2 << " s'est connecté au serveur" << endl;
 
             if(botin.addNewClient(champ2, champ3, "1338")==CLIENT_ADD_OK) {
+<<<<<<< HEAD
                 cout << "Debug :" << champ2 << " a été ajouté à l'annuaire" << endl;
                 cout << "size : " << botin.getClientRooms(champ2).size() << endl;
                 ack = rfc.createMsgAck("Connexion réussie");
                 send = rfc.createMsgBookListResp(champ2, champ3, "1338", botin.getClientRooms(champ2).size(), botin.getClientRooms(champ2));
+=======
+>>>>>>> 300dc7178895e8874756a334fbfc6e32d0bc6a83
 
-                for (it = botin.getClients().begin(); it != botin.getClients().end(); ++it) {
-                    cout << udp.sendDatagrams(it->getSocket()->getSocket(), (char*) send.c_str(), sizeof send.c_str(), it->getSocket()->getSockaddr(), it->getSocket()->getAddrinfo());
-                }
+                cout << "Main() -> Debug :" << champ2 << " a été ajouté à l'annuaire" << endl;
+
+                roomList = botin.getClientRooms(champ2);
+
+                cout << "Main() -> le client est dans " << roomList.size() << " room " << endl;
+
+                send = rfc.createMsgBookListResp(champ2, champ3, "1338", roomList.size(), roomList);
+                cout << "Main() -> Message a renvoyer : [" << send << "]" << endl;
+
+                //for (it = botin.getClients().begin(); it != botin.getClients().end(); ++it) {
+                  //  cout << udp.sendDatagrams(it->getSocket()->getSocket(), (char*) send.c_str(), sizeof send.c_str(), it->getSocket()->getSockaddr(), it->getSocket()->getAddrinfo());
+                //}
             } else
-                cout << "Debug :" << champ2 << " n'a pas pu etre ajouté à l'annuaire" << endl;
+                cout << "Main() -> Debug :" << champ2 << " n'a pas pu etre ajouté à l'annuaire" << endl;
 
             break;
 
         case MSG_DECO:
-            cout << "Debug :" << champ2 << " s'est déconnecté du serveur" << endl;
+            cout << "Main() -> Debug :" << champ2 << " s'est déconnecté du serveur" << endl;
             botin.removeClient(champ2);
             break;
 
         case MSG_COM:
             cout << "Debug :" << champ2 << " à envoyé un message à redispatcher" << endl;
-            for (it = botin.getClients().begin(); it != botin.getClients().end(); ++it) {
-                cout << udp.sendDatagrams(it->getSocket()->getSocket(), message, sizeof message, it->getSocket()->getSockaddr(), it->getSocket()->getAddrinfo());
-            }
+            //for (it = botin.getClients().begin(); it != botin.getClients().end(); ++it) {
+            //    cout << udp.sendDatagrams(it->getSocket()->getSocket(), message, sizeof message, it->getSocket()->getSockaddr(), it->getSocket()->getAddrinfo());
+            //}
             break;
         case MSG_LIVE:
-            cout << "Debug :" << champ2 << " signale qu'il est encore actif" << endl;
+            cout << "Main() -> Debug :" << champ2 << " signale qu'il est encore actif" << endl;
             botin.findClient(champ2)->setLastalive(time(0));
             cout << botin.findClient(champ2)->getLastalive() << endl;
             break;
         case MSG_ROOM_JOIN:
             botin.addClientToRoom(champ2, champ3);
+<<<<<<< HEAD
             cout << "Debug :" << champ2 << " à rejoint le salon " << champ3 << endl;
             ack = rfc.createMsgAck("Room joined");
             send = rfc.createMsgBookListResp(champ2, champ3, "1338", botin.getClientRooms(champ2).size(), botin.getClientRooms(champ2));
+=======
+            cout << "Main() -> Debug :" << champ2 << " à rejoint le salon " << champ3 << endl;
+>>>>>>> 300dc7178895e8874756a334fbfc6e32d0bc6a83
 
-            for (it = botin.getClients().begin(); it != botin.getClients().end(); ++it) {
-                cout << udp.sendDatagrams(it->getSocket()->getSocket(), (char*) send.c_str(), sizeof send.c_str(), it->getSocket()->getSockaddr(), it->getSocket()->getAddrinfo());
-            }
+            roomList = botin.getClientRooms(champ2);
+
+            send = rfc.createMsgBookListResp(champ2, champ3, "1338", roomList.size(), roomList);
+
+            //for (it = botin.getClients().begin(); it != botin.getClients().end(); ++it) {
+            //    cout << udp.sendDatagrams(it->getSocket()->getSocket(), (char*) send.c_str(), sizeof send.c_str(), it->getSocket()->getSockaddr(), it->getSocket()->getAddrinfo());
+            //}
             break;
 
         case MSG_ROOM_QUIT:
             botin.removeClientFromRoom(champ2, champ3);
-            cout << "Debug :" << champ2 << " à quitté le salon " << champ3 << endl;
+            cout << "Main() -> Debug :" << champ2 << " à quitté le salon " << champ3 << endl;
             send = rfc.createMsgBookListResp(champ2, champ3, "1338", botin.getClientRooms(champ2).size(), botin.getClientRooms(champ2));
 
             for (it = botin.getClients().begin(); it != botin.getClients().end(); ++it) {
@@ -122,7 +140,7 @@ int main(int argc, char** argv) {
             break;
 
         case MSG_BOOK_LIST_RQST:
-            cout << "Debug :" << champ2 << "à demandé l'annuaire" << endl;
+            cout << "Main() -> Debug :" << champ2 << "à demandé l'annuaire" << endl;
             send = rfc.createMsgBookListResp(champ2, champ3, "1338", botin.getClientRooms(champ2).size(), botin.getClientRooms(champ2));
 
 
@@ -137,17 +155,7 @@ int main(int argc, char** argv) {
 
 
         }
-
-        /* TRAITEMENT DU MESSAGE
-        if (sendto(listenSocket, message, sizeof message,0,(SOCKADDR *) &clientAddress,clientAddressSize) == -1)
-        {
-                perror("send failed :");
-                close(listenSocket);
-                exit(0);
-        }*/
-
-        cout << "Main() -> Traitement du message" << endl;
-        cout << "Main() -> Traitement du terminé" << endl;
+        cout << "Main() -> Traitement du message terminé" << endl;
     }
 
     return 1337;

@@ -22,7 +22,7 @@ public:
     Book();
     virtual ~Book();
     BOOK_ERROR_ENUM addNewClient(string name,string addressIp,string port, vector<string> roomList);
-    BOOK_ERROR_ENUM addNewClient(string name,string addressIp,string port);
+    BOOK_ERROR_ENUM addNewClient(string name, string addressIp, string port);
     int removeClient(string name);
     int addClientToRoom(string clientName, string roomName);
     int removeClientFromRoom(string clientName, string roomName);
@@ -36,7 +36,6 @@ public:
     vector<Room*> getClientRooms(string clientName);
     vector<Room> getRooms();
     int addRoom(string name);
-    int addNetworkHints(string nameClient, string ipAddress, string port);
     int nbClientRooms(string clientName);
 private:
     vector<Client> clients;

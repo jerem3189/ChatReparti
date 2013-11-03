@@ -8,7 +8,7 @@
 
 #include "../../Server/src/Thread.hpp"
 #include <string>
-#include <QMainWindow>
+#include "mainwindow.hpp"
 
 #define DEFAULT_PORT "1338"
 
@@ -21,7 +21,7 @@ class RFC1664;
 
 class Listening : public Thread {
 public:
-    Listening(QMainWindow *mainWindow);
+    Listening(MainWindow *mainWindow);
     void run();
 private:
     Socket *listenSocket;

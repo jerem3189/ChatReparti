@@ -39,9 +39,12 @@ public:
     SOCKET getSocket();
     SOCKADDR *getSockaddr();
     ADDRINFO *getAddrinfo();
+    string getAddressIp();
+    string getPort();
 
     SOCK_ERROR_ENUM create(string adressIp, string port);
     SOCK_ERROR_ENUM binding();
+    void setIpPort(string addressIp, string port);
     void terminate();
 
     //int getPort();
@@ -55,6 +58,7 @@ private:
     SOCKET sock;
     ADDRINFO hints;
     ADDRINFO *server_info;
+    SOCKADDR *sockaddr;
 
     string addressIp;
     string port;

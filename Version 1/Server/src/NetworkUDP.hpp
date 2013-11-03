@@ -25,9 +25,12 @@ using namespace std;
 class NetworkUDP {
 public:
     int sendDatagrams(SOCKET sock, char *data, size_t len, SOCKADDR *address, ADDRINFO *infos);
+    int sendDatagrams1(SOCKET sock, char *data, size_t len, SOCKADDR *address, ADDRINFO *infos);
+    int sendDatagrams2(SOCKET sock, char *data, size_t len, SOCKADDR *address, ADDRINFO *infos);
     int receiveDatagrams(SOCKET sock, char *data, size_t maxLen, SOCKADDR *address);
     static string getIp_static();
     static string getIp_interface(string interface);
+    static SOCKADDR udpFormatAddress(char *host, u_short port);
 };
 
 #endif  //_SENDINGUDP_H

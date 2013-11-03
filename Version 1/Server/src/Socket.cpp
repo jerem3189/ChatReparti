@@ -5,6 +5,10 @@
 #include <string.h>
 #include <unistd.h>
 
+#include <sstream>
+
+#include "../../Server/src/NetworkUDP.hpp"
+
 
 Socket::Socket() {
     this->initialized = false;
@@ -12,7 +16,7 @@ Socket::Socket() {
     memset(&this->hints, 0, sizeof this->hints);
     this->hints.ai_family = AF_INET; /* IPV4 ou V6 */
     this->hints.ai_socktype = SOCK_DGRAM; /* Mode Datagramme */
-    //this->hints.ai_flags = AI_PASSIVE;
+    this->hints.ai_flags = AI_PASSIVE;
 }
 
 Socket::~Socket() {
@@ -30,7 +34,7 @@ SOCK_ERROR_ENUM Socket::create(string addressIp, string port) {
     if (ret != 0)
     {
         cout << "Socket::create() -> Erreur lors de la récupération des informations du serveur" << endl;
-        cout << "retour de getaddrinfo" << gai_strerror(ret) << endl;
+        cout << "Socket::create() -> Retour de getaddrinfo : " << gai_strerror(ret) << endl;
         return ERR_SOCK_HINTS;
     }
 
@@ -65,13 +69,22 @@ SOCK_ERROR_ENUM Socket::binding() {
     return SOCK_BIND_OK;
 }
 
+void Socket::setIpPort(string addressIp, string port)
+{
+    this->addressIp = addressIp;
+    this->port = port;
+}
+
 
 void Socket::terminate() {
     close(this->sock);
 }
 
 SOCKADDR *Socket::getSockaddr() {
-    return this->server_info->ai_addr;
+    if (this->initialized)
+        return this->server_info->ai_addr;
+
+    return this->sockaddr;
 }
 
 ADDRINFO *Socket::getAddrinfo()
@@ -83,33 +96,12 @@ SOCKET Socket::getSocket() {
     return this->sock;
 }
 
-/*
-bool Socket::setPort(u_short port)
+string Socket::getPort()
 {
-	this->address.sin_port	= ntohs(port);
-
-	return true;
+    return this->port;
 }
 
-bool Socket::setAddress(const char * szAddress)
+string Socket::getAddressIp()
 {
-
-    return true;
+    return this->addressIp;
 }
-
-int Socket::getPort(){
-	return 1;
-}
-
-bool Socket::getAddressIp()
-{
-	 cout << inet_ntoa(this->address.sin_addr);
-
-	 return true;
-}
-
-sockaddr_in Socket::getAddress()
-{
-	 return this->address;
-}
-*/

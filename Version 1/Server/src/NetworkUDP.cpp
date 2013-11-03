@@ -6,7 +6,7 @@
 #include "NetworkUDP.hpp"
 
 int NetworkUDP::sendDatagrams(SOCKET sock, char *data, size_t len, SOCKADDR *address, ADDRINFO *infos) {
-    socklen_t addr_size = sizeof *address;
+    socklen_t addr_size = sizeof address;
 
     //return sendto(sock, data, len, 0, address, addr_size);
     return sendto(sock, data, len, 0, address, infos->ai_addrlen);
@@ -54,4 +54,11 @@ int NetworkUDP::receiveDatagrams(SOCKET sock, char *data, size_t maxLen, SOCKADD
         }
         if (ifAddrStruct!=NULL) freeifaddrs(ifAddrStruct);
         return ss2;
+    }
+
+    SOCKADDR NetworkUDP::udpFormatAddress( char * host, u_short port )
+    {
+        SOCKADDR addr;
+
+
     }
