@@ -25,7 +25,7 @@ public:
     void run();
 private:
     Socket *listenSocket;
-    QMainWindow *mainWindow;
+    MainWindow *mainWindow;
     char message[4096];
     NetworkUDP *udp;
     RFC1664 *rfc;
