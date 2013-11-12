@@ -21,7 +21,7 @@ class RFC1664;
 
 class Listening : public Thread {
 public:
-    Listening(MainWindow *mainWindow);
+    Listening(MainWindow *mainWindow, Socket *socket);
     void run();
 private:
     Socket *listenSocket;

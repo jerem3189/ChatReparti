@@ -131,9 +131,9 @@ string RFC1664::fieldFromMesg(string msg, int fieldNb, char delim) {
     return retour;
 }*/
 
-string RFC1664::fieldFromMesg(string msg, int fieldNb, char delim) {
+string RFC1664::fieldFromMesg(string msg, int fieldNb, string delimiter) {
 
-    string delimiter = "§";
+    //string delimiter = "§";
     string retour;
     size_t pos = 0;
     std::string token;

@@ -1,4 +1,4 @@
-CC=g++
+CC=clang++
 CFLAGS=-Wall -g -pthread 
 LDFLAGS=-pthread
 EXEC=server clean

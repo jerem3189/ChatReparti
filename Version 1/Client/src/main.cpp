@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
     MainWindow w;
     w.show();
 
-    Listening *listen = new Listening(&w);
+    Listening *listen = new Listening(&w, w.getSocket());
     listen->start();
     
     return a.exec();

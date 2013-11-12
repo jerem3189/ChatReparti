@@ -10,7 +10,6 @@ using namespace std;
 
 
 Client::Client() {
-    this->socket = new Socket();
 }
 
 Client::Client(string name) {
@@ -23,6 +22,7 @@ Client::~Client() {
 string Client::getName() {
     return this->name;
 }
+
 void Client::setName(string newName) {
     name=newName;
 }
@@ -33,6 +33,11 @@ bool Client::isMaster() {
 
 void Client::setMaster(bool type) {
 
+}
+
+SOCKADDR_IN *Client::getSockAddr()
+{
+    return this->addr_in;
 }
 
 bool Client::operator==(Client & client)
@@ -51,12 +56,9 @@ time_t Client::getLastalive() const {
     return lastalive;
 }
 
-SOCK_ERROR_ENUM Client::addNetworkHints(string addressIp, string port)
+SOCK_ERROR_ENUM Client::addNetworkHints(SOCKADDR_IN *addr_in)
 {
-    this->socket->setIpPort(addressIp, port);
+    this->addr_in = addr_in;
 
     return NETWORK_HINTS_OK;
-}
-Socket* Client::getSocket(){
-    return this->socket;
 }

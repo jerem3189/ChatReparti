@@ -15,15 +15,11 @@
 #include "mainwindow.hpp"
 #include <ui_mainwindow.h>
 
-Listening::Listening(MainWindow *mainWindow)
+Listening::Listening(MainWindow *mainWindow, Socket *socket)
 {
     this->mainWindow = mainWindow;
-    this->listenSocket = new Socket();
-
-    cout << listenSocket->create("NULL", DEFAULT_PORT) << endl;
-    cout << listenSocket->binding() << endl;
-
-    //this->listenSocket = mainWindow->getSocket();
+    //this->listenSocket = new Socket();
+    this->listenSocket = socket;
 
     mainWindow->getUi()->textEdit->insertPlainText("toto");
 
@@ -39,12 +35,13 @@ void Listening::run() {
             cout << "Main() -> Attente d'un nouveau message" << endl;
             memset(this->message, 0, sizeof this->message); //vide le message
 
-            this->udp->receiveDatagrams(this->listenSocket->getSocket(), this->message, sizeof this->message, this->listenSocket->getSockaddr());
+
+            SOCKADDR_IN addr_in;
+
+            this->udp->receiveDatagrams(listenSocket->getSocket(), this->message, sizeof this->message, (SOCKADDR*)&addr_in, this->listenSocket->getAddrinfo());
 
             cout << "Main() -> Message reçu : " << this->message << endl;
             cout << "Main() -> Type du message reçu : " << this->rfc->type(this->message) << endl;
-
-            cout << "Main() -> Message reçu : " << this->message << endl;
     }
 }
 }

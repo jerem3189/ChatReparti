@@ -47,12 +47,6 @@ public:
     void setIpPort(string addressIp, string port);
     void terminate();
 
-    //int getPort();
-    //bool getAddressIp();
-    //sockaddr_in getAddress();
-    //bool	setPort(unsigned short nPortNumber);
-    //bool	setAddress(const char * szAddress);
-
 private:
     bool initialized;
     SOCKET sock;
@@ -63,7 +57,6 @@ private:
     string addressIp;
     string port;
 
-    //sockaddr_in	address;
 };
 
 #endif

@@ -15,7 +15,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     this->socket = new Socket();
-    this->socket->create("127.0.0.1", "1337");
+    this->socket->create("NULL", "1337");
 }
 
 Socket *MainWindow::getSocket()

@@ -5,7 +5,6 @@
  * Created on 28 octobre 2013, 18:56
  */
 
-
 #ifndef CLIENT_HPP
 #define	CLIENT_HPP
 
@@ -15,10 +14,14 @@
 #include <netdb.h>
 #include <netinet/in.h>
 
+#include <vector>
 #include <string>
 #include "../../Server/src/ErrorCodes.hpp"
 
-typedef sockaddr SOCKADDR;
+typedef int SOCKET;
+typedef struct sockaddr_in SOCKADDR_IN;
+typedef struct sockaddr SOCKADDR;
+typedef struct addrinfo ADDRINFO;
 
 class Socket;
 
@@ -31,17 +34,16 @@ public:
     void setName(string newName);
     bool isMaster();
     void setMaster(bool type);
+    SOCKADDR_IN *getSockAddr();
 
-    SOCK_ERROR_ENUM addNetworkHints(string addressIp, string port);
-    Socket* getSocket();
+    SOCK_ERROR_ENUM addNetworkHints(SOCKADDR_IN *addr_in);
     bool operator==(Client & client);
     void setLastalive(time_t lastalive);
     time_t getLastalive() const;
 private:
     string name;
     time_t lastalive;
-    Socket *socket;
-
+    SOCKADDR_IN *addr_in;
 };
 
 #endif	/* CLIENT_HPP */
