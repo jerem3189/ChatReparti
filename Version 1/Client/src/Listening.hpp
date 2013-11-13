@@ -18,10 +18,11 @@ using namespace std;
 class Socket;
 class NetworkUDP;
 class RFC1664;
+class Book;
 
 class Listening : public Thread {
 public:
-    Listening(MainWindow *mainWindow, Socket *socket);
+    Listening(MainWindow *mainWindow, Socket *socket, Book *book);
     void run();
 private:
     Socket *listenSocket;
@@ -29,6 +30,7 @@ private:
     char message[4096];
     NetworkUDP *udp;
     RFC1664 *rfc;
+    Book *book;
 };
 
 #endif  //_LISTENING_H

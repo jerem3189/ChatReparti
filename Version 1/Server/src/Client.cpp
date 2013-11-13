@@ -8,6 +8,9 @@ using namespace std;
 #include "Client.hpp"
 #include "Socket.hpp"
 
+#include <stdio.h>
+#include <string.h>
+
 
 Client::Client() {
 }
@@ -37,7 +40,7 @@ void Client::setMaster(bool type) {
 
 SOCKADDR_IN *Client::getSockAddr()
 {
-    return this->addr_in;
+    return &this->addr_in;
 }
 
 bool Client::operator==(Client & client)
@@ -58,7 +61,8 @@ time_t Client::getLastalive() const {
 
 SOCK_ERROR_ENUM Client::addNetworkHints(SOCKADDR_IN *addr_in)
 {
-    this->addr_in = addr_in;
+    //this->addr_in = addr_in;
+    memcpy(&this->addr_in, addr_in, sizeof(*addr_in));
 
     return NETWORK_HINTS_OK;
 }

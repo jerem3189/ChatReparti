@@ -102,7 +102,7 @@
       </property>
       <widget class="QWidget" name="QTabWidget_GlobalRoom">
        <attribute name="title">
-        <string>Global Room</string>
+        <string>Onglet de la room globale</string>
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>

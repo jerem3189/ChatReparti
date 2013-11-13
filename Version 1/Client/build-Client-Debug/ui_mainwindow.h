@@ -197,7 +197,7 @@ public:
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:'Sans'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", 0));
-        QTabWidget_onglets->setTabText(QTabWidget_onglets->indexOf(QTabWidget_GlobalRoom), QApplication::translate("MainWindow", "Global Room", 0));
+        QTabWidget_onglets->setTabText(QTabWidget_onglets->indexOf(QTabWidget_GlobalRoom), QApplication::translate("MainWindow", "Onglet de la room globale", 0));
         menu_File->setTitle(QApplication::translate("MainWindow", "&Menu", 0));
         menu_Salons->setTitle(QApplication::translate("MainWindow", "&Salons", 0));
     } // retranslateUi

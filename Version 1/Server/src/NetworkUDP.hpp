@@ -27,6 +27,8 @@ class NetworkUDP {
 public:
     static int sendDatagrams(SOCKET sock, char *data, size_t len, SOCKADDR *address, ADDRINFO *infos);
     static int receiveDatagrams(SOCKET sock, char *data, size_t maxLen, SOCKADDR *address, ADDRINFO *infos);
+    static int sendDatagrams2(SOCKET sock, char *data, size_t len, SOCKADDR *address, int addrLen);
+    static int receiveDatagrams2(SOCKET sock, char *data, size_t maxLen, SOCKADDR **address, ADDRINFO *infos);
     static string getIp_static();
     static string getIp_interface(string interface);
 };

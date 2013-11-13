@@ -193,30 +193,10 @@ int Book::nbClientRooms(string clientName)
 
 vector<Room*> Book::getClientRooms(string clientName) {
     vector<Room*> vector_roomList;
-    //cout << "test1" << endl;
-
     vector<Room>::iterator it;
-    //cout << "test1" << endl;
+
     for(it = this->rooms.begin(); it != this->rooms.end(); ++it)
     {
-        //cout << "test2" << endl;
-        //vector<Client*>::iterator it2;
-        //cout << "test2" << endl;
-        /*
-        for(it2 = it->getClients().begin(); it2 != it->getClients().end(); ++it2)
-        {
-            cout << "test3" << endl;
-            cout << "Nombre de clients dans la room " << it->getName() << " : " << it->getClients().size() << endl;
-            Client *client = *it2;
-            cout << "nom du client" << client->getName() << endl;
-            if ((*it2)->getName() == clientName)
-            {
-                vector_roomList.push_back(&(*it));
-                break;
-            }
-        }
-        */
-
         for(int i=0; i<it->getClients().size(); i++)
         {
             if (it->getClients().at(i)->getName() == clientName)
@@ -226,7 +206,6 @@ vector<Room*> Book::getClientRooms(string clientName) {
                 break;
             }
         }
-
     }
 
     return vector_roomList;

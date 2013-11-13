@@ -43,7 +43,7 @@ public:
 private:
     string name;
     time_t lastalive;
-    SOCKADDR_IN *addr_in;
+    SOCKADDR_IN addr_in;
 };
 
 #endif	/* CLIENT_HPP */

@@ -43,7 +43,7 @@ MessagesTypesRFC1664 RFC1664::type(string msg) {
     found = msg.find("BOOK_LIST_RQST§", 0);
     if (found != string::npos)
         return MSG_BOOK_LIST_RQST;
-    
+
     found = msg.find("BOOK_LIST_RESP§", 0);
     if (found != string::npos)
         return MSG_BOOK_LIST_RESP;
