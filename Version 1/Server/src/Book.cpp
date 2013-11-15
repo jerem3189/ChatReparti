@@ -22,8 +22,10 @@ Book::~Book() {
 
 BOOK_ERROR_ENUM Book::addNewClient(string name, SOCKADDR_IN *addr_in) {
     Client *client = new Client(name); // Creation de l'objet Client a partir de son nom
+    //Client client(name);
 
     SOCK_ERROR_ENUM retour = client->addNetworkHints(addr_in);
+    //SOCK_ERROR_ENUM retour = client.addNetworkHints(addr_in);
 
     if (retour != NETWORK_HINTS_OK)
         return CLIENT_ADD_NOK;
@@ -195,18 +197,30 @@ vector<Room*> Book::getClientRooms(string clientName) {
     vector<Room*> vector_roomList;
     vector<Room>::iterator it;
 
+    string tempName = "";
+
     for(it = this->rooms.begin(); it != this->rooms.end(); ++it)
     {
         for(int i=0; i<it->getClients().size(); i++)
         {
-            if (it->getClients().at(i)->getName() == clientName)
+            cout << "avant tempName " << endl;
+            tempName = it->getClients().at(i)->getName();
+            cout << "tempName :  " << tempName << endl;
+            if (tempName == clientName)
             {
+                cout << "proutiproutproutiprout" << endl;
                 Room *room = &(*it);
+                cout << "proutidazfazfgazfazf" << endl;
                 vector_roomList.push_back(room);
+                cout << "proutgeeeeeeegggggggggggggr" << endl;
                 break;
             }
         }
     }
+    cout << "YAAAAAAAAAAAA" << endl;
+
+    cout << "TAILLE DE LA ROOMLIST" << vector_roomList.size() << endl;
+    cout << "element at (1) [" << vector_roomList.at(0)->getName() << "]" << endl;
 
     return vector_roomList;
 }

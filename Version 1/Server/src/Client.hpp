@@ -28,6 +28,7 @@ class Socket;
 class Client {
 public:
     Client();
+    Client(const Client &client);
     Client(string name);
     virtual ~Client();
     string getName();
@@ -37,9 +38,10 @@ public:
     SOCKADDR_IN *getSockAddr();
 
     SOCK_ERROR_ENUM addNetworkHints(SOCKADDR_IN *addr_in);
-    bool operator==(Client & client);
     void setLastalive(time_t lastalive);
     time_t getLastalive() const;
+
+    bool operator==(Client & client);
 private:
     string name;
     time_t lastalive;

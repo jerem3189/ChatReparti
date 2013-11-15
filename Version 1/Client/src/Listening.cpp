@@ -68,6 +68,7 @@ void Listening::run() {
                     msg_com += chaine4;
                     msg_com += "\n";
 
+                    mainWindow->getUi()->textEdit->moveCursor(QTextCursor::End);
                     mainWindow->getUi()->textEdit->insertPlainText(msg_com);
 
                 break;

@@ -24,6 +24,9 @@ class Listening : public Thread {
 public:
     Listening(MainWindow *mainWindow, Socket *socket, Book *book);
     void run();
+private slots:
+    void on_pushButton_clicked();
+
 private:
     Socket *listenSocket;
     MainWindow *mainWindow;

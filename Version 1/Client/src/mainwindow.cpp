@@ -51,7 +51,12 @@ void MainWindow::on_action_Lancer_le_KeepAlive_triggered()
 
 void MainWindow::on_pushButton_clicked()
 {
+    RFC1664 rfc;
     cout << "Envoi du message au serveur !" << endl;
+
+    QString msg = ui->lineEdit->text();
+    string msgCom = rfc.createMsgCom(ui->label_pseudo->text().toStdString(), "", msg.toStdString(), ui->QTabWidget_onglets->tabText(ui->QTabWidget_onglets->currentIndex()).toStdString());
+    NetworkUDP::sendDatagrams(this->socket->getSocket(),(char*)msgCom.c_str(), strlen(msgCom.c_str()),socket->getSockaddr(), this->socket->getAddrinfo());
 }
 
 void MainWindow::on_action_Cr_er_un_nouveau_salon_triggered()

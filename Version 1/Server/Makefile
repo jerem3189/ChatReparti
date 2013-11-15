@@ -1,5 +1,5 @@
 CC=clang++
-CFLAGS=-Wall -g -pthread 
+CFLAGS=-Wall -g -pthread -Wuninitialized -O1 -Wunused-parameter 
 LDFLAGS=-pthread
 EXEC=server clean
 SRC=$(wildcard src/*.cpp)

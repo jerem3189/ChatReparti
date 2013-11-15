@@ -34,6 +34,7 @@ int main(int argc, char** argv) {
     listenSocket.binding();
 
     while (1) {
+        cout << "Nombre de client dans l'annuaire : " << book.getClients().size() << endl;
         cout << "Main() -> Attente d'un nouveau message" << endl;
 
         memset(message, 0, sizeof message); //vide le message
@@ -54,10 +55,14 @@ int main(int argc, char** argv) {
 
         string send;
         string ack;
+
         vector<Client>::iterator itClient;
         vector<Room*>::iterator itRoomPtr;
         vector<Room*> roomList;
+        vector<Room*> *roomListPtr = NULL;
         Client *client;
+
+        int i = 0;
 
 
 
@@ -66,28 +71,78 @@ int main(int argc, char** argv) {
             cout << "Main() -> " << champ2 << " s'est connecté au serveur" << endl;
             if(book.addNewClient(champ2, &addr_in)==CLIENT_ADD_OK) {
                 cout << "Main() ->" << champ2 << " a été ajouté à l'annuaire" << endl;
-                cout << "Main() -> Size : " << book.getClientRooms(champ2).size() << endl;
 
-                ack = rfc.createMsgAck("Connexion réussie");
                 send = rfc.createMsgBookListResp(champ2, champ3, "1337", book.getClientRooms(champ2).size(), book.getClientRooms(champ2));
 
-                roomList = book.getClientRooms(champ2);
+                //roomList = book.getClientRooms(champ2);
 
-                cout << "Main() -> le client est dans " << roomList.size() << " room(s) " << endl;
+                //cout << "Main() -> le client est dans " << roomList.size() << " room(s) " << endl;
 
-                for (itClient = book.getClients().begin(); itClient != book.getClients().end(); ++itClient) {
-                    roomList = book.getClientRooms(itClient->getName());
-                    send = rfc.createMsgBookListResp(itClient->getName(), "127.0.0.1", "1337", roomList.size(), roomList);
+                cout << "NB CLIENTS : " << book.getClients().size() << endl;
+
+                /*for (itClient = book.getClients().begin(); itClient != book.getClients().end(); ++itClient) {
+                    //cout << "Main() -> MESSAGE EEEEE " << itClient->getName() << endl;
+                    cout << "AFFICHAGE " << endl;
+                    //roomList = book.getClientRooms(itClient->getName());
+
+                    if (i == 0)
+                        roomList = book.getClientRooms("jeremy");
+                    else
+                        roomList = book.getClientRooms("arnaud");
+
+
+                    cout << "TAILLE DE LA ROOMLIST " << roomList.size() << endl;
+                    cout << "element at (1) [" << roomList.at(0)->getName() << "]" << endl;
+
+
+                    //roomListPtr = new vector<Room*>(book.getClientRooms(itClient->getName()));
+                    //send = rfc.createMsgBookListResp(itClient->getName(), "127.0.0.1", "1337", roomList.size(), roomList);
+                    send = rfc.createMsgBookListResp("jeremy", "127.0.0.1", "1337", roomList.size(), roomList);
+                    cout << "ON SORT DE LA FONCTION" << endl;
+                    //send = rfc.createMsgBookListResp(itClient->getName(), "127.0.0.1", "1337", roomListPtr->size(), *roomListPtr);
+                    //NetworkUDP::sendDatagrams(listenSocket.getSocket(), (char*)send.c_str(), strlen(send.c_str()), (SOCKADDR*)book.findClient(champ2)->getSockAddr(), listenSocket.getAddrinfo());
+                    //delete roomListPtr;
+                    //roomListPtr = NULL;
+                    i++;
+                }*/
+
+
+                ack = rfc.createMsgAck("Connexion réussie");
+                NetworkUDP::sendDatagrams(listenSocket.getSocket(), (char*)ack.c_str(), strlen(ack.c_str()), (SOCKADDR*)book.findClient(champ2)->getSockAddr(), listenSocket.getAddrinfo());
+
+
+                for (i=0; i<book.getClients().size(); i++)
+                {
+                    roomList = book.getClientRooms(book.getClients().at(i).getName());
+                    send = rfc.createMsgBookListResp(book.getClients().at(i).getName(), "127.0.0.1", "1337", roomList.size(), roomList);
                     NetworkUDP::sendDatagrams(listenSocket.getSocket(), (char*)send.c_str(), strlen(send.c_str()), (SOCKADDR*)book.findClient(champ2)->getSockAddr(), listenSocket.getAddrinfo());
                 }
 
-                send = rfc.createMsgBookListResp(champ2, champ3, "1337", roomList.size(), roomList);
+
+                cout << "TRUC EN DESSOUS " << endl;
+
+
+
+                //send = rfc.createMsgBookListResp(champ2, champ3, "1337", roomList.size(), roomList);
                 cout << "Main() -> Message a renvoyer : [" << send << "]" << endl;
 
-                for (itClient = book.getClients().begin(); itClient != book.getClients().end(); ++itClient) {
-                    NetworkUDP::sendDatagrams(listenSocket.getSocket(), (char*)send.c_str(), strlen(send.c_str()), (SOCKADDR*)itClient->getSockAddr(), listenSocket.getAddrinfo());
+                /*for (itClient = book.getClients().begin(); itClient != book.getClients().end(); ++itClient) {
+                    //NetworkUDP::sendDatagrams(listenSocket.getSocket(), (char*)send.c_str(), strlen(send.c_str()), (SOCKADDR*)itClient->getSockAddr(), listenSocket.getAddrinfo());
                     cout << "Main() -> Message envoyé à " << itClient->getName() << endl;
+                }*/
+
+
+                send = rfc.createMsgBookListResp(champ2, champ3, "1337", book.getClientRooms(champ2).size(), book.getClientRooms(champ2));
+
+                for (i=0; i<book.getClients().size(); i++)
+                {
+                    if (book.getClients().at(i).getName() != champ2)
+                    {
+                        NetworkUDP::sendDatagrams(listenSocket.getSocket(), (char*)send.c_str(), strlen(send.c_str()), (SOCKADDR*)book.getClients().at(i).getSockAddr(), listenSocket.getAddrinfo());
+                        cout << "Main() -> Message envoyé à " << book.getClients().at(i).getName() << endl;
+                    }
                 }
+
             } else
                 cout << "Main() -> " << champ2 << " n'a pas pu etre ajouté à l'annuaire" << endl;
 
@@ -102,7 +157,7 @@ int main(int argc, char** argv) {
             cout << "Debug :" << champ2 << " à envoyé un message à redispatcher" << endl;
 
             for (itClient = book.getClients().begin(); itClient != book.getClients().end(); ++itClient) {
-                NetworkUDP::sendDatagrams(listenSocket.getSocket(), (char*)send.c_str(), strlen(send.c_str()), (SOCKADDR*)itClient->getSockAddr(), listenSocket.getAddrinfo());
+                NetworkUDP::sendDatagrams(listenSocket.getSocket(), message, strlen(message), (SOCKADDR*)itClient->getSockAddr(), listenSocket.getAddrinfo());
             }
 
             break;

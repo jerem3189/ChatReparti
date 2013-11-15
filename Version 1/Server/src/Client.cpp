@@ -15,6 +15,11 @@ using namespace std;
 Client::Client() {
 }
 
+Client::Client(const Client &client) : name(client.name), addr_in(client.addr_in), lastalive(client.lastalive)
+{
+
+}
+
 Client::Client(string name) {
     this->name = name;
 }
