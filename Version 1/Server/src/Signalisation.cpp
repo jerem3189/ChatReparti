@@ -1,6 +1,7 @@
 /** \file Signalisation.cpp
- * Description breve du fichier.
+ * Fonctions d'envoi périodique de keep alive.
  * Description plus elaboree et detaillee du fichier.
+ * 
  */
 
 #include <time.h>
@@ -12,13 +13,20 @@
 #include "NetworkUDP.hpp"
 #include "RFC1664.hpp"
 #include "Socket.hpp"
-
+/**
+ * Constructeur de signalisation à partir du nom du client et d'un socket
+ * @param clientName nom du client envoyant le keepalive
+ * @param *socket pointeur sur un socket
+ */
 Signalisation::Signalisation(string clientName, Socket *socket)
 {
     this->socket = socket;
     this->clientName =clientName;
 }
 
+/**
+ * Envoi du keep alive
+ */
 int Signalisation::sendKeepAlive() {
     RFC1664 rfc;
     NetworkUDP udp;
@@ -31,7 +39,11 @@ int Signalisation::sendKeepAlive() {
 
     return 0;
 }
-
+/**
+ * Fonction de mise en stand by pour une durée déterminée
+ * 
+ * @param nbr_seconds temps en secondes de stand by
+ */
 void Signalisation::sleep(int nbr_seconds)
 {
     clock_t goal;
@@ -41,7 +53,9 @@ void Signalisation::sleep(int nbr_seconds)
         ;
     }
 }
-
+/**
+ * Lancement de la boucle d'envoi de keep alive espacé d'un temps égal à KEEP_ALIVE_TIMEOUT
+ */
 void Signalisation::run() {
     while(!end)
     {
