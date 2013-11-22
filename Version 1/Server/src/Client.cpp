@@ -19,18 +19,27 @@ Client::Client(const Client &client) : name(client.name), addr_in(client.addr_in
 {
 
 }
-
+/**
+ * constructeur de client à partir de son nom
+ * @param name le nom du client a creer
+ */
 Client::Client(string name) {
     this->name = name;
 }
 
 Client::~Client() {
 }
-
+/**
+ * getter du nom d'un client
+ * @return name le nom du client
+ */
 string Client::getName() {
     return this->name;
 }
-
+/**
+ * setter du nom d'un client 
+ * @param newName le nouveau nom attribué
+ */
 void Client::setName(string newName) {
     name=newName;
 }

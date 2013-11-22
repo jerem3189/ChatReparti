@@ -13,7 +13,9 @@
 #if !defined(_MESSAGESTYPESRFC1664_HPP)
 #define _MESSAGESTYPESRFC1664_HPP
 
-
+/**
+ * énumeration des types de message possibles
+ */
 enum MessagesTypesRFC1664 {
     MSG_CON=1,
     MSG_RCON,

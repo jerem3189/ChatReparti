@@ -6,11 +6,16 @@
 #if !defined(_ERRORCODES_H)
 #define _ERRORCODES_H
 
-
+/**
+ * énumération des erreurs UDP
+ */
 enum UDP_ERROR_ENUM {
     UDP_ERROR
 };
 
+/**
+ * énumération des erreur de socket possible
+ */
 enum SOCK_ERROR_ENUM {
     SOCK_OK,
     SOCK_NOK,
@@ -21,7 +26,9 @@ enum SOCK_ERROR_ENUM {
     ERR_GETADDRINFO,
     NETWORK_HINTS_OK
 };
-
+/**
+ * enumération des erreur d'annuaire possible
+ */
 enum BOOK_ERROR_ENUM {
     CLIENT_ADD_OK,
     CLIENT_ADD_NOK,

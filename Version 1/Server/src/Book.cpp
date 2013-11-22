@@ -10,7 +10,10 @@ using namespace std;
 
 #include <utility>
 #include "../../Server/src/ErrorCodes.hpp"
-
+/**
+ * Constructeur par défaut de l'annuaire
+ * créé un salon global
+ */
 Book::Book() {
     Room room("global");
 
@@ -19,7 +22,12 @@ Book::Book() {
 
 Book::~Book() {
 }
-
+/** ajoute un client à l'annuaire
+ *  
+ * @param name le nom du client a ajouter
+ * @param addr_in le socket du client
+ * @return un numéro d'erreur d'ajout à l'annuaire 
+ */
 BOOK_ERROR_ENUM Book::addNewClient(string name, SOCKADDR_IN *addr_in) {
     Client *client = new Client(name); // Creation de l'objet Client a partir de son nom
     //Client client(name);
@@ -35,7 +43,14 @@ BOOK_ERROR_ENUM Book::addNewClient(string name, SOCKADDR_IN *addr_in) {
 
     return CLIENT_ADD_OK;
 }
-
+/**
+ * Ajoute un client à l'annuaire
+ * @param name le nom du client à ajouter
+ * @param addressIp son adresse IP
+ * @param port son port d'écoute
+ * @param roomList sa liste de salon
+ * @return un numéro d'erreur d'ajout à l'annuaire
+ */
 BOOK_ERROR_ENUM Book::addNewClient(string name,string addressIp, string port, vector<string> roomList) {
     /*Client client = Client(name); // Creation de l'objet Client a partir de son nom
     int test = -1;
@@ -79,7 +94,11 @@ BOOK_ERROR_ENUM Book::addNewClient(string name,string addressIp, string port, ve
 
     return CLIENT_ADD_OK;
 }
-
+/**
+ * retire un client de l'annuaire
+ * @param name le nom du client à retirer
+ * @return 0
+ */
 int Book::removeClient(string name) {
     Client *client = findClient(name);
 
@@ -104,7 +123,12 @@ int Book::removeClient(string name) {
 
     return 0;
 }
-
+/**
+ * ajout d'un client à un salon
+ * @param clientName le nom du client 
+ * @param roomName le nom du salon
+ * @return 0 
+ */
 int Book::addClientToRoom(string clientName, string roomName) {
     Room *room = findRoom(roomName);
     Client *client = findClient(clientName);
@@ -113,7 +137,12 @@ int Book::addClientToRoom(string clientName, string roomName) {
 
     return 0;
 }
-
+/**
+ * retire un client d'un salon
+ * @param clientName le nom du client
+ * @param roomName le nom du salon
+ * @return 0
+ */
 int Book::removeClientFromRoom(string clientName, string roomName) {
     Client *client = findClient(clientName);
     Room *room = findRoom(roomName);
@@ -123,11 +152,23 @@ int Book::removeClientFromRoom(string clientName, string roomName) {
     return 0;
 }
 
+/**
+ * change le nom d'un client
+ * @param name le nom actuel du client
+ * @param newName son nouveau nom
+ * @return 0
+ */
 int Book::changeClientName(string name, string newName) {
     //A CODER MAIS PAS IMPORTANT
     return 0;
 }
 
+/**
+ * cherche un client dans l'annuaire
+ * @param name le nom du cient à chercher
+ * @return un pointeur vers le client trouvé
+ * @return NULL si aucun client correspond au nom recherché
+ */
 Client* Book::findClient(string name) {
     vector<Client>::iterator it;
     for(it = this->clients.begin(); it != this->clients.end(); ++it)
@@ -142,7 +183,12 @@ Client* Book::findClient(string name) {
 
     return NULL;
 }
-
+/**
+ * cherche un salon dans l'annuaire
+ * @param name le nom du salon à chercher
+ * @return un pointeur vers le salon trouvé
+ * @return NULL si aucun salon trouvé avec le nom donné
+ */
 Room* Book::findRoom(string name) {
     vector<Room>::iterator it;
     for(it = this->rooms.begin(); it != this->rooms.end(); ++it)
@@ -157,15 +203,24 @@ Room* Book::findRoom(string name) {
 
     return NULL;
 }
-
+/**
+ * renvoie la liste des clients presents dans l'annuaire
+ * @return un vector des clients de l'annuaire
+ */
 vector<Client> Book::getClients() {
     return this->clients;
 }
-
+/**charge dans l'annuaire une liste de clients
+ * @param clients le vector de client a charger dans l'annuaire
+ */
 void Book::setClients(vector<Client> clients) {
     this->clients = clients;
 }
-
+/**
+ * 
+ * @param roomName 
+ * @return 
+ */
 vector<Client*> Book::getRoomClients(string roomName) {
     Room *room = findRoom(roomName);
 
