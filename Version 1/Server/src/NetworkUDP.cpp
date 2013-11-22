@@ -1,15 +1,30 @@
-/** \file SendingUDP.cpp
- * Description breve du fichier.
- * Description plus elaboree et detaillee du fichier.
+/** \file NetworkUDP.cpp
+ * Fichier regroupant les fonctions en rapport avec le réseaux
+ * Envois, Réceptions, Récupération d'addresse IP
  */
 
 #include "NetworkUDP.hpp"
-
+/**
+ * Fonction générique d'envoi de datagramme
+ * @param sock socket 
+ * @param *data contenu du message
+ * @param len taille du message
+ * @param *address adresse du socket
+ * @param *infos adresse destinataire
+ */
 int NetworkUDP::sendDatagrams(SOCKET sock, char *data, size_t len, SOCKADDR *address, ADDRINFO *infos) {
 
     return sendto(sock, data, len, 0, address, infos->ai_addrlen);
 }
 
+/**
+ * Fonction générique de réception de datagramme
+ * @param sock socket d'écoute
+ * @param *data contenu du message
+ * @param len taille maximum du message
+ * @param *address adresse du socket
+ * @param *infos adresse destinateur
+ */
 int NetworkUDP::receiveDatagrams(SOCKET sock, char *data, size_t maxLen, SOCKADDR *address, ADDRINFO *infos) {
 
     return recvfrom(sock, data, maxLen, 0, address, &(infos->ai_addrlen));
@@ -23,7 +38,9 @@ int NetworkUDP::receiveDatagrams2(SOCKET sock, char *data, size_t maxLen, SOCKAD
     //return recvfrom(sock, data, maxLen, 0, *address, (socklen_t*)addrLen);
     return recvfrom(sock, data, maxLen, 0, *address, &infos->ai_addrlen);
 }
-
+/**
+ * Fonction récupérant l'adresse IP du post utilisé
+ */
 string NetworkUDP::getIp_static() {
 
     char hostname[128];
@@ -36,7 +53,9 @@ string NetworkUDP::getIp_static() {
 
     return ss;
 }
-
+/**
+ * Fonction récupérant l'adresse IP de l'interface utilisée
+ */
 string NetworkUDP::getIp_interface(string interface) {
 
     struct ifaddrs * ifAddrStruct=NULL;
