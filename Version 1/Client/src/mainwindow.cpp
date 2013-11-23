@@ -67,6 +67,7 @@ void MainWindow::on_action_Lancer_le_KeepAlive_triggered()
 {
     Signalisation *keepalive = new Signalisation(ui->label_pseudo->text().toStdString(), this->socket);
     keepalive->start();
+
 }
 
 void MainWindow::on_pushButton_clicked()
@@ -105,4 +106,12 @@ void MainWindow::on_action_Joindre_un_salon_triggered()
 
     string msg = rfc.createMsgRoomJoin(ui->label_pseudo->text().toStdString(), roomName.toStdString());
     udp.sendDatagrams(this->socket->getSocket(),(char*)msg.c_str(), strlen(msg.c_str()),socket->getSockaddr(), this->socket->getAddrinfo());
+}
+
+void MainWindow::on_actionD_connexion_triggered()
+{
+    RFC1664 rfc;
+    string msg =rfc.createMsgDeco(ui->label_pseudo->text().toStdString());
+    NetworkUDP::sendDatagrams(this->socket->getSocket(),(char*)msg.c_str(),strlen(msg.c_str()),socket->getSockaddr(), this->socket->getAddrinfo());
+
 }

@@ -40,6 +40,7 @@ public:
     QAction *action_Joindre_un_salon;
     QAction *actionAjouter;
     QAction *actionAjouter_Ligne;
+    QAction *actionD_connexion;
     QWidget *centralWidget;
     QGridLayout *gridLayout;
     QLabel *label_pseudo;
@@ -77,6 +78,8 @@ public:
         actionAjouter->setObjectName(QStringLiteral("actionAjouter"));
         actionAjouter_Ligne = new QAction(MainWindow);
         actionAjouter_Ligne->setObjectName(QStringLiteral("actionAjouter_Ligne"));
+        actionD_connexion = new QAction(MainWindow);
+        actionD_connexion->setObjectName(QStringLiteral("actionD_connexion"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         gridLayout = new QGridLayout(centralWidget);
@@ -153,7 +156,7 @@ public:
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 763, 20));
+        menuBar->setGeometry(QRect(0, 0, 763, 28));
         menu_File = new QMenu(menuBar);
         menu_File->setObjectName(QStringLiteral("menu_File"));
         menu_Salons = new QMenu(menuBar);
@@ -168,6 +171,8 @@ public:
         menu_File->addAction(action_Connexion_au_serveur);
         menu_File->addSeparator();
         menu_File->addAction(action_Lancer_le_KeepAlive);
+        menu_File->addSeparator();
+        menu_File->addAction(actionD_connexion);
         menu_Salons->addAction(action_Cr_er_un_nouveau_salon);
         menu_Salons->addAction(action_Joindre_un_salon);
 
@@ -189,14 +194,15 @@ public:
         action_Joindre_un_salon->setText(QApplication::translate("MainWindow", "&Joindre un salon", 0));
         actionAjouter->setText(QApplication::translate("MainWindow", "Ajouter", 0));
         actionAjouter_Ligne->setText(QApplication::translate("MainWindow", "Ajouter Ligne", 0));
+        actionD_connexion->setText(QApplication::translate("MainWindow", "&D\303\251connexion", 0));
         label_pseudo->setText(QApplication::translate("MainWindow", "Pseudo", 0));
         label->setText(QApplication::translate("MainWindow", "Liste des clients", 0));
         pushButton->setText(QApplication::translate("MainWindow", "send", 0));
         textEdit->setHtml(QApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans';\"><br /></p></body></html>", 0));
+"</style></head><body style=\" font-family:'Sans'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", 0));
         QTabWidget_onglets->setTabText(QTabWidget_onglets->indexOf(QTabWidget_GlobalRoom), QApplication::translate("MainWindow", "Onglet de la room globale", 0));
         menu_File->setTitle(QApplication::translate("MainWindow", "&Menu", 0));
         menu_Salons->setTitle(QApplication::translate("MainWindow", "&Salons", 0));
