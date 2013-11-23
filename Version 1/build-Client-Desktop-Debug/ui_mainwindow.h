@@ -25,7 +25,6 @@
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTabWidget>
 #include <QtWidgets/QTextEdit>
-#include <QtWidgets/QToolBar>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
@@ -55,7 +54,6 @@ public:
     QMenuBar *menuBar;
     QMenu *menu_File;
     QMenu *menu_Salons;
-    QToolBar *mainToolBar;
     QStatusBar *statusBar;
 
     void setupUi(QMainWindow *MainWindow)
@@ -71,8 +69,10 @@ public:
         action_Lancer_le_KeepAlive->setObjectName(QStringLiteral("action_Lancer_le_KeepAlive"));
         action_Cr_er_un_nouveau_salon = new QAction(MainWindow);
         action_Cr_er_un_nouveau_salon->setObjectName(QStringLiteral("action_Cr_er_un_nouveau_salon"));
+        action_Cr_er_un_nouveau_salon->setEnabled(false);
         action_Joindre_un_salon = new QAction(MainWindow);
         action_Joindre_un_salon->setObjectName(QStringLiteral("action_Joindre_un_salon"));
+        action_Joindre_un_salon->setEnabled(false);
         actionAjouter = new QAction(MainWindow);
         actionAjouter->setObjectName(QStringLiteral("actionAjouter"));
         actionAjouter_Ligne = new QAction(MainWindow);
@@ -85,6 +85,7 @@ public:
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
         label_pseudo = new QLabel(centralWidget);
         label_pseudo->setObjectName(QStringLiteral("label_pseudo"));
+        label_pseudo->setEnabled(false);
 
         gridLayout->addWidget(label_pseudo, 2, 0, 1, 1);
 
@@ -102,6 +103,7 @@ public:
 
         lineEdit = new QLineEdit(centralWidget);
         lineEdit->setObjectName(QStringLiteral("lineEdit"));
+        lineEdit->setEnabled(false);
         lineEdit->setMaxLength(3000);
         lineEdit->setFrame(true);
 
@@ -120,6 +122,7 @@ public:
 
         pushButton = new QPushButton(centralWidget);
         pushButton->setObjectName(QStringLiteral("pushButton"));
+        pushButton->setEnabled(false);
         pushButton->setMaximumSize(QSize(40, 25));
         pushButton->setAutoDefault(true);
         pushButton->setDefault(true);
@@ -150,15 +153,12 @@ public:
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 763, 25));
+        menuBar->setGeometry(QRect(0, 0, 763, 20));
         menu_File = new QMenu(menuBar);
         menu_File->setObjectName(QStringLiteral("menu_File"));
         menu_Salons = new QMenu(menuBar);
         menu_Salons->setObjectName(QStringLiteral("menu_Salons"));
         MainWindow->setMenuBar(menuBar);
-        mainToolBar = new QToolBar(MainWindow);
-        mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
-        MainWindow->addToolBar(Qt::TopToolBarArea, mainToolBar);
         statusBar = new QStatusBar(MainWindow);
         statusBar->setObjectName(QStringLiteral("statusBar"));
         MainWindow->setStatusBar(statusBar);
@@ -195,8 +195,8 @@ public:
         textEdit->setHtml(QApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:'Sans'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", 0));
+"</style></head><body style=\" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans';\"><br /></p></body></html>", 0));
         QTabWidget_onglets->setTabText(QTabWidget_onglets->indexOf(QTabWidget_GlobalRoom), QApplication::translate("MainWindow", "Onglet de la room globale", 0));
         menu_File->setTitle(QApplication::translate("MainWindow", "&Menu", 0));
         menu_Salons->setTitle(QApplication::translate("MainWindow", "&Salons", 0));

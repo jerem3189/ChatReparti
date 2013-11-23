@@ -138,9 +138,14 @@ int main(int argc, char** argv) {
         case MSG_COM:
             cout << "Main() - Switch(MSG_COM) -> " << champ2 << " à envoyé un message à redispatcher" << endl;
 
-            for (i=0; i<book.getClients().size(); i++)
+            client = book.findClient(champ2);
+
+            if (client != NULL)
             {
-                NetworkUDP::sendDatagrams(listenSocket.getSocket(), message, strlen(message), (SOCKADDR*)book.getClients().at(i).getSockAddr(), listenSocket.getAddrinfo());
+                for (i=0; i<book.getClients().size(); i++)
+                {
+                    NetworkUDP::sendDatagrams(listenSocket.getSocket(), message, strlen(message), (SOCKADDR*)book.getClients().at(i).getSockAddr(), listenSocket.getAddrinfo());
+                }
             }
 
             break;

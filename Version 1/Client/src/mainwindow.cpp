@@ -16,11 +16,29 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     this->socket = new Socket();
     this->socket->create("NULL", "1337");
+    this->connected = false;
+
+    this->on_action_Connexion_au_serveur_triggered();
 }
 
 Socket *MainWindow::getSocket()
 {
     return this->socket;
+}
+
+bool MainWindow::getConnected()
+{
+     return this->connected;
+}
+
+void MainWindow::setConnected(bool connected)
+{
+    this->connected = connected;
+}
+
+void MainWindow::showStatusBarMessage(QString msg)
+{
+    statusBar()->showMessage(msg);
 }
 
 MainWindow::~MainWindow()
@@ -57,6 +75,8 @@ void MainWindow::on_pushButton_clicked()
     QString msg = ui->lineEdit->text();
     string msgCom = rfc.createMsgCom(ui->label_pseudo->text().toStdString(), "", msg.toStdString(), ui->QTabWidget_onglets->tabText(ui->QTabWidget_onglets->currentIndex()).toStdString());
     NetworkUDP::sendDatagrams(this->socket->getSocket(),(char*)msgCom.c_str(), strlen(msgCom.c_str()),socket->getSockaddr(), this->socket->getAddrinfo());
+
+    this->ui->lineEdit->clear();
 }
 
 void MainWindow::on_action_Cr_er_un_nouveau_salon_triggered()
