@@ -21,7 +21,6 @@ public:
     int sendKeepAlive();
     void run();
 private:
-    void sleep(int nbr_seconds);
     Socket *socket;
     string clientName;
 };
