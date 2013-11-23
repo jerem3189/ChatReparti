@@ -14,7 +14,7 @@ int Room::addClient(Client *client) {
     cout << "Room::addClient() -> Ajout du client " << client->getName() << " dans la room " << this->getName() << "." << endl;
     this->clients.push_back(client);
 
-    return 1;
+    return ROOM_CLIENT_ADD_OK;
 }
 
 /**

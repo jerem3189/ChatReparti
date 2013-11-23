@@ -15,8 +15,13 @@
  * @return -1 en cas d'echec
  */
 int NetworkUDP::sendDatagrams(SOCKET sock, char *data, size_t len, SOCKADDR *address, ADDRINFO *infos) {
+    int nbOctets = 0;
+    nbOctets = sendto(sock, data, len, 0, address, infos->ai_addrlen);
 
-    return sendto(sock, data, len, 0, address, infos->ai_addrlen);
+    if (nbOctets  < len)
+        return ERR_SEND;
+
+    return SEND_OK;
 }
 
 /**
@@ -30,17 +35,13 @@ int NetworkUDP::sendDatagrams(SOCKET sock, char *data, size_t len, SOCKADDR *add
  * @return -1 en cas d'echec
  */
 int NetworkUDP::receiveDatagrams(SOCKET sock, char *data, size_t maxLen, SOCKADDR *address, ADDRINFO *infos) {
+    int nbOctets = 0;
+    nbOctets = recvfrom(sock, data, maxLen, 0, address, &(infos->ai_addrlen));
 
-    return recvfrom(sock, data, maxLen, 0, address, &(infos->ai_addrlen));
-}
+    if (nbOctets  < 0)
+        return ERR_RECV;
 
-int NetworkUDP::sendDatagrams2(SOCKET sock, char *data, size_t len, SOCKADDR *address, int addrLen) {
-    return sendto(sock, data, len, 0, address, addrLen);
-}
-
-int NetworkUDP::receiveDatagrams2(SOCKET sock, char *data, size_t maxLen, SOCKADDR **address, ADDRINFO *infos) {
-    //return recvfrom(sock, data, maxLen, 0, *address, (socklen_t*)addrLen);
-    return recvfrom(sock, data, maxLen, 0, *address, &infos->ai_addrlen);
+    return RECV_OK;
 }
 /**
  * Fonction récupérant l'adresse IP du post utilisé

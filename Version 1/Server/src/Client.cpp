@@ -75,8 +75,10 @@ time_t Client::getLastalive() const {
 
 SOCK_ERROR_ENUM Client::addNetworkHints(SOCKADDR_IN *addr_in)
 {
-    //this->addr_in = addr_in;
-    memcpy(&this->addr_in, addr_in, sizeof(*addr_in));
+    void * retour = memcpy(&this->addr_in, addr_in, sizeof(*addr_in));
+
+    if (retour == NULL)
+        return NETWORK_HINTS_NOK;
 
     return NETWORK_HINTS_OK;
 }
