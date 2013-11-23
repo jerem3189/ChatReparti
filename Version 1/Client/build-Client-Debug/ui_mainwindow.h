@@ -25,7 +25,6 @@
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTabWidget>
 #include <QtWidgets/QTextEdit>
-#include <QtWidgets/QToolBar>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
@@ -41,6 +40,7 @@ public:
     QAction *action_Joindre_un_salon;
     QAction *actionAjouter;
     QAction *actionAjouter_Ligne;
+    QAction *actionD_connexion;
     QWidget *centralWidget;
     QGridLayout *gridLayout;
     QLabel *label_pseudo;
@@ -55,7 +55,6 @@ public:
     QMenuBar *menuBar;
     QMenu *menu_File;
     QMenu *menu_Salons;
-    QToolBar *mainToolBar;
     QStatusBar *statusBar;
 
     void setupUi(QMainWindow *MainWindow)
@@ -71,12 +70,16 @@ public:
         action_Lancer_le_KeepAlive->setObjectName(QStringLiteral("action_Lancer_le_KeepAlive"));
         action_Cr_er_un_nouveau_salon = new QAction(MainWindow);
         action_Cr_er_un_nouveau_salon->setObjectName(QStringLiteral("action_Cr_er_un_nouveau_salon"));
+        action_Cr_er_un_nouveau_salon->setEnabled(false);
         action_Joindre_un_salon = new QAction(MainWindow);
         action_Joindre_un_salon->setObjectName(QStringLiteral("action_Joindre_un_salon"));
+        action_Joindre_un_salon->setEnabled(false);
         actionAjouter = new QAction(MainWindow);
         actionAjouter->setObjectName(QStringLiteral("actionAjouter"));
         actionAjouter_Ligne = new QAction(MainWindow);
         actionAjouter_Ligne->setObjectName(QStringLiteral("actionAjouter_Ligne"));
+        actionD_connexion = new QAction(MainWindow);
+        actionD_connexion->setObjectName(QStringLiteral("actionD_connexion"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         gridLayout = new QGridLayout(centralWidget);
@@ -85,6 +88,7 @@ public:
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
         label_pseudo = new QLabel(centralWidget);
         label_pseudo->setObjectName(QStringLiteral("label_pseudo"));
+        label_pseudo->setEnabled(false);
 
         gridLayout->addWidget(label_pseudo, 2, 0, 1, 1);
 
@@ -102,6 +106,7 @@ public:
 
         lineEdit = new QLineEdit(centralWidget);
         lineEdit->setObjectName(QStringLiteral("lineEdit"));
+        lineEdit->setEnabled(false);
         lineEdit->setMaxLength(3000);
         lineEdit->setFrame(true);
 
@@ -120,6 +125,7 @@ public:
 
         pushButton = new QPushButton(centralWidget);
         pushButton->setObjectName(QStringLiteral("pushButton"));
+        pushButton->setEnabled(false);
         pushButton->setMaximumSize(QSize(40, 25));
         pushButton->setAutoDefault(true);
         pushButton->setDefault(true);
@@ -150,15 +156,12 @@ public:
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 763, 25));
+        menuBar->setGeometry(QRect(0, 0, 763, 28));
         menu_File = new QMenu(menuBar);
         menu_File->setObjectName(QStringLiteral("menu_File"));
         menu_Salons = new QMenu(menuBar);
         menu_Salons->setObjectName(QStringLiteral("menu_Salons"));
         MainWindow->setMenuBar(menuBar);
-        mainToolBar = new QToolBar(MainWindow);
-        mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
-        MainWindow->addToolBar(Qt::TopToolBarArea, mainToolBar);
         statusBar = new QStatusBar(MainWindow);
         statusBar->setObjectName(QStringLiteral("statusBar"));
         MainWindow->setStatusBar(statusBar);
@@ -168,6 +171,8 @@ public:
         menu_File->addAction(action_Connexion_au_serveur);
         menu_File->addSeparator();
         menu_File->addAction(action_Lancer_le_KeepAlive);
+        menu_File->addSeparator();
+        menu_File->addAction(actionD_connexion);
         menu_Salons->addAction(action_Cr_er_un_nouveau_salon);
         menu_Salons->addAction(action_Joindre_un_salon);
 
@@ -189,6 +194,7 @@ public:
         action_Joindre_un_salon->setText(QApplication::translate("MainWindow", "&Joindre un salon", 0));
         actionAjouter->setText(QApplication::translate("MainWindow", "Ajouter", 0));
         actionAjouter_Ligne->setText(QApplication::translate("MainWindow", "Ajouter Ligne", 0));
+        actionD_connexion->setText(QApplication::translate("MainWindow", "&D\303\251connexion", 0));
         label_pseudo->setText(QApplication::translate("MainWindow", "Pseudo", 0));
         label->setText(QApplication::translate("MainWindow", "Liste des clients", 0));
         pushButton->setText(QApplication::translate("MainWindow", "send", 0));
