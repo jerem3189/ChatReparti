@@ -27,6 +27,10 @@ public:
 private slots:
     void on_pushButton_clicked();
 
+    void on_actionD_connexion_triggered();
+
+    void on_action_Lancer_le_KeepAlive_triggered();
+
 private:
     Socket *listenSocket;
     MainWindow *mainWindow;

@@ -14,6 +14,7 @@
 #include "../../Server/src/RFC1664.hpp"
 #include "../../Server/src/Book.hpp"
 #include "mainwindow.hpp"
+#include "../../Server/src/Signalisation.hpp"
 #include <ui_mainwindow.h>
 
 Listening::Listening(MainWindow *mainWindow, Socket *socket, Book *book)
@@ -58,6 +59,7 @@ void Listening::run() {
             QString chaine5(champ5.c_str());
 
             QString msg_com = "";
+            Signalisation *keepalive = new Signalisation(mainWindow->getUi()->label_pseudo->text().toStdString(), mainWindow->getSocket());
 
             switch (rfc->type(message)) {
                 case MSG_COM:
@@ -96,6 +98,8 @@ void Listening::run() {
                         this->mainWindow->getUi()->lineEdit->setEnabled(true);
                         this->mainWindow->getUi()->pushButton->setEnabled(true);
                         this->mainWindow->getUi()->action_Connexion_au_serveur->setEnabled(false);
+
+                        keepalive->start();
                     }
 
                     if(champ2 == MSG_ACK_REMOVE_CLIENT_FAILED)
@@ -154,3 +158,6 @@ void Listening::run() {
     }
 }
 }
+
+
+
