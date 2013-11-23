@@ -14,3 +14,8 @@
 
 # Binaries
 *.exe
+
+# projet
+*.pro
+*.pro.user
+*.pro.*
