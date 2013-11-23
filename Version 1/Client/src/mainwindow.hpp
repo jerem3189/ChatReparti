@@ -17,6 +17,9 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     Socket *getSocket();
     Ui::MainWindow *getUi() { return this->ui; }
+    bool getConnected();
+    void setConnected(bool connected);
+    void showStatusBarMessage(QString msg);
     ~MainWindow();
     
 private slots:
@@ -34,6 +37,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
     Socket *socket;
+    bool connected;
 };
 
 #endif // MAINWINDOW_HPP

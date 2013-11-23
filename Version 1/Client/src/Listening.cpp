@@ -81,6 +81,69 @@ void Listening::run() {
 
                     break;
 
+                case MSG_ACK:
+                    if(champ2 == MSG_ACK_CONNEXION_FAILED)
+                    {
+                        this->mainWindow->setConnected(false);
+                    }
+
+                    if(champ2 == MSG_ACK_CONNEXION_SUCCESS)
+                    {
+                        this->mainWindow->setConnected(true);
+                        this->mainWindow->getUi()->action_Cr_er_un_nouveau_salon->setEnabled(true);
+                        this->mainWindow->getUi()->action_Joindre_un_salon->setEnabled(true);
+                        this->mainWindow->getUi()->label_pseudo->setEnabled(true);
+                        this->mainWindow->getUi()->lineEdit->setEnabled(true);
+                        this->mainWindow->getUi()->pushButton->setEnabled(true);
+                        this->mainWindow->getUi()->action_Connexion_au_serveur->setEnabled(false);
+                    }
+
+                    if(champ2 == MSG_ACK_REMOVE_CLIENT_FAILED)
+                    {
+
+                    }
+
+                    if(champ2 == MSG_ACK_REMOVE_CLIENT_SUCCESS)
+                    {
+
+                    }
+
+                    if(champ2 == MSG_ACK_ADD_CLIENT_TO_ROOM_FAILED)
+                    {
+
+                    }
+
+                    if(champ2 == MSG_ACK_ADD_CLIENT_TO_ROOM_SUCCESS)
+                    {
+
+                    }
+
+                    if(champ2 == MSG_ACK_REMOVE_CLIENT_TO_ROOM_FAILED)
+                    {
+
+                    }
+
+                    if(champ2 == MSG_ACK_REMOVE_CLIENT_TO_ROOM_SUCCESS)
+                    {
+
+                    }
+
+                    if(champ2 == MSG_ACK_ROOM_CREATE_FAILED)
+                    {
+
+                    }
+
+                    if(champ2 == MSG_ACK_ROOM_CREATE_SUCCESS)
+                    {
+
+                    }
+
+                    if(champ2 == MSG_ACK_UNKNOWN_CLIENT)
+                    {
+
+                    }
+
+                    break;
 
                 default:
 

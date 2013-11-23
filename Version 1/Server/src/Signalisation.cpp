@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
 #include "Signalisation.hpp"
 #include "NetworkUDP.hpp"
@@ -62,7 +63,9 @@ void Signalisation::run() {
     {
         //printf("Il vous reste %ld secondes.\n", i);
         this->sendKeepAlive();
-        sleep(KEEP_ALIVE_TIMEOUT);
+        //sleep(KEEP_ALIVE_TIMEOUT);
+        sleep(3);
+
     }
 }
 
