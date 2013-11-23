@@ -41,27 +41,13 @@ int Signalisation::sendKeepAlive() {
 
     return 0;
 }
-/**
- * Fonction de mise en stand by pour une durée déterminée
- *
- * @param nbr_seconds temps en secondes de stand by
- */
-void Signalisation::sleep(int nbr_seconds)
-{
-    clock_t goal;
-    goal = (nbr_seconds * CLOCKS_PER_SEC) + clock();
-    while(goal > clock())
-    {
-        ;
-    }
-}
+
 /**
  * Lancement de la boucle d'envoi de keep alive espacé d'un temps égal à KEEP_ALIVE_TIMEOUT
  */
 void Signalisation::run() {
     while(!end)
     {
-        //printf("Il vous reste %ld secondes.\n", i);
         this->sendKeepAlive();
         //sleep(KEEP_ALIVE_TIMEOUT);
         sleep(3);

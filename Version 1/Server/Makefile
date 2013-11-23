@@ -1,13 +1,13 @@
 CC=clang++
 CFLAGS=-Wall -g -pthread -Wuninitialized -O1 -Wunused-parameter 
 LDFLAGS=-pthread
-EXEC=server clean
+EXEC=server.exe clean
 SRC=$(wildcard src/*.cpp)
 OBJ=$(SRC:.cpp=.o)
 
 all: $(EXEC)
 
-server: $(OBJ)
+server.exe: $(OBJ)
 	$(CC) -o bin/$@ $^ $(LDFLAGS)
 
 %.o: %.cpp
