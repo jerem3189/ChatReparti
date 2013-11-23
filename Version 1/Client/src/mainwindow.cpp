@@ -39,7 +39,7 @@ void MainWindow::on_action_Connexion_au_serveur_triggered()
 
     ui->label_pseudo->setText(pseudo);
 
-    string msgcon = rfc.createMsgCon(ui->label_pseudo->text().toStdString(), "127.0.0.1");
+    string msgcon = rfc.createMsgCon(ui->label_pseudo->text().toStdString(), "127.0.0.1", "1337");
     udp.sendDatagrams(this->socket->getSocket(),(char*)msgcon.c_str(), strlen(msgcon.c_str()),socket->getSockaddr(), this->socket->getAddrinfo());
 }
 

@@ -33,4 +33,16 @@ enum MessagesTypesRFC1664 {
 
 };
 
+#define MSG_ACK_CONNEXION_FAILED "connecion failed"
+#define MSG_ACK_CONNEXION_SUCCESS "connection success"
+#define MSG_ACK_REMOVE_CLIENT_FAILED "remove client failed"
+#define MSG_ACK_REMOVE_CLIENT_SUCCESS "remove client success"
+#define MSG_ACK_ADD_CLIENT_TO_ROOM_FAILED "add client to room failed"
+#define MSG_ACK_ADD_CLIENT_TO_ROOM_SUCCESS "add client to room success"
+#define MSG_ACK_REMOVE_CLIENT_TO_ROOM_FAILED "remove client from room failed"
+#define MSG_ACK_REMOVE_CLIENT_TO_ROOM_SUCCESS "remove client from room success"
+#define MSG_ACK_ROOM_CREATE_FAILED "room create failed"
+#define MSG_ACK_ROOM_CREATE_SUCCESS "room create success"
+#define MSG_ACK_UNKNOWN_CLIENT "unknown client"
+
 #endif  //_MESSAGESTYPESRFC1664_HPP

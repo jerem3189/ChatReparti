@@ -23,17 +23,15 @@ Book::Book() {
 Book::~Book() {
 }
 /** ajoute un client à l'annuaire
- *  
+ *
  * @param name le nom du client a ajouter
  * @param addr_in le socket du client
- * @return un numéro d'erreur d'ajout à l'annuaire 
+ * @return un numéro d'erreur d'ajout à l'annuaire
  */
 BOOK_ERROR_ENUM Book::addNewClient(string name, SOCKADDR_IN *addr_in) {
     Client *client = new Client(name); // Creation de l'objet Client a partir de son nom
-    //Client client(name);
 
     SOCK_ERROR_ENUM retour = client->addNetworkHints(addr_in);
-    //SOCK_ERROR_ENUM retour = client.addNetworkHints(addr_in);
 
     if (retour != NETWORK_HINTS_OK)
         return CLIENT_ADD_NOK;
@@ -99,8 +97,9 @@ BOOK_ERROR_ENUM Book::addNewClient(string name,string addressIp, string port, ve
  * @param name le nom du client à retirer
  * @return 0
  */
-int Book::removeClient(string name) {
+BOOK_ERROR_ENUM Book::removeClient(string name) {
     Client *client = findClient(name);
+    bool success = false;
 
     vector<Client>::iterator it;
     for(it = this->clients.begin(); it != this->clients.end(); ++it)
@@ -117,25 +116,35 @@ int Book::removeClient(string name) {
             }
             this->clients.erase(it);
             cout << "Book::removeClient() -> Client supprimé !!!" << endl;
+            success = true;
             break;
         }
     }
 
-    return 0;
+    if (!success)
+        return CLIENT_DEL_NOK;
+
+    return CLIENT_DEL_OK;
 }
 /**
  * ajout d'un client à un salon
- * @param clientName le nom du client 
+ * @param clientName le nom du client
  * @param roomName le nom du salon
- * @return 0 
+ * @return 0
  */
-int Book::addClientToRoom(string clientName, string roomName) {
+BOOK_ERROR_ENUM Book::addClientToRoom(string clientName, string roomName) {
     Room *room = findRoom(roomName);
     Client *client = findClient(clientName);
 
+    if (client == NULL)
+        return ERR_UNKNOWN_CLIENT;
+
+    if (room == NULL)
+        return ERR_UNKNOWN_ROOM;
+
     room->addClient(client);
 
-    return 0;
+    return CLIENT_ADD_TO_ROOM_OK;
 }
 /**
  * retire un client d'un salon
@@ -143,13 +152,18 @@ int Book::addClientToRoom(string clientName, string roomName) {
  * @param roomName le nom du salon
  * @return 0
  */
-int Book::removeClientFromRoom(string clientName, string roomName) {
+BOOK_ERROR_ENUM Book::removeClientFromRoom(string clientName, string roomName) {
     Client *client = findClient(clientName);
     Room *room = findRoom(roomName);
 
+    if (room == NULL)
+    {
+        return ERR_REMOVE_CLIENT_FROM_ROOM;
+    }
+
     room->delClient(client);
 
-    return 0;
+    return REMOVE_CLIENT_FROM_ROOM_OK;
 }
 
 /**
@@ -217,9 +231,9 @@ void Book::setClients(vector<Client> clients) {
     this->clients = clients;
 }
 /**
- * 
- * @param roomName 
- * @return 
+ *
+ * @param roomName
+ * @return
  */
 vector<Client*> Book::getRoomClients(string roomName) {
     Room *room = findRoom(roomName);
