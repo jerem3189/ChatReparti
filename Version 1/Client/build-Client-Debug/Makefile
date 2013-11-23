@@ -122,9 +122,9 @@ DIST          = /usr/share/qt5/mkspecs/features/spec_pre.prf \
 		/usr/share/qt5/mkspecs/features/lex.prf \
 		../../Client.pro \
 		../Client.pro
-QMAKE_TARGET  = Client
+QMAKE_TARGET  = Client.exe
 DESTDIR       = 
-TARGET        = Client
+TARGET        = Client.exe
 
 
 first: all
