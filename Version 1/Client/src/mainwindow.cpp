@@ -18,6 +18,8 @@ MainWindow::MainWindow(QWidget *parent) :
     this->socket->create("NULL", "1337");
     this->connected = false;
 
+    this->show();
+    this->hide();
     this->on_action_Connexion_au_serveur_triggered();
 }
 
