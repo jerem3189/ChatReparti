@@ -137,7 +137,7 @@ int main(int argc, char** argv) {
 
         case MSG_COM:
             cout << "Main() - Switch(MSG_COM) -> " << champ2 << " à envoyé un message à redispatcher" << endl;
-j
+
             client = book.findClient(champ2);
 
             if (client != NULL)
