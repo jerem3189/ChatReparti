@@ -19,8 +19,8 @@
 #include <sstream>
 #include <iostream>
 
-/** renvoi le type d'un message
- *
+/**
+ * renvoi le type d'un message
  * @see MessagesTypesRFC1664
  * @param msg la string dont le type est a définir
  * @return le numero correspondant au type de message
@@ -69,8 +69,9 @@ MessagesTypesRFC1664 RFC1664::type(string msg) {
     return ERR_BAD_MESSAGE;
 
 }
-/** Créé un message de quittage de room
- *
+
+/**
+ * Créé un message de quittage de room
  * @param clientName le nom du cliant quittant le salon
  * @param roomName le nom du salon quitté
  * @return le message formé
@@ -79,8 +80,9 @@ string RFC1664::createMsgRoomQuit(string clientName, string roomName) {
     string retour = "ROOM_QUIT§" + clientName + "§" + roomName+"§";
     return retour;
 }
-/** Créé un message permettant de rejoindre une room
- *
+
+/**
+ * Créé un message permettant de rejoindre une room
  * @param clientName le nom du client rejoingnant la room
  * @param roomName le nom du salon rejoint
  * @return le message formé
@@ -89,8 +91,9 @@ string RFC1664::createMsgRoomJoin(string clientName, string roomName) {
     string retour = "ROOM_JOIN§" + clientName + "§" + roomName+"§";
     return retour;
 }
-/** Créé un message de creation de room
- *
+
+/**
+ * Créé un message de creation de room
  * @param clientName le nom du client à l'initiative de la creation
  * @param roomName le nom du salon à creer
  * @return le message formé
@@ -99,8 +102,9 @@ string RFC1664::createMsgRoomCreate(string clientName, string roomName) {
     string retour = "ROOM_CREATE§" + clientName + "§" + roomName + "§";
     return retour;
 }
-/** Créé un message de demande d'annuaire
- *
+
+/**
+ * Créé un message de demande d'annuaire
  * @param clientName le nom du client demandant l'annuaire
  * @return le message formé
  */
@@ -108,8 +112,9 @@ string RFC1664::createMsgBookListRqst(string clientName) {
     string retour = "BOOK_LIST_RQST§" + clientName+"§";
     return retour;
 }
-/** Créé un message de réponse d'annuaire
- *
+
+/**
+ * Créé un message de réponse d'annuaire
  * @param clientName le nom du client
  * @param ip son adresse ip
  * @param port sont port d'ecoute
@@ -152,7 +157,9 @@ string RFC1664::createMsgBookListResp(string clientName, string ip, string port,
 
     return retour;
 }
-/** Crée un message de deconnection
+
+/**
+ * Crée un message de deconnection
  *
  * @param clientName le nom du client se déconnectant
  * @return le message formé
@@ -162,7 +169,9 @@ string RFC1664::createMsgDeco(string clientName) {
     string retour = "DECO§" + clientName+"§";
     return retour;
 }
-/** Créé un message de connection
+
+/**
+ * Créé un message de connection
  *
  * @param clientName le nom du client désirant se connecter
  * @param addressIp son adresse ip
@@ -172,7 +181,9 @@ string RFC1664::createMsgCon(string clientName, string addressIp, string port) {
     string retour = "CON§" + clientName + "§" + addressIp +"§" + port = "§";
     return retour;
 }
-/** Créé un message contenant un message de chat a envoyer a un client
+
+/**
+ * Créé un message contenant un message de chat a envoyer a un client
  *
  * @param senderName l'emetteur du message
  * @param receiverName le destinataire du message
@@ -184,8 +195,9 @@ string RFC1664::createMsgCom(string senderName, string receiverName, string mess
     string retour = "COM§" + senderName + "§" + receiverName + "§" + message + "§" + roomName+"§";
     return retour;
 }
-/** créé un message de signalisation pour le maintient dans l'annuaire
- *
+
+/**
+ * créé un message de signalisation pour le maintient dans l'annuaire
  * @param clientName le nom du client se signalant
  * @return le message formé
  */
@@ -193,9 +205,10 @@ string RFC1664::createMsgKeepAlive(string clientName) {
     string retour = "KEEP_ALIVE§" + clientName+"§";
     return retour;
 }
-/** ???
- *
- * @param message ???
+
+/**
+ * creer un message d'aquittement
+ * @param message le message d'aquittement
  * @return le message formé
  */
 string RFC1664::createMsgAck(string message) {

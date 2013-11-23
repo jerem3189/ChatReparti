@@ -231,20 +231,27 @@ void Book::setClients(vector<Client> clients) {
     this->clients = clients;
 }
 /**
- *
- * @param roomName
- * @return
+ * renvoi les clients d'un salon
+ * @param roomName le nom du salon
+ * @return les clients (pointeurs) présent dans un salon
  */
 vector<Client*> Book::getRoomClients(string roomName) {
     Room *room = findRoom(roomName);
 
     return room->getClients();
 }
-
+/**
+ * retourne la liste de salons de l'annuaire
+ * @return un vector de salons
+ */
 vector<Room> Book::getRooms() {
     return this->rooms;
 }
-
+/**
+ * Ajoute un salon à l'annuaire
+ * @param name le nom d'un salon a ajouter à l'annuaire
+ * @return 0
+ */
 int Book::addRoom(string name) {
     Room room = Room(name);
     this->rooms.push_back(room);
@@ -252,7 +259,11 @@ int Book::addRoom(string name) {
 
     return 0;
 }
-
+/**
+ * retourne le nombre de salons d'un client
+ * @param clientName le nom d'un client
+ * @return le nombre de salons d'un client
+ */
 int Book::nbClientRooms(string clientName)
 {
     vector<Room*> roomList = this->getClientRooms(clientName);
@@ -261,7 +272,11 @@ int Book::nbClientRooms(string clientName)
 
     return nb;
 }
-
+/**
+ * retourne un tableau de pointeurs sur les salons d'un client
+ * @param clientName le nom du client
+ * @return vector_roomList un vector de pointeur sur les salons d'un client
+ */
 vector<Room*> Book::getClientRooms(string clientName) {
     vector<Room*> vector_roomList;
     vector<Room>::iterator it;
