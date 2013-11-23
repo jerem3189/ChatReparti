@@ -178,7 +178,7 @@ string RFC1664::createMsgDeco(string clientName) {
  * @return le message formé
  */
 string RFC1664::createMsgCon(string clientName, string addressIp, string port) {
-    string retour = "CON§" + clientName + "§" + addressIp +"§" + port = "§";
+    string retour = "CON§" + clientName + "§" + addressIp +"§" + port + "§";
     return retour;
 }
 
