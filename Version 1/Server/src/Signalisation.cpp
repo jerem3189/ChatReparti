@@ -49,8 +49,7 @@ void Signalisation::run() {
     while(!end)
     {
         this->sendKeepAlive();
-        //sleep(KEEP_ALIVE_TIMEOUT);
-        sleep(3);
+		sleep(KEEP_ALIVE_TIMEOUT);
 
     }
 }
