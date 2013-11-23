@@ -37,7 +37,7 @@ string Client::getName() {
     return this->name;
 }
 /**
- * setter du nom d'un client 
+ * setter du nom d'un client
  * @param newName le nouveau nom attribué
  */
 void Client::setName(string newName) {

@@ -6,11 +6,13 @@
 #include "NetworkUDP.hpp"
 /**
  * Fonction générique d'envoi de datagramme
- * @param sock socket 
+ * @param sock socket
  * @param *data contenu du message
  * @param len taille du message
  * @param *address adresse du socket
  * @param *infos adresse destinataire
+ * @return le nombre de bytes envoyés
+ * @return -1 en cas d'echec
  */
 int NetworkUDP::sendDatagrams(SOCKET sock, char *data, size_t len, SOCKADDR *address, ADDRINFO *infos) {
 
@@ -24,6 +26,8 @@ int NetworkUDP::sendDatagrams(SOCKET sock, char *data, size_t len, SOCKADDR *add
  * @param len taille maximum du message
  * @param *address adresse du socket
  * @param *infos adresse destinateur
+ * @return le nombre de bytes reçus
+ * @return -1 en cas d'echec
  */
 int NetworkUDP::receiveDatagrams(SOCKET sock, char *data, size_t maxLen, SOCKADDR *address, ADDRINFO *infos) {
 
@@ -40,6 +44,7 @@ int NetworkUDP::receiveDatagrams2(SOCKET sock, char *data, size_t maxLen, SOCKAD
 }
 /**
  * Fonction récupérant l'adresse IP du post utilisé
+ * @return ss la chaine contenant l'adresse ip
  */
 string NetworkUDP::getIp_static() {
 
@@ -55,6 +60,7 @@ string NetworkUDP::getIp_static() {
 }
 /**
  * Fonction récupérant l'adresse IP de l'interface utilisée
+ * @return ss2 la chaine contenant l'adresse ip
  */
 string NetworkUDP::getIp_interface(string interface) {
 

@@ -1,5 +1,5 @@
 /** \file Room.cpp
- * 
+ *
  */
 using namespace std;
 #include "Room.hpp"
@@ -43,7 +43,7 @@ string Room::getName() {
     return this->name;
 }
 /**
- * setter du nom d'un client 
+ * setter du nom d'un client
  * @param newName le nouveau nom attribué
  */
 void Room::setName(string name) {

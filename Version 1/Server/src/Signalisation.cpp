@@ -1,7 +1,7 @@
 /** \file Signalisation.cpp
  * Fonctions d'envoi périodique de keep alive.
  * Description plus elaboree et detaillee du fichier.
- * 
+ *
  */
 
 #include <time.h>
@@ -26,6 +26,7 @@ Signalisation::Signalisation(string clientName, Socket *socket)
 
 /**
  * Envoi du keep alive
+ * @return 0
  */
 int Signalisation::sendKeepAlive() {
     RFC1664 rfc;
@@ -41,7 +42,7 @@ int Signalisation::sendKeepAlive() {
 }
 /**
  * Fonction de mise en stand by pour une durée déterminée
- * 
+ *
  * @param nbr_seconds temps en secondes de stand by
  */
 void Signalisation::sleep(int nbr_seconds)

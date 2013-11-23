@@ -23,10 +23,10 @@ Book::Book() {
 Book::~Book() {
 }
 /** ajoute un client à l'annuaire
- *  
+ *
  * @param name le nom du client a ajouter
  * @param addr_in le socket du client
- * @return un numéro d'erreur d'ajout à l'annuaire 
+ * @return un numéro d'erreur d'ajout à l'annuaire
  */
 BOOK_ERROR_ENUM Book::addNewClient(string name, SOCKADDR_IN *addr_in) {
     Client *client = new Client(name); // Creation de l'objet Client a partir de son nom
@@ -125,9 +125,9 @@ int Book::removeClient(string name) {
 }
 /**
  * ajout d'un client à un salon
- * @param clientName le nom du client 
+ * @param clientName le nom du client
  * @param roomName le nom du salon
- * @return 0 
+ * @return 0
  */
 int Book::addClientToRoom(string clientName, string roomName) {
     Room *room = findRoom(roomName);
@@ -228,7 +228,7 @@ vector<Client*> Book::getRoomClients(string roomName) {
 }
 /**
  * retourne la liste de salons de l'annuaire
- * @return un vector de salons 
+ * @return un vector de salons
  */
 vector<Room> Book::getRooms() {
     return this->rooms;
@@ -261,7 +261,7 @@ int Book::nbClientRooms(string clientName)
 /**
  * retourne un tableau de pointeurs sur les salons d'un client
  * @param clientName le nom du client
- * @return vector_roomList un vector de pointeur sur les salons d'un client 
+ * @return vector_roomList un vector de pointeur sur les salons d'un client
  */
 vector<Room*> Book::getClientRooms(string clientName) {
     vector<Room*> vector_roomList;

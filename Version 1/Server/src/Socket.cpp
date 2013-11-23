@@ -9,7 +9,9 @@
 
 #include "../../Server/src/NetworkUDP.hpp"
 
-
+/**
+ * constructeur ar défaut de socket
+ */
 Socket::Socket() {
     this->initialized = false;
 
@@ -18,11 +20,18 @@ Socket::Socket() {
     this->hints.ai_socktype = SOCK_DGRAM; /* Mode Datagramme */
     this->hints.ai_flags = AI_PASSIVE;
 }
-
+/**
+ * destructeur du socket
+ */
 Socket::~Socket() {
     close(this->sock);
 }
-
+/**
+ * fonction permettant de créer un socket a partir d'une adresse ip et d'un port
+ * @param addressIp l'adresse ip du socket
+ * @param port le port du socket
+ * @return un code d'erreur correspondant au status de la creation du socket
+ */
 SOCK_ERROR_ENUM Socket::create(string addressIp, string port) {
     int ret = 0;
 
@@ -54,7 +63,10 @@ SOCK_ERROR_ENUM Socket::create(string addressIp, string port) {
 
     return SOCK_OK;
 }
-
+/**
+ * bind un socket
+ * @return un code erreur correspondant au status du bind
+ */
 SOCK_ERROR_ENUM Socket::binding() {
     if (bind(this->sock, this->server_info->ai_addr, this->server_info->ai_addrlen) == -1)
     {
@@ -68,14 +80,21 @@ SOCK_ERROR_ENUM Socket::binding() {
 
     return SOCK_BIND_OK;
 }
-
+/**
+ * setter d'ip et port d'un socket
+ * @param addressIp l'adresse ip du socket
+ * @param port le port du socket
+ */
 void Socket::setIpPort(string addressIp, string port)
 {
     this->addressIp = addressIp;
     this->port = port;
 }
 
-
+/**
+ * fonction de fermeture d'un socket
+ *
+ */
 void Socket::terminate() {
     close(this->sock);
 }
@@ -95,12 +114,18 @@ ADDRINFO *Socket::getAddrinfo()
 SOCKET Socket::getSocket() {
     return this->sock;
 }
-
+/**
+ * getter du port d'un socket
+ * @return un chaine contenant le port
+ */
 string Socket::getPort()
 {
     return this->port;
 }
-
+/**
+ * getter de l'adresse ip d'un socket
+ * @return la chaine contenant l'adresse ip
+ */
 string Socket::getAddressIp()
 {
     return this->addressIp;
