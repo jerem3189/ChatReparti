@@ -139,7 +139,8 @@ void Listening::run() {
 
                     if(champ2 == MSG_ACK_ROOM_CREATE_SUCCESS)
                     {
-
+                        QWidget *widget = new QWidget (this->mainWindow->getUi()->QTabWidget_GlobalRoom);
+                        this->mainWindow->getUi()->QTabWidget_onglets->addTab(widget, QIcon(), "TEST");
                     }
 
                     if(champ2 == MSG_ACK_UNKNOWN_CLIENT)
