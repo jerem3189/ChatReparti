@@ -78,7 +78,7 @@ void Listening::run() {
                 case MSG_BOOK_LIST_RESP:
                     cout << "Debug :j'ai reçu l'annuaire" << endl;
 
-                    this->book->addNewClient(chaine2.toStdString(), &addr_in);
+                    this->book->addNewClient(chaine2.toStdString(), chaine3.toStdString(), chaine4.toStdString(), &addr_in);
                     mainWindow->getUi()->listWidget->addItem(chaine2);
 
                     break;
@@ -161,7 +161,7 @@ void Listening::run() {
 
                     if(champ2 == MSG_ACK_UNKNOWN_CLIENT)
                     {
-                        this->mainWindow->getUi()->statusBar->addPermanentWidget (new QLabel ("message permanent", this->mainWindow->getUi()->statusBar,(QMainWindow)this->mainWindow));
+                        this->mainWindow->getUi()->statusBar->addPermanentWidget (new QLabel ("message permanent"));
                     }
 
                     break;
