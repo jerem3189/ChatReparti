@@ -245,21 +245,21 @@ vector<Room*> Book::getClientRooms(string clientName) {
     {
         for(int i=0; i<it->getClients().size(); i++)
         {
-            cout << "avant tempName " << endl;
+            //cout << "avant tempName " << endl;
             tempName = it->getClients().at(i)->getName();
-            cout << "tempName :  " << tempName << endl;
+            //cout << "tempName :  " << tempName << endl;
             if (tempName == clientName)
             {
-                cout << "proutiproutproutiprout" << endl;
+                
                 Room *room = &(*it);
-                cout << "proutidazfazfgazfazf" << endl;
+                
                 vector_roomList.push_back(room);
-                cout << "proutgeeeeeeegggggggggggggr" << endl;
+                
                 break;
             }
         }
     }
-    cout << "YAAAAAAAAAAAA" << endl;
+    
 
     cout << "TAILLE DE LA ROOMLIST" << vector_roomList.size() << endl;
     cout << "element at (1) [" << vector_roomList.at(0)->getName() << "]" << endl;
