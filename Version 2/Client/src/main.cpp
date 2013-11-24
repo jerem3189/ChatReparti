@@ -12,6 +12,7 @@ int main(int argc, char *argv[])
     w.show();
 
     Book *book = new Book();
+    w.setBook(book);
 
     Listening *listen = new Listening(&w, w.getSocket(), book);
     listen->start();

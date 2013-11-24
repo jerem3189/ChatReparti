@@ -5,6 +5,7 @@
 
 class Socket;
 class Signalisation;
+class Book;
 
 namespace Ui {
 class MainWindow;
@@ -25,6 +26,7 @@ public:
     
     Signalisation *getSig() const;
     void setSig(Signalisation *value);
+    void setBook(Book *botin);
 
 private slots:
 
@@ -45,6 +47,7 @@ private:
     Socket *socket;
     bool connected;
     Signalisation *sig;
+    Book *book;
 };
 
 #endif // MAINWINDOW_HPP

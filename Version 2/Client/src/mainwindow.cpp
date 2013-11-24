@@ -1,6 +1,6 @@
 #include "mainwindow.hpp"
 #include "ui_mainwindow.h"
-
+#include "../../Server/src/Book.hpp"
 #include "../../Server/src/Signalisation.hpp"
 #include "../../Server/src/RFC1664.hpp"
 #include "../../Server/src/NetworkUDP.hpp"
@@ -68,15 +68,24 @@ void MainWindow::on_action_Lancer_le_KeepAlive_triggered()
     keepalive->start();
 
 }
+void MainWindow::setBook(Book *botin){
+    this->book=botin;
+}
 
 void MainWindow::on_pushButton_clicked()
 {
     RFC1664 rfc;
     cout << "Envoi du message au serveur !" << endl;
-
+    int i;
     QString msg = ui->lineEdit->text();
     string msgCom = rfc.createMsgCom(ui->label_pseudo->text().toStdString(), "", msg.toStdString(), ui->QTabWidget_onglets->tabText(ui->QTabWidget_onglets->currentIndex()).toStdString());
-    NetworkUDP::sendDatagrams(this->socket->getSocket(),(char*)msgCom.c_str(), strlen(msgCom.c_str()),socket->getSockaddr(), this->socket->getAddrinfo());
+
+    for (i=0; i<book->getClients().size(); i++)
+                    {
+
+                        NetworkUDP::sendDatagrams(this->socket->getSocket(), (char*)msgCom.c_str(), strlen(msgCom.c_str()), (SOCKADDR*)book->getClients().at(i).getSockAddr(), this->socket->getAddrinfo());
+                    }
+    //NetworkUDP::sendDatagrams(this->socket->getSocket(),(char*)msgCom.c_str(), strlen(msgCom.c_str()),socket->getSockaddr(), this->socket->getAddrinfo());
 
     this->ui->lineEdit->clear();
 }
