@@ -122,20 +122,24 @@ int main(int argc, char** argv) {
             {   //si il existe on le supprime
 
                 bookErrorEnum = book.removeClient(champ2);
+                cout << "BOOK ERROR NUM " << bookErrorEnum << endl;
                 //si une erreur survient lors de la suppression on l'envoie
                 if (bookErrorEnum == CLIENT_DEL_NOK)
                 {
+                    cout << "NOK NOK NOK" << endl;
                     ack = rfc.createMsgAck(MSG_ACK_REMOVE_CLIENT_FAILED);
                     NetworkUDP::sendDatagrams(listenSocket.getSocket(), (char*)ack.c_str(), strlen(ack.c_str()), (SOCKADDR*)book.findClient(champ2)->getSockAddr(), listenSocket.getAddrinfo());
                 }
                 else
                 {   //sinon on envoie une confirmation de suppression
+                    cout << "OK OK OK" << endl;
                     ack = rfc.createMsgAck(MSG_ACK_REMOVE_CLIENT_SUCCESS);
-                    NetworkUDP::sendDatagrams(listenSocket.getSocket(), (char*)ack.c_str(), strlen(ack.c_str()), (SOCKADDR*)book.findClient(champ2)->getSockAddr(), listenSocket.getAddrinfo());
+                    NetworkUDP::sendDatagrams(listenSocket.getSocket(), (char*)ack.c_str(), strlen(ack.c_str()), (SOCKADDR*)&addr_in, listenSocket.getAddrinfo());
                 }
             }
             else
             {   //si le client n'existe pas on envoie une erreur de client inconnu
+                cout << "BIZU TA ENVOYE CA" <<endl;
                 ack = rfc.createMsgAck(MSG_ACK_UNKNOWN_CLIENT);
                 NetworkUDP::sendDatagrams(listenSocket.getSocket(), (char*)ack.c_str(), strlen(ack.c_str()), (SOCKADDR*)&addr_in, listenSocket.getAddrinfo());
             }

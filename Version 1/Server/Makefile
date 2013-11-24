@@ -1,7 +1,7 @@
 CC=clang++
 CFLAGS=-Wall -g -pthread -Wuninitialized -O1 -Wunused-parameter 
 LDFLAGS=-pthread
-EXEC=server.exe clean
+EXEC=server clean
 SRC=$(wildcard src/*.cpp)
 OBJ=$(SRC:.cpp=.o)
 

@@ -61,7 +61,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(763, 639);
+        MainWindow->resize(800, 640);
         action_Connexion_au_serveur = new QAction(MainWindow);
         action_Connexion_au_serveur->setObjectName(QStringLiteral("action_Connexion_au_serveur"));
         actionErger = new QAction(MainWindow);
@@ -156,7 +156,7 @@ public:
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 763, 28));
+        menuBar->setGeometry(QRect(0, 0, 800, 20));
         menu_File = new QMenu(menuBar);
         menu_File->setObjectName(QStringLiteral("menu_File"));
         menu_Salons = new QMenu(menuBar);

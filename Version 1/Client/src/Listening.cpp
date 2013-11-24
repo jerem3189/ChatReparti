@@ -114,7 +114,7 @@ void Listening::run() {
 
                     if(champ2 == MSG_ACK_REMOVE_CLIENT_SUCCESS)
                     {
-
+                        this->keepalive->stop();
                     }
 
                     if(champ2 == MSG_ACK_ADD_CLIENT_TO_ROOM_FAILED)

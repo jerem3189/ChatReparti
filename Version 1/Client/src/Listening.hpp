@@ -23,15 +23,11 @@ class Signalisation;
 class QObject;
 
 class Listening : public QObject, public Thread {
+    Q_OBJECT
+
 public:
     Listening(MainWindow *mainWindow, Socket *socket, Book *book);
     void run();
-private slots:
-    void on_pushButton_clicked();
-
-    void on_actionD_connexion_triggered();
-
-    void on_action_Lancer_le_KeepAlive_triggered();
 
 private:
     Socket *listenSocket;
