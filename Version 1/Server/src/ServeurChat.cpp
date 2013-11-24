@@ -68,7 +68,7 @@ int main(int argc, char** argv) {
         switch (rfc.type(message)) {
         case MSG_CON:
             cout << "Main() - Switch(MSG_CON) -> " << champ2 << " s'est connecté au serveur" << endl;
-            if(book.addNewClient(champ2, &addr_in)==CLIENT_ADD_OK) {
+            if(book.addNewClient(champ2, champ3, champ4, &addr_in)==CLIENT_ADD_OK) {
                 cout << "Main() - Switch(MSG_CON) -> " << champ2 << " a été ajouté à l'annuaire" << endl;
 
                 send = rfc.createMsgBookListResp(champ2, champ3, champ4, book.getClientRooms(champ2).size(), book.getClientRooms(champ2));
@@ -202,12 +202,11 @@ int main(int argc, char** argv) {
             break;
 
         case MSG_ROOM_QUIT:
-            bookErrorEnum = book.removeClientFromRoom(champ2, champ3);
-
             client = book.findClient(champ2);
 
             if (client != NULL)
             {
+                bookErrorEnum = book.removeClientFromRoom(champ2, champ3);
                 if (bookErrorEnum == REMOVE_CLIENT_FROM_ROOM_OK)
                 {
                     cout << "Main() - Switch(MSG_ROOM_QUIT) -> " << champ2 << " à quitté le salon " << champ3 << endl;

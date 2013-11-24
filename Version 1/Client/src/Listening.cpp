@@ -139,13 +139,29 @@ void Listening::run() {
 
                     if(champ2 == MSG_ACK_ROOM_CREATE_SUCCESS)
                     {
-                        QWidget *widget = new QWidget (this->mainWindow->getUi()->QTabWidget_GlobalRoom);
-                        this->mainWindow->getUi()->QTabWidget_onglets->addTab(widget, QIcon(), "TEST");
+                        this->mainWindow->getUi()->statusBar->addPermanentWidget(new QLabel ("message permanent", this->mainWindow->getUi()->statusBar));
+                        QWidget *widget = new QWidget();
+                        widget->setObjectName(QStringLiteral("TAB_TOTO"));
+
+                        QVBoxLayout *vertLayout = new QVBoxLayout(widget);
+                        vertLayout->setSpacing(6);
+                        vertLayout->setContentsMargins(11, 11, 11, 11);
+                        vertLayout->setObjectName(QStringLiteral("verticalLayout_14"));
+
+                        QTextEdit *textEdit = new QTextEdit(widget);
+                        textEdit->setObjectName(QStringLiteral("textEdit2"));
+                        textEdit->setTextInteractionFlags(Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse);
+
+                        vertLayout->addWidget(textEdit);
+
+                        widget->show();
+
+                        this->mainWindow->getUi()->QTabWidget_onglets->addTab(widget, QString(champ3.c_str()));
                     }
 
                     if(champ2 == MSG_ACK_UNKNOWN_CLIENT)
                     {
-
+                        this->mainWindow->getUi()->statusBar->addPermanentWidget (new QLabel ("message permanent", this->mainWindow->getUi()->statusBar,(QMainWindow)this->mainWindow));
                     }
 
                     break;

@@ -1,3 +1,4 @@
+
 /*
  * File:   Client.cpp
  * Author: Arnaud
@@ -10,7 +11,6 @@ using namespace std;
 
 #include <stdio.h>
 #include <string.h>
-
 
 Client::Client() {
 }
@@ -25,6 +25,22 @@ Client::Client(const Client &client) : name(client.name), addr_in(client.addr_in
  */
 Client::Client(string name) {
     this->name = name;
+}
+
+
+string Client::getPort() const
+{
+    return port;
+}
+
+void Client::setPort(const string &value)
+{
+    port = value;
+}
+
+string Client::getAdressIp() const
+{
+    return this->adressIp;
 }
 
 Client::~Client() {
@@ -81,4 +97,10 @@ SOCK_ERROR_ENUM Client::addNetworkHints(SOCKADDR_IN *addr_in)
         return NETWORK_HINTS_NOK;
 
     return NETWORK_HINTS_OK;
+}
+
+
+void Client::setAdressIp(const string &value)
+{
+    this->adressIp = value;
 }

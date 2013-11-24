@@ -21,9 +21,7 @@ class Book {
 public:
     Book();
     virtual ~Book();
-    BOOK_ERROR_ENUM addNewClient(string name,string addressIp,string port, vector<string> roomList);
-    BOOK_ERROR_ENUM addNewClient(string name, string addressIp, string port);
-    BOOK_ERROR_ENUM addNewClient(string name, SOCKADDR_IN *addr_in);
+    BOOK_ERROR_ENUM addNewClient(string name, string addressIp, string port, SOCKADDR_IN *addr_in);
     BOOK_ERROR_ENUM removeClient(string name);
     BOOK_ERROR_ENUM addClientToRoom(string clientName, string roomName);
     BOOK_ERROR_ENUM removeClientFromRoom(string clientName, string roomName);

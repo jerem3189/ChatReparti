@@ -10,6 +10,8 @@ using namespace std;
 
 #include <utility>
 #include "../../Server/src/ErrorCodes.hpp"
+
+
 /**
  * Constructeur par défaut de l'annuaire
  * créé un salon global
@@ -22,25 +24,7 @@ Book::Book() {
 
 Book::~Book() {
 }
-/** ajoute un client à l'annuaire
- *
- * @param name le nom du client a ajouter
- * @param addr_in le socket du client
- * @return un numéro d'erreur d'ajout à l'annuaire
- */
-BOOK_ERROR_ENUM Book::addNewClient(string name, SOCKADDR_IN *addr_in) {
-    Client *client = new Client(name); // Creation de l'objet Client a partir de son nom
 
-    SOCK_ERROR_ENUM retour = client->addNetworkHints(addr_in);
-
-    if (retour != NETWORK_HINTS_OK)
-        return CLIENT_ADD_NOK;
-
-    this->rooms.at(0).addClient(client);
-    this->clients.push_back(*client);
-
-    return CLIENT_ADD_OK;
-}
 /**
  * Ajoute un client à l'annuaire
  * @param name le nom du client à ajouter
@@ -49,49 +33,23 @@ BOOK_ERROR_ENUM Book::addNewClient(string name, SOCKADDR_IN *addr_in) {
  * @param roomList sa liste de salon
  * @return un numéro d'erreur d'ajout à l'annuaire
  */
-BOOK_ERROR_ENUM Book::addNewClient(string name,string addressIp, string port, vector<string> roomList) {
-    /*Client client = Client(name); // Creation de l'objet Client a partir de son nom
-    int test = -1;
+BOOK_ERROR_ENUM Book::addNewClient(string name, string addressIp, string port, SOCKADDR_IN *addr_in) {
+    Client *client = new Client(name); // Creation de l'objet Client a partir de son nom
 
-    for (vector<string>::iterator i = roomList.begin(); i != roomList.end(); ++i)
-    {
-        vector<Room>::iterator it;
+    SOCK_ERROR_ENUM retour = client->addNetworkHints(addr_in);
 
-        bool result = false;
-        for(it = this->rooms.begin(); it != this->rooms.end(); ++it)
-        {
-            if(it->getName() == *i)
-            {
-                result = true;
-                it->addClient(&client);
-                test++;
+    if (retour != NETWORK_HINTS_OK)
+        return CLIENT_ADD_NOK;
 
-                SOCK_ERROR_ENUM retour = client.addNetworkHints(addressIp,port);
+    client->setAdressIp(addressIp);
+    client->setPort(port);
 
-                if (retour != NETWORK_HINTS_OK)
-                {
-                    it->delClient(&client);
-                    return CLIENT_ADD_NOK;
-                }
-
-                cout << "Book::addNewClient() -> La room existe et le client a été ajouté" << endl;
-                break;
-            }
-        }
-    }
-
-    if (test < 0)
-    {
-        this->rooms.at(0).addClient(&client);
-        this->clients.push_back(client);
-        return CLIENT_ADD_OK;
-    }
-    else
-        this->clients.push_back(client);
-        */
+    this->rooms.at(0).addClient(client);
+    this->clients.push_back(*client);
 
     return CLIENT_ADD_OK;
 }
+
 /**
  * retire un client de l'annuaire
  * @param name le nom du client à retirer

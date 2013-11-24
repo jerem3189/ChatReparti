@@ -42,10 +42,19 @@ public:
     time_t getLastalive() const;
 
     bool operator==(Client & client);
+
+    string getPort() const;
+    void setPort(const string &value);
+
+    string getAdressIp() const;
+    void setAdressIp(const string &value);
+
 private:
     string name;
     time_t lastalive;
     SOCKADDR_IN addr_in;
+    string adressIp;
+    string port;
 };
 
 #endif	/* CLIENT_HPP */
