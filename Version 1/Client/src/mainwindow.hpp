@@ -4,6 +4,7 @@
 #include <QMainWindow>
 
 class Socket;
+class Signalisation;
 
 namespace Ui {
 class MainWindow;
@@ -19,9 +20,12 @@ public:
     Ui::MainWindow *getUi() { return this->ui; }
     bool getConnected();
     void setConnected(bool connected);
-    void showStatusBarMessage(QString msg);
+    void addMessageToStatusBar(QString msg);
     ~MainWindow();
     
+    Signalisation *getSig() const;
+    void setSig(Signalisation *value);
+
 private slots:
 
     void on_action_Connexion_au_serveur_triggered();
@@ -40,6 +44,7 @@ private:
     Ui::MainWindow *ui;
     Socket *socket;
     bool connected;
+    Signalisation *sig;
 };
 
 #endif // MAINWINDOW_HPP

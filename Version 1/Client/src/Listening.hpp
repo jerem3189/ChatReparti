@@ -19,8 +19,10 @@ class Socket;
 class NetworkUDP;
 class RFC1664;
 class Book;
+class Signalisation;
+class QObject;
 
-class Listening : public Thread {
+class Listening : public QObject, public Thread {
 public:
     Listening(MainWindow *mainWindow, Socket *socket, Book *book);
     void run();
@@ -38,6 +40,10 @@ private:
     NetworkUDP *udp;
     RFC1664 *rfc;
     Book *book;
+    Signalisation *keepalive;
+
+signals:
+    void statusBarChanged(QString);
 };
 
 #endif  //_LISTENING_H

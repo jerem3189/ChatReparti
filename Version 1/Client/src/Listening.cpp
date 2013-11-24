@@ -28,6 +28,9 @@ Listening::Listening(MainWindow *mainWindow, Socket *socket, Book *book)
 
     QString global_room_name(this->book->getRooms().at(0).getName().c_str());
     this->mainWindow->getUi()->QTabWidget_onglets->setTabText(0, global_room_name);
+    this->keepalive = NULL;
+
+    QObject::connect(this, SIGNAL(statusBarChanged(QString)),this->mainWindow->getUi()->statusBar, SLOT(showMessage(QString)));
 }
 
 void Listening::run() {
@@ -59,7 +62,6 @@ void Listening::run() {
             QString chaine5(champ5.c_str());
 
             QString msg_com = "";
-            Signalisation *keepalive = new Signalisation(mainWindow->getUi()->label_pseudo->text().toStdString(), mainWindow->getSocket());
 
             switch (rfc->type(message)) {
                 case MSG_COM:
@@ -98,6 +100,9 @@ void Listening::run() {
                         this->mainWindow->getUi()->lineEdit->setEnabled(true);
                         this->mainWindow->getUi()->pushButton->setEnabled(true);
                         this->mainWindow->getUi()->action_Connexion_au_serveur->setEnabled(false);
+
+                        keepalive = new Signalisation(mainWindow->getUi()->label_pseudo->text().toStdString(), mainWindow->getSocket());
+                        this->mainWindow->setSig(keepalive);
 
                         keepalive->start();
                     }
@@ -161,7 +166,8 @@ void Listening::run() {
 
                     if(champ2 == MSG_ACK_UNKNOWN_CLIENT)
                     {
-                        this->mainWindow->getUi()->statusBar->addPermanentWidget (new QLabel ("message permanent"));
+                        //this->mainWindow->getUi()->statusBar->addPermanentWidget (new QLabel ("message permanent"));
+                        emit statusBarChanged(QString("Vous n'etes pas connecté"));
                     }
 
                     break;

@@ -19,6 +19,7 @@ void Thread::start() {
         printf("Thread::start() -> ERREUR de création du thread; Code d'erreur = %d\n",rc);
     }
     printf("Thread::start() -> Thread créé\n");
+    this->end = false;
 }
 
 void Thread::stop()

@@ -38,9 +38,9 @@ void MainWindow::setConnected(bool connected)
     this->connected = connected;
 }
 
-void MainWindow::showStatusBarMessage(QString msg)
+void MainWindow::addMessageToStatusBar(QString msg)
 {
-    statusBar()->showMessage(msg);
+    this->ui->statusBar->addPermanentWidget(new QLabel(msg));
 }
 
 MainWindow::~MainWindow()
@@ -51,7 +51,6 @@ MainWindow::~MainWindow()
 void MainWindow::on_action_Connexion_au_serveur_triggered()
 {
     RFC1664 rfc;
-    NetworkUDP udp;
 
     QString pseudo = QInputDialog::getText(this, "Connexion au serveur", "Veuillez saisir votre pseudo");
     if ((pseudo == "Veuillez saisir votre pseudo") || (pseudo == ""))
@@ -60,7 +59,7 @@ void MainWindow::on_action_Connexion_au_serveur_triggered()
     ui->label_pseudo->setText(pseudo);
 
     string msgcon = rfc.createMsgCon(ui->label_pseudo->text().toStdString(), "127.0.0.1", "1337");
-    udp.sendDatagrams(this->socket->getSocket(),(char*)msgcon.c_str(), strlen(msgcon.c_str()),socket->getSockaddr(), this->socket->getAddrinfo());
+    NetworkUDP::sendDatagrams(this->socket->getSocket(),(char*)msgcon.c_str(), strlen(msgcon.c_str()),socket->getSockaddr(), this->socket->getAddrinfo());
 }
 
 void MainWindow::on_action_Lancer_le_KeepAlive_triggered()
@@ -85,27 +84,25 @@ void MainWindow::on_pushButton_clicked()
 void MainWindow::on_action_Cr_er_un_nouveau_salon_triggered()
 {
     RFC1664 rfc;
-    NetworkUDP udp;
 
     QString roomName = QInputDialog::getText(this, "Création d'un salon", "Veuillez saisir le nom du salon");
     if ((roomName == "Veuillez saisir le nom du salon") || (roomName == ""))
         return;
 
     string msg = rfc.createMsgRoomCreate(ui->label_pseudo->text().toStdString(),roomName.toStdString());
-    udp.sendDatagrams(this->socket->getSocket(),(char*)msg.c_str(), strlen(msg.c_str()),socket->getSockaddr(), this->socket->getAddrinfo());
+    NetworkUDP::sendDatagrams(this->socket->getSocket(),(char*)msg.c_str(), strlen(msg.c_str()),socket->getSockaddr(), this->socket->getAddrinfo());
 }
 
 void MainWindow::on_action_Joindre_un_salon_triggered()
 {
     RFC1664 rfc;
-    NetworkUDP udp;
 
     QString roomName = QInputDialog::getText(this, "Création d'un salon", "Veuillez saisir le nom du salon");
     if ((roomName == "Veuillez saisir le nom du salon") || (roomName == ""))
         return;
 
     string msg = rfc.createMsgRoomJoin(ui->label_pseudo->text().toStdString(), roomName.toStdString());
-    udp.sendDatagrams(this->socket->getSocket(),(char*)msg.c_str(), strlen(msg.c_str()),socket->getSockaddr(), this->socket->getAddrinfo());
+    NetworkUDP::sendDatagrams(this->socket->getSocket(),(char*)msg.c_str(), strlen(msg.c_str()),socket->getSockaddr(), this->socket->getAddrinfo());
 }
 
 void MainWindow::on_actionD_connexion_triggered()
@@ -113,5 +110,15 @@ void MainWindow::on_actionD_connexion_triggered()
     RFC1664 rfc;
     string msg =rfc.createMsgDeco(ui->label_pseudo->text().toStdString());
     NetworkUDP::sendDatagrams(this->socket->getSocket(),(char*)msg.c_str(),strlen(msg.c_str()),socket->getSockaddr(), this->socket->getAddrinfo());
+}
 
+
+Signalisation *MainWindow::getSig() const
+{
+    return sig;
+}
+
+void MainWindow::setSig(Signalisation *value)
+{
+    sig = value;
 }
