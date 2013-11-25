@@ -15,7 +15,7 @@ using namespace std;
 Client::Client() {
 }
 
-Client::Client(const Client &client) : name(client.name), addr_in(client.addr_in), lastalive(client.lastalive)
+Client::Client(const Client &client) : name(client.name), addr_in(client.addr_in), lastalive(client.lastalive), addressIp(client.addressIp), port(client.port)
 {
 
 }
@@ -33,14 +33,14 @@ string Client::getPort() const
     return port;
 }
 
-void Client::setPort(const string &value)
+void Client::setPort(const string value)
 {
     port = value;
 }
 
-string Client::getAdressIp() const
+string Client::getAddressIp() const
 {
-    return this->adressIp;
+    return this->addressIp;
 }
 
 Client::~Client() {
@@ -100,7 +100,7 @@ SOCK_ERROR_ENUM Client::addNetworkHints(SOCKADDR_IN *addr_in)
 }
 
 
-void Client::setAdressIp(const string &value)
+void Client::setAddressIp(const string value)
 {
-    this->adressIp = value;
+    this->addressIp = value;
 }

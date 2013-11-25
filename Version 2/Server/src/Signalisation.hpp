@@ -6,7 +6,7 @@
 #if !defined(_SIGNALISATION_H)
 #define _SIGNALISATION_H
 
-#define KEEP_ALIVE_TIMEOUT 5 // en secondes
+#define KEEP_ALIVE_TIMEOUT 120 // en secondes
 
 #include "Thread.hpp"
 #include <string>

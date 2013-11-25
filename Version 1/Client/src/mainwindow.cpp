@@ -40,7 +40,7 @@ void MainWindow::setConnected(bool connected)
 
 void MainWindow::addMessageToStatusBar(QString msg)
 {
-    this->ui->statusBar->addPermanentWidget(new QLabel(msg));
+    this->ui->statusBar->addPermanentWidget(new QLabel(msg),120);
 }
 
 MainWindow::~MainWindow()

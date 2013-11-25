@@ -31,6 +31,7 @@ Listening::Listening(MainWindow *mainWindow, Socket *socket, Book *book)
     this->keepalive = NULL;
 
     QObject::connect(this, SIGNAL(statusBarChanged(QString)),this->mainWindow->getUi()->statusBar, SLOT(showMessage(QString)));
+    QObject::connect(this, SIGNAL(newRoom(QString)),this, SLOT(createNewTab(QString)));
 }
 
 void Listening::run() {
@@ -89,6 +90,7 @@ void Listening::run() {
                     if(champ2 == MSG_ACK_CONNEXION_FAILED)
                     {
                         this->mainWindow->setConnected(false);
+                        emit statusBarChanged(QString("Connexion échouée"));
                     }
 
                     if(champ2 == MSG_ACK_CONNEXION_SUCCESS)
@@ -105,6 +107,7 @@ void Listening::run() {
                         this->mainWindow->setSig(keepalive);
 
                         keepalive->start();
+                        emit statusBarChanged(QString("Connexion effectuée avec succès"));
                     }
 
                     if(champ2 == MSG_ACK_REMOVE_CLIENT_FAILED)
@@ -115,6 +118,7 @@ void Listening::run() {
                     if(champ2 == MSG_ACK_REMOVE_CLIENT_SUCCESS)
                     {
                         this->keepalive->stop();
+                        emit statusBarChanged(QString("Déconnexion effectuée avec succès"));
                     }
 
                     if(champ2 == MSG_ACK_ADD_CLIENT_TO_ROOM_FAILED)
@@ -144,29 +148,12 @@ void Listening::run() {
 
                     if(champ2 == MSG_ACK_ROOM_CREATE_SUCCESS)
                     {
-                        this->mainWindow->getUi()->statusBar->addPermanentWidget(new QLabel ("message permanent", this->mainWindow->getUi()->statusBar));
-                        QWidget *widget = new QWidget();
-                        widget->setObjectName(QStringLiteral("TAB_TOTO"));
-
-                        QVBoxLayout *vertLayout = new QVBoxLayout(widget);
-                        vertLayout->setSpacing(6);
-                        vertLayout->setContentsMargins(11, 11, 11, 11);
-                        vertLayout->setObjectName(QStringLiteral("verticalLayout_14"));
-
-                        QTextEdit *textEdit = new QTextEdit(widget);
-                        textEdit->setObjectName(QStringLiteral("textEdit2"));
-                        textEdit->setTextInteractionFlags(Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse);
-
-                        vertLayout->addWidget(textEdit);
-
-                        widget->show();
-
-                        this->mainWindow->getUi()->QTabWidget_onglets->addTab(widget, QString(champ3.c_str()));
+                        emit statusBarChanged(QString("Le salon a été créé avec succès"));
+                        emit newRoom(QString(champ2.c_str()));
                     }
 
                     if(champ2 == MSG_ACK_UNKNOWN_CLIENT)
                     {
-                        //this->mainWindow->getUi()->statusBar->addPermanentWidget (new QLabel ("message permanent"));
                         emit statusBarChanged(QString("Vous n'etes pas connecté"));
                     }
 
@@ -182,5 +169,26 @@ void Listening::run() {
 }
 }
 
+
+void Listening::createNewTab(QString name)
+{
+    QWidget *widget = new QWidget();
+    widget->setObjectName(QStringLiteral("TAB_TOTO"));
+
+    QVBoxLayout *vertLayout = new QVBoxLayout(widget);
+    vertLayout->setSpacing(6);
+    vertLayout->setContentsMargins(11, 11, 11, 11);
+    vertLayout->setObjectName(QStringLiteral("verticalLayout_14"));
+
+    QTextEdit *textEdit = new QTextEdit(widget);
+    textEdit->setObjectName(QStringLiteral("textEdit2"));
+    textEdit->setTextInteractionFlags(Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse);
+
+    vertLayout->addWidget(textEdit);
+
+    widget->show();
+
+    this->mainWindow->getUi()->QTabWidget_onglets->addTab(widget, name);
+}
 
 

@@ -192,6 +192,9 @@ int main(int argc, char** argv) {
                 roomList = book.getClientRooms(champ2);
 
                 ack = rfc.createMsgAck(MSG_ACK_ADD_CLIENT_TO_ROOM_SUCCESS);
+                ack += champ3;
+                ack += "§";
+
                 send = rfc.createMsgBookListResp(champ2, champ3, "1337", roomList.size(), roomList);
                 //on envoie une confirmation au client
                 NetworkUDP::sendDatagrams(listenSocket.getSocket(), (char*)ack.c_str(), strlen(ack.c_str()), (SOCKADDR*)client->getSockAddr(), listenSocket.getAddrinfo());

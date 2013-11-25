@@ -136,28 +136,6 @@ string RFC1664::createMsgBookListResp(string clientName, string ip, string port,
     return retour;
 }
 
-string RFC1664::createMsgBookListResp(string clientName, string ip, string port, int roomNb, vector<Room*> *rooms) {
-    cout << "NB de ROOMS DU CLIENT DANS LA FONCITON " << roomNb << " " << endl;
-    string sRoomNb = to_string(roomNb);
-    cout << "NGGGGGGGGGGGGGGGGGGGG " << roomNb << " " << endl;
-    string retour = "BOOK_LIST_RESP§" + clientName + "§" + ip + "§" + port + "§" + sRoomNb+"§";
-    cout << "HHHHHHHHHHHHHHHHHHHHHHHHH" << roomNb << " " << endl;
-
-    vector<Room*>::iterator it;
-    cout << "IIIIIIIIIIIIIIIIIIIIIIIIIIII" << roomNb << " " << endl;
-    for (it = rooms->begin(); it != rooms->end(); ++it) {
-        cout << " FOR 1 " << endl;
-        retour += (*it)->getName();
-        cout << " FOR 2 " << endl;
-        retour += "§";
-        cout << " FOR 3 " << endl;
-    }
-
-    cout << "prout 2 "<< endl;
-
-    return retour;
-}
-
 /**
  * Crée un message de deconnection
  *

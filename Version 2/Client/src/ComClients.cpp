@@ -8,7 +8,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "Listening.hpp"
+#include "ComClients.hpp"
 #include "../../Server/src/Socket.hpp"
 #include "../../Server/src/NetworkUDP.hpp"
 #include "../../Server/src/RFC1664.hpp"
@@ -17,7 +17,7 @@
 #include "../../Server/src/Signalisation.hpp"
 #include <ui_mainwindow.h>
 
-Listening::Listening(MainWindow *mainWindow, Socket *socket, Book *book)
+ComClients::ComClients(MainWindow *mainWindow, Socket *socket, Book *book)
 {
     this->mainWindow = mainWindow;
     this->listenSocket = socket;
@@ -33,21 +33,21 @@ Listening::Listening(MainWindow *mainWindow, Socket *socket, Book *book)
     QObject::connect(this, SIGNAL(statusBarChanged(QString)),this->mainWindow->getUi()->statusBar, SLOT(showMessage(QString)));
 }
 
-void Listening::run() {
+void ComClients::run() {
     while(!end)
     {
 
         while (1) {
-            cout << "Listening() -> Attente d'un nouveau message" << endl;
+            cout << "ComClients() -> Attente d'un nouveau message" << endl;
             memset(this->message, 0, sizeof this->message); //vide le message
 
             SOCKADDR_IN addr_in;
-            SOCKADDR_IN addr_client;
+            SOCKADDR_IN addr_in2;
 
             this->udp->receiveDatagrams(listenSocket->getSocket(), this->message, sizeof this->message, (SOCKADDR*)&addr_in, this->listenSocket->getAddrinfo());
 
-            cout << "Listening() -> Message reçu : " << this->message << endl;
-            cout << "Listening() -> Type du message reçu : " << this->rfc->type(this->message) << endl;
+            cout << "ComClients() -> Message reçu : " << this->message << endl;
+            cout << "ComClients() -> Type du message reçu : " << this->rfc->type(this->message) << endl;
 
             string testString(message);
             string champ1(rfc->fieldFromMesg(testString, 1, "§"));
@@ -66,7 +66,7 @@ void Listening::run() {
 
             switch (rfc->type(message)) {
                 case MSG_COM:
-                    cout << "Listening() -> " << champ2 << " a envoyé un message" << endl;
+                    cout << "ComClients() -> " << champ2 << " a envoyé un message" << endl;
 
                     msg_com = chaine2;
                     msg_com += " - ";
@@ -79,15 +79,8 @@ void Listening::run() {
                 break;
 
                 case MSG_BOOK_LIST_RESP:
-                    cout << "Listening() -> j'ai reçu l'annuaire" << endl;
-
-                    memset(&addr_client, 0, sizeof(addr_client));
-
-                    addr_client.sin_family = AF_INET;
-                    addr_client.sin_addr.s_addr = inet_addr(chaine3.toStdString().c_str());
-                    addr_client.sin_port = htons(chaine4.toInt());
-
-                    this->book->addNewClient(chaine2.toStdString(), chaine3.toStdString(), chaine4.toStdString(), &addr_client);
+                    cout << "ComClients() -> j'ai reçu l'annuaire" << endl;
+                    this->book->addNewClient(chaine2.toStdString(), chaine3.toStdString(), chaine4.toStdString(), &addr_in);
                     mainWindow->getUi()->listWidget->addItem(chaine2);
 
                     break;
@@ -188,3 +181,6 @@ void Listening::run() {
     }
 }
 }
+
+
+

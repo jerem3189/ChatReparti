@@ -41,7 +41,7 @@ BOOK_ERROR_ENUM Book::addNewClient(string name, string addressIp, string port, S
     if (retour != NETWORK_HINTS_OK)
         return CLIENT_ADD_NOK;
 
-    client->setAdressIp(addressIp);
+    client->setAddressIp(addressIp);
     client->setPort(port);
 
     this->rooms.at(0).addClient(client);
@@ -145,10 +145,9 @@ Client* Book::findClient(string name) {
     vector<Client>::iterator it;
     for(it = this->clients.begin(); it != this->clients.end(); ++it)
     {
-        cout << "nom : " << it->getName() << endl;
         if(it->getName() == name)
         {
-            cout << "Client trouvé !!!" << endl;
+            cout << "Book::findClient() -> Client trouvé !!!" << endl;
             return &(*it);
         }
     }
@@ -165,10 +164,9 @@ Room* Book::findRoom(string name) {
     vector<Room>::iterator it;
     for(it = this->rooms.begin(); it != this->rooms.end(); ++it)
     {
-        cout << "nom : " << it->getName() << endl;
         if(it->getName() == name)
         {
-            cout << "room trouvée !!!" << endl;
+            cout << "Book::findRoom() -> room trouvée !!!" << endl;
             return &(*it);
         }
     }
@@ -245,24 +243,15 @@ vector<Room*> Book::getClientRooms(string clientName) {
     {
         for(int i=0; i<it->getClients().size(); i++)
         {
-            cout << "avant tempName " << endl;
             tempName = it->getClients().at(i)->getName();
-            cout << "tempName :  " << tempName << endl;
             if (tempName == clientName)
             {
-                cout << "proutiproutproutiprout" << endl;
                 Room *room = &(*it);
-                cout << "proutidazfazfgazfazf" << endl;
                 vector_roomList.push_back(room);
-                cout << "proutgeeeeeeegggggggggggggr" << endl;
                 break;
             }
         }
     }
-    cout << "YAAAAAAAAAAAA" << endl;
-
-    cout << "TAILLE DE LA ROOMLIST" << vector_roomList.size() << endl;
-    cout << "element at (1) [" << vector_roomList.at(0)->getName() << "]" << endl;
 
     return vector_roomList;
 }

@@ -8,6 +8,27 @@
 
 #include <QInputDialog>
 
+MainWindow::MainWindow(QString listenPortClient, QWidget *parent) :
+    QMainWindow(parent),
+    ui(new Ui::MainWindow)
+{
+
+    cout << "PORT DECOUTE " << listenPortClient.toStdString() << endl;
+    this->listenPortClient = listenPortClient;
+
+    ui->setupUi(this);
+    this->socket = new Socket();
+    this->socket->create("NULL", "1337");
+    this->connected = false;
+
+    this->socketClients = new Socket();
+    this->socketClients->create("NULL", listenPortClient.toStdString());
+    this->socketClients->binding();
+
+    this->show();
+    this->hide();
+    this->on_action_Connexion_au_serveur_triggered();
+}
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -30,7 +51,7 @@ Socket *MainWindow::getSocket()
 
 bool MainWindow::getConnected()
 {
-     return this->connected;
+    return this->connected;
 }
 
 void MainWindow::setConnected(bool connected)
@@ -58,7 +79,7 @@ void MainWindow::on_action_Connexion_au_serveur_triggered()
 
     ui->label_pseudo->setText(pseudo);
 
-    string msgcon = rfc.createMsgCon(ui->label_pseudo->text().toStdString(), "127.0.0.1", "1337");
+    string msgcon = rfc.createMsgCon(ui->label_pseudo->text().toStdString(), "127.0.0.1", this->listenPortClient.toStdString());
     NetworkUDP::sendDatagrams(this->socket->getSocket(),(char*)msgcon.c_str(), strlen(msgcon.c_str()),socket->getSockaddr(), this->socket->getAddrinfo());
 }
 
@@ -81,10 +102,10 @@ void MainWindow::on_pushButton_clicked()
     string msgCom = rfc.createMsgCom(ui->label_pseudo->text().toStdString(), "", msg.toStdString(), ui->QTabWidget_onglets->tabText(ui->QTabWidget_onglets->currentIndex()).toStdString());
 
     for (i=0; i<book->getClients().size(); i++)
-                    {
+    {
 
-                        NetworkUDP::sendDatagrams(this->socket->getSocket(), (char*)msgCom.c_str(), strlen(msgCom.c_str()), (SOCKADDR*)book->getClients().at(i).getSockAddr(), this->socket->getAddrinfo());
-                    }
+        NetworkUDP::sendDatagrams(this->socketClients->getSocket(), (char*)msgCom.c_str(), strlen(msgCom.c_str()), (SOCKADDR*)book->getClients().at(i).getSockAddr(), this->socketClients->getAddrinfo());
+    }
     //NetworkUDP::sendDatagrams(this->socket->getSocket(),(char*)msgCom.c_str(), strlen(msgCom.c_str()),socket->getSockaddr(), this->socket->getAddrinfo());
 
     this->ui->lineEdit->clear();
@@ -130,4 +151,29 @@ Signalisation *MainWindow::getSig() const
 void MainWindow::setSig(Signalisation *value)
 {
     sig = value;
+}
+
+Socket *MainWindow::getSocketClients() const
+{
+    return socketClients;
+}
+
+void MainWindow::setSocketClients(Socket *value)
+{
+    socketClients = value;
+}
+
+void MainWindow::on_pushButton_2_clicked()
+{
+    SOCKADDR_IN sendhost;
+    RFC1664 rfc;
+
+    memset(&sendhost, 0, sizeof(sendhost));
+
+    sendhost.sin_family = AF_INET;
+    sendhost.sin_addr.s_addr = inet_addr("127.0.0.1");
+    sendhost.sin_port = htons(1338);
+
+    string msg = rfc.createMsgCom("jeremy", "arnaud", "SALUT LA COMPAGNIE", "global");
+    NetworkUDP::sendDatagrams(this->socketClients->getSocket(),(char*)msg.c_str(),strlen(msg.c_str()),(SOCKADDR*)&sendhost, this->socketClients->getAddrinfo());
 }

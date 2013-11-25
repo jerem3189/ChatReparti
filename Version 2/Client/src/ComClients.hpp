@@ -3,8 +3,8 @@
  * Description plus elaboree et detaillee du fichier.
  */
 
-#if !defined(_LISTENING_H)
-#define _LISTENING_H
+#if !defined(_COM_CLIENTS_)
+#define _COM_CLIENTS_
 
 #include "../../Server/src/Thread.hpp"
 #include <string>
@@ -22,11 +22,11 @@ class Book;
 class Signalisation;
 class QObject;
 
-class Listening : public QObject, public Thread {
+class ComClients : public QObject, public Thread {
     Q_OBJECT
 
 public:
-    Listening(MainWindow *mainWindow, Socket *socket, Book *book);
+    ComClients(MainWindow *mainWindow, Socket *socket, Book *book);
     void run();
 
 private:
@@ -40,9 +40,6 @@ private:
 
 signals:
     void statusBarChanged(QString);
-    void newRoom(QString);
-public slots:
-    void createNewTab(QString name);
 };
 
-#endif  //_LISTENING_H
+#endif  //_COM_CLIENTS

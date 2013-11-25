@@ -17,6 +17,7 @@ class MainWindow : public QMainWindow
     
 public:
     explicit MainWindow(QWidget *parent = 0);
+    explicit MainWindow(QString listenPortClient, QWidget *parent = 0);
     Socket *getSocket();
     Ui::MainWindow *getUi() { return this->ui; }
     bool getConnected();
@@ -27,6 +28,9 @@ public:
     Signalisation *getSig() const;
     void setSig(Signalisation *value);
     void setBook(Book *botin);
+
+    Socket *getSocketClients() const;
+    void setSocketClients(Socket *value);
 
 private slots:
 
@@ -42,12 +46,16 @@ private slots:
 
     void on_actionD_connexion_triggered();
 
+    void on_pushButton_2_clicked();
+
 private:
     Ui::MainWindow *ui;
     Socket *socket;
+    Socket *socketClients;
     bool connected;
     Signalisation *sig;
     Book *book;
+    QString listenPortClient;
 };
 
 #endif // MAINWINDOW_HPP
