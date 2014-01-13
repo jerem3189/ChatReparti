@@ -4,7 +4,7 @@
  *
  * Created on 28 octobre 2013, 19:22
  */
-using namespace std;
+
 
 #if !defined(_BOOK_HPP)
 #define _BOOK_HPP
@@ -14,7 +14,7 @@ using namespace std;
 #include <vector>
 #include <map>
 #include <stdio.h>
-
+using namespace std;
 class Client;
 
 class Book {

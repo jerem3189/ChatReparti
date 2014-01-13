@@ -5,7 +5,7 @@
  *
  *
  */
-using namespace std;
+//using namespace std;
 #include "Client.hpp"
 #include "Socket.hpp"
 

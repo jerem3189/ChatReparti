@@ -17,7 +17,7 @@
 #include <vector>
 #include <string>
 #include "../../Server/src/ErrorCodes.hpp"
-
+using namespace std;
 typedef int SOCKET;
 typedef struct sockaddr_in SOCKADDR_IN;
 typedef struct sockaddr SOCKADDR;

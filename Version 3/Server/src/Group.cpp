@@ -16,3 +16,19 @@ Group::Group(const Group& orig) {
 Group::~Group() {
 }
 
+Client Group::master(){
+    
+}
+
+
+vector<Client> Group::getClients() {
+    return this->clients;
+}
+
+int Group::getNumber() {
+    return this->number;
+}
+
+int Group::setNumber(int num) {
+    this->number = num;
+}

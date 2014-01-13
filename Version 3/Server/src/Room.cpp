@@ -1,7 +1,7 @@
 /** \file Room.cpp
  *
  */
-using namespace std;
+//using namespace std;
 #include "Room.hpp"
 #include "Client.hpp"
 #include <vector>

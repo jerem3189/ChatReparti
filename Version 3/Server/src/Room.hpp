@@ -12,7 +12,7 @@
 #include "Client.hpp"
 #include <iostream>
 #include <vector>
-
+using namespace std;
 class Room {
 public:
     Room(string name) {
