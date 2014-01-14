@@ -15,12 +15,12 @@
 class Group {
 public:
     Group();
-    Group(const Group& orig);
+    Group(Client c);
     virtual ~Group();
     Client master();
     vector<Client> getClients();
-    int getNumber();
-    int setNumber(int number);
+    int getNumberOfClients();
+    int setNumberOfClients(int number);
 private:
     int numberOfClients;
     vector<Client> clients;
