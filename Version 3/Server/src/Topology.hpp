@@ -13,8 +13,8 @@ using namespace std;
 class Topology {
 public:
     Topology();
-    Topology(const topology& orig);
-    virtual ~topology();
+    Topology(const Topology& orig);
+    virtual ~Topology();
     int createGroup(string name);
     int rebuildChain();
     int nbGroups();

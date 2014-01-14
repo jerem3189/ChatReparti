@@ -11,7 +11,7 @@
 Topology::Topology() {
 }
 
-Topology::Topology(const topology& orig) {
+Topology::Topology(const Topology& orig) {
 }
 
 Topology::~Topology() {
