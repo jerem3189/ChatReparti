@@ -26,9 +26,9 @@ vector<Client> Group::getClients() {
 }
 
 int Group::getNumber() {
-    return this->number;
+    return this->numberOfClients;
 }
 
 int Group::setNumber(int num) {
-    this->number = num;
+    this->numberOfClients = num;
 }

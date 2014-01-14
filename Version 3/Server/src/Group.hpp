@@ -22,7 +22,7 @@ public:
     int getNumber();
     int setNumber(int number);
 private:
-    int number;
+    int numberOfClients;
     vector<Client> clients;
 };
 
