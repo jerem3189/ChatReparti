@@ -17,6 +17,7 @@ using namespace std;
 #include "RFC1664.hpp"
 #include "MessagesTypesRFC1664.hpp"
 #include "Book.hpp"
+#include "Group.hpp"
 
 #define MAX_MSG 1024
 #define DEFAULT_PORT "1337"
@@ -60,7 +61,7 @@ int main(int argc, char** argv) {
         string ack;
 
         vector<Client>::iterator itClient;
-        vector<Room*> roomList;
+        vector<Group*> groupList;
         Client *client = NULL;
         BOOK_ERROR_ENUM bookErrorEnum;
 
@@ -85,14 +86,14 @@ int main(int argc, char** argv) {
                 //renvoit la liste de client connectés au nouveau client
                 for (i=0; i<book.getClients().size(); i++)
                 {
-                    roomList = book.getClientRooms(book.getClients().at(i).getName());
-                    send = rfc.createMsgBookListResp(book.getClients().at(i).getName(), book.getClients().at(i).getAddressIp(), book.getClients().at(i).getPort(), roomList.size(), roomList);
+                    //V2 roomList = book.getClientRooms(book.getClients().at(i).getName());
+                    send = rfc.createMsgBookListResp(book.getClients().at(i).getName(), book.getClients().at(i).getAddressIp(), book.getClients().at(i).getPort());
                     cout << "Main() - Switch(MSG_CON) -> Message a renvoyer à " << champ2 << " : [" << send << "]" << endl;
                     NetworkUDP::sendDatagrams(listenSocket.getSocket(), (char*)send.c_str(), strlen(send.c_str()), (SOCKADDR*)book.findClient(champ2)->getSockAddr(), listenSocket.getAddrinfo());
                 }
 
                 //creation d'un message d'annuaire le concernant
-                send = rfc.createMsgBookListResp(champ2, champ3, champ4, book.getClientRooms(champ2).size(), book.getClientRooms(champ2));
+                send = rfc.createMsgBookListResp(champ2, champ3, champ4);
                 cout << "Main() - Switch(MSG_CON) -> Message a renvoyer à tous les clients : [" << send << "]" << endl;
 
                 //envoi les information du nouveau client à tout les autres clients (sauf lui meme))
@@ -187,10 +188,10 @@ int main(int argc, char** argv) {
                 cout << "Main() - Switch(MSG_ROOM_JOIN) -> " << champ2 << " a rejoint le salon " << champ3 << endl;
 
                 client = book.findClient(champ2);
-                roomList = book.getClientRooms(champ2);
+                //V2 roomList = book.getClientRooms(champ2);
 
                 ack = rfc.createMsgAck(MSG_ACK_ADD_CLIENT_TO_ROOM_SUCCESS);
-                send = rfc.createMsgBookListResp(champ2, champ3, "1337", roomList.size(), roomList);
+                send = rfc.createMsgBookListResp(champ2, champ3, "1337");
                 //on envoie une confirmation au client
                 NetworkUDP::sendDatagrams(listenSocket.getSocket(), (char*)ack.c_str(), strlen(ack.c_str()), (SOCKADDR*)client->getSockAddr(), listenSocket.getAddrinfo());
                 //et on envoie un message d'annuaire a tout les clients pour leur signaler que celui ci a rejoint un salon
@@ -226,7 +227,7 @@ int main(int argc, char** argv) {
                 {   //si il a bien été retiré du salon on lui envoi une confirmation
                     cout << "Main() - Switch(MSG_ROOM_QUIT) -> " << champ2 << " à quitté le salon " << champ3 << endl;
                     ack = rfc.createMsgAck(MSG_ACK_REMOVE_CLIENT_TO_ROOM_SUCCESS);
-                    send = rfc.createMsgBookListResp(champ2, champ3, "1337", book.getClientRooms(champ2).size(), book.getClientRooms(champ2));
+                    send = rfc.createMsgBookListResp(champ2, champ3, "1337");
                 }
                 else {//sinon on lui signifie que sa requete a echoué
                     ack = rfc.createMsgAck(MSG_ACK_REMOVE_CLIENT_TO_ROOM_FAILED);
@@ -267,8 +268,8 @@ int main(int argc, char** argv) {
             {
                 for (i=0; i<book.getClients().size(); i++)
                 {   //on lui renvoi la liste des clients présent dans l'annuaire
-                    roomList = book.getClientRooms(book.getClients().at(i).getName());
-                    send = rfc.createMsgBookListResp(book.getClients().at(i).getName(), book.getClients().at(i).getAddressIp(), book.getClients().at(i).getPort(), roomList.size(), roomList);
+                    //V2 roomList = book.getClientRooms(book.getClients().at(i).getName());
+                    send = rfc.createMsgBookListResp(book.getClients().at(i).getName(), book.getClients().at(i).getAddressIp(), book.getClients().at(i).getPort());
                     NetworkUDP::sendDatagrams(listenSocket.getSocket(), (char*)send.c_str(), strlen(send.c_str()), (SOCKADDR*)client->getSockAddr(), listenSocket.getAddrinfo());
                 }
             }

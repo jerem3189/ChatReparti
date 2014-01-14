@@ -39,7 +39,7 @@ public:
     string createMsgRoomJoin(string clientName,string roomName);
     string createMsgBookListRqst(string clientName);
     string createMsgBookListResp(string clientName, string ip, string port, int roomNb, vector<Room *> rooms);
-    string createMsgBookListResp(string clientName, string ip, string port, int roomNb, vector<Room *> *rooms);
+    string createMsgBookListResp(string clientName, string ip, string port);
     string createMsgDeco(string clientName);
     string createMsgCon(string clientName, string addressIp, string port);
     string createMsgCom(string senderName,string receiverName,string message, string roomName);
