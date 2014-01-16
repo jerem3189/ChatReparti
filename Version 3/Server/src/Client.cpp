@@ -61,11 +61,11 @@ void Client::setName(string newName) {
 }
 
 bool Client::isMaster() {
-
+    return isMaster_;
 }
 
 void Client::setMaster(bool type) {
-
+        this->isMaster_=type;
 }
 
 SOCKADDR_IN *Client::getSockAddr()

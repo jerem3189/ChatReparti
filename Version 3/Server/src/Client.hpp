@@ -50,6 +50,7 @@ public:
     void setAddressIp(const string value);
 
 private:
+    bool isMaster_;
     string name;
     time_t lastalive;
     SOCKADDR_IN addr_in;
