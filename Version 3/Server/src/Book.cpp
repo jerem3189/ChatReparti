@@ -4,12 +4,13 @@
  *
  * Created on 28 octobre 2013, 19:22
  */
-using namespace std;
+
 #include "Book.hpp"
 #include "Client.hpp"
 
 #include <utility>
 #include "../../Server/src/ErrorCodes.hpp"
+using namespace std;
 
 
 /**
@@ -111,7 +112,7 @@ BOOK_ERROR_ENUM Book::addClientToRoom(string clientName, string roomName) {
  * @return 0
  */
 BOOK_ERROR_ENUM Book::removeClientFromRoom(string clientName, string roomName) {
-    Client *client = findClient(clientName);
+//////////////////    Client *client = findClient(clientName);
     Room *room = findRoom(roomName);
 
     if (room == NULL)
