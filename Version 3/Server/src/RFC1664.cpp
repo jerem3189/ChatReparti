@@ -122,9 +122,16 @@ string RFC1664::createMsgBookListRqst(string clientName) {
  * @param rooms le vector contenant la liste des salons dans lequel il se trouve
  * @return le message formé
  */
-string RFC1664::createMsgBookListResp(string clientName, string ip, string port) {
-    
-    string retour = "BOOK_LIST_RESP§" + clientName + "§" + ip + "§" + port + "§";
+string RFC1664::createMsgBookListResp(string clientName, string ip, string port, int roomNb, vector<Room*> rooms) {
+    string sRoomNb = to_string(roomNb);
+    string retour = "BOOK_LIST_RESP§" + clientName + "§" + ip + "§" + port + "§" + sRoomNb+"§";
+
+    vector<Room*>::iterator it;
+    for (it = rooms.begin(); it != rooms.end(); ++it) {
+
+        retour += (*it)->getName();
+        retour += "§";
+    }
 
     return retour;
 }
