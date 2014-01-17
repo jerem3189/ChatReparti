@@ -9,7 +9,6 @@
 #include <stdlib.h>
 #include <iostream>
 #include <string.h>
-using namespace std;
 
 #include "ErrorCodes.hpp"
 #include "Socket.hpp"
@@ -18,6 +17,7 @@ using namespace std;
 #include "MessagesTypesRFC1664.hpp"
 #include "Book.hpp"
 #include "Group.hpp"
+using namespace std;
 
 #define MAX_MSG 1024
 #define DEFAULT_PORT "1337"
@@ -144,22 +144,7 @@ int main(int argc, char** argv) {
             }
 
             break;
-            //si message de communication reçu
-        case MSG_COM:
-            cout << "Main() - Switch(MSG_COM) -> " << champ2 << " à envoyé un message à redispatcher" << endl;
-            //on cherche l'emetteur dans l'annuaire
-            client = book.findClient(champ2);
-
-            //si l'emmetteur est valide on l'envoi au salon general
-            if (client != NULL)
-            {
-                for (i=0; i<book.getClients().size(); i++)
-                {
-                    NetworkUDP::sendDatagrams(listenSocket.getSocket(), message, strlen(message), (SOCKADDR*)book.getClients().at(i).getSockAddr(), listenSocket.getAddrinfo());
-                }
-            }
-
-            break;
+        
             //si reception d'un message de keep alive
         case MSG_LIVE:
             cout << "Main() - Switch(MSG_LIVE) -> " << champ2 << " signale qu'il est encore actif" << endl;
@@ -175,89 +160,9 @@ int main(int argc, char** argv) {
                 ack = rfc.createMsgAck(MSG_ACK_UNKNOWN_CLIENT);
                 NetworkUDP::sendDatagrams(listenSocket.getSocket(), (char*)ack.c_str(), strlen(ack.c_str()), (SOCKADDR*)&addr_in, listenSocket.getAddrinfo());
             }
-
             break;
 
-            // si message de connexion à un salon reçu
-        case MSG_ROOM_JOIN:
-            //on essaye d'ajouter le clien au salon
-            bookErrorEnum = book.addClientToRoom(champ2, champ3);
-
-            if (bookErrorEnum == CLIENT_ADD_TO_ROOM_OK)
-            {   //si le client à bien été ajouté au salon
-                cout << "Main() - Switch(MSG_ROOM_JOIN) -> " << champ2 << " a rejoint le salon " << champ3 << endl;
-
-                client = book.findClient(champ2);
-                //V2 roomList = book.getClientRooms(champ2);
-
-                ack = rfc.createMsgAck(MSG_ACK_ADD_CLIENT_TO_ROOM_SUCCESS);
-                send = rfc.createMsgBookListResp(champ2, champ3, "1337");
-                //on envoie une confirmation au client
-                NetworkUDP::sendDatagrams(listenSocket.getSocket(), (char*)ack.c_str(), strlen(ack.c_str()), (SOCKADDR*)client->getSockAddr(), listenSocket.getAddrinfo());
-                //et on envoie un message d'annuaire a tout les clients pour leur signaler que celui ci a rejoint un salon
-                for (i=0; i<book.getClients().size(); i++) {
-                    NetworkUDP::sendDatagrams(listenSocket.getSocket(), (char*)send.c_str(), strlen(send.c_str()), (SOCKADDR*)book.getClients().at(i).getSockAddr(), listenSocket.getAddrinfo());
-                }
-            }
-            else {
-                client = book.findClient(champ2);
-                //si le client existe
-                if (client != NULL)
-                {   //on lui renvoi un message d'erreur lui indiquant qu'il n'a pas pu rejoindre le salon
-                    ack = rfc.createMsgAck(MSG_ACK_ADD_CLIENT_TO_ROOM_FAILED);
-                    NetworkUDP::sendDatagrams(listenSocket.getSocket(), (char*)ack.c_str(), strlen(ack.c_str()), (SOCKADDR*)client->getSockAddr(), listenSocket.getAddrinfo());
-                }
-                else
-                {   //si il n'existe pas on lui signifie
-                    ack = rfc.createMsgAck(MSG_ACK_UNKNOWN_CLIENT);
-                    NetworkUDP::sendDatagrams(listenSocket.getSocket(), (char*)ack.c_str(), strlen(ack.c_str()), (SOCKADDR*)&addr_in, listenSocket.getAddrinfo());
-                }
-            }
-
-            break;
-            //si message pour quitter un salon reçu
-        case MSG_ROOM_QUIT:
-            client = book.findClient(champ2);
-
-            //si le client existe
-            if (client != NULL)
-            {
-                bookErrorEnum = book.removeClientFromRoom(champ2, champ3);
-                if (bookErrorEnum == REMOVE_CLIENT_FROM_ROOM_OK)
-                {   //si il a bien été retiré du salon on lui envoi une confirmation
-                    cout << "Main() - Switch(MSG_ROOM_QUIT) -> " << champ2 << " à quitté le salon " << champ3 << endl;
-                    ack = rfc.createMsgAck(MSG_ACK_REMOVE_CLIENT_TO_ROOM_SUCCESS);
-                    send = rfc.createMsgBookListResp(champ2, champ3, "1337");
-                }
-                else {//sinon on lui signifie que sa requete a echoué
-                    ack = rfc.createMsgAck(MSG_ACK_REMOVE_CLIENT_TO_ROOM_FAILED);
-                    NetworkUDP::sendDatagrams(listenSocket.getSocket(), (char*)ack.c_str(), strlen(ack.c_str()), (SOCKADDR*)client->getSockAddr(), listenSocket.getAddrinfo());
-                }
-            }
-            else
-            {   //si il n'existe pas on lui signifie
-                ack = rfc.createMsgAck(MSG_ACK_UNKNOWN_CLIENT);
-                NetworkUDP::sendDatagrams(listenSocket.getSocket(), (char*)ack.c_str(), strlen(ack.c_str()), (SOCKADDR*)&addr_in, listenSocket.getAddrinfo());
-            }
-
-            break;
-            //si reception d'un message de creation de salon
-        case MSG_ROOM_CREATE:
-            client = book.findClient(champ2);
-            //si le client existe
-            if (client != NULL)
-            {   //on cree le salon et renvoie une confirmation
-                book.addRoom(champ3);
-                ack = rfc.createMsgAck(MSG_ACK_ROOM_CREATE_SUCCESS);
-                NetworkUDP::sendDatagrams(listenSocket.getSocket(), (char*)ack.c_str(), strlen(ack.c_str()), (SOCKADDR*)client->getSockAddr(), listenSocket.getAddrinfo());
-            }
-            else
-            {   //sinon on lui signifie qu'il est inconnu
-                ack = rfc.createMsgAck(MSG_ACK_UNKNOWN_CLIENT);
-                NetworkUDP::sendDatagrams(listenSocket.getSocket(), (char*)ack.c_str(), strlen(ack.c_str()), (SOCKADDR*)&addr_in, listenSocket.getAddrinfo());
-            }
-
-            break;
+        
             //si reception d'une requete d'annuaire
         case MSG_BOOK_LIST_RQST:
             cout << "Main() - Switch(MSG_BOOK_LIST_RQST) -> " << champ2 << "a demandé l'annuaire" << endl;
