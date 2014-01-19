@@ -66,6 +66,7 @@ int main(int argc, char** argv) {
         BOOK_ERROR_ENUM bookErrorEnum;
 
         int i = 0;
+        int nbClients = 0;
 
 
 
@@ -106,14 +107,36 @@ int main(int argc, char** argv) {
                     }
                 }
 
-            } else
-            {   //sinon si le client n'a pas pu etre ajouté à l'annuaire renvoi un ACK d'erreur
+                // TRAITEMENT DES VOISINS - AJOUT POUR LA V3 -
+
+                nbClients = book.getClients().size();
+
+                //Si il y a déja au moins qqn de connecté, on envoie a ce nouveau client les coordonnées du dernier connecté
+                if (nbClients > 1) {
+                    //Création du message a envoyer au nouveau client
+                    send = rfc.createMsgNeighboor(book.getClients().at(nbClients-2).getName());
+                    cout << "Main() - Switch(MSG_CON) -> Message a renvoyer au nouveau client : [" << send << "]" << endl;
+                    //Envoi du message au nouveau client
+                    NetworkUDP::sendDatagrams(listenSocket.getSocket(), (char*)send.c_str(), strlen(send.c_str()), (SOCKADDR*)book.findClient(champ2)->getSockAddr(), listenSocket.getAddrinfo());
+
+                    //Ensuite on envoi au dernier connecté le nouveau client
+                    //Création du message a envoyer au nouveau client
+                    send = rfc.createMsgNeighboor(book.getClients().at(nbClients-1).getName());
+                    cout << "Main() - Switch(MSG_CON) -> Message a renvoyer à l'ancien dernier client' : [" << send << "]" << endl;
+                    //Envoi du message au nouveau client
+                    NetworkUDP::sendDatagrams(listenSocket.getSocket(), (char*)send.c_str(), strlen(send.c_str()), (SOCKADDR*)book.findClient(book.getClients().at(nbClients-2).getName())->getSockAddr(), listenSocket.getAddrinfo());
+                }
+
+                // Si le nouveau client est le premier client, on ne lui attribue aucun voisin
+
+            } else {   //sinon si le client n'a pas pu etre ajouté à l'annuaire renvoi un ACK d'erreur
                 cout << "Main() - Switch(MSG_CON) -> " << champ2 << " n'a pas pu etre ajouté à l'annuaire" << endl;
                 ack = rfc.createMsgAck(MSG_ACK_CONNEXION_FAILED);
                 NetworkUDP::sendDatagrams(listenSocket.getSocket(), (char*)ack.c_str(), strlen(ack.c_str()), (SOCKADDR*)&addr_in, listenSocket.getAddrinfo());
             }
 
             break;
+
             //si message de déconnexion reçu
         case MSG_DECO:
             cout << "Main() - Switch(MSG_DECO) -> " << champ2 << " s'est déconnecté du serveur" << endl;

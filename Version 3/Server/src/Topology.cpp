@@ -1,7 +1,7 @@
-/* 
+/*
  * File:   topology.cpp
  * Author: darkey
- * 
+ *
  * Created on 6 janvier 2014, 09:29
  */
 
@@ -17,6 +17,6 @@ Topology::Topology(const Topology& orig) {
 Topology::~Topology() {
 }
 
-int Topology::createGroup(string name){
-    
+int Topology::createGroup(string name) {
+
 }

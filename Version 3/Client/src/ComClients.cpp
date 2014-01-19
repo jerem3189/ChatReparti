@@ -64,8 +64,17 @@ void ComClients::run() {
 
             QString msg_com = "";
 
+            Client *client = NULL;
+
+            int compare = -1;
+
             switch (rfc->type(message)) {
-                case MSG_COM:
+            case MSG_COM:
+
+                /* MESSAGERIE PRIVEE
+
+                // Si le message est pour lui de facon spécifique
+                if(this->mainWindow->getUi()->label_pseudo->text().toStdString() == champ3) {
                     cout << "ComClients() -> " << champ2 << " a envoyé un message" << endl;
 
                     msg_com = chaine2;
@@ -73,113 +82,175 @@ void ComClients::run() {
                     msg_com += chaine4;
                     msg_com += "\n";
 
-                    mainWindow->getUi()->textEdit->moveCursor(QTextCursor::End);
-                    mainWindow->getUi()->textEdit->insertPlainText(msg_com);
+                    QTextEdit *text;
+
+                    if (this->mainWindow->getRoomLists().contains(chaine5)) {
+                        text = this->mainWindow->getRoomLists().take(chaine5);
+                        text->moveCursor(QTextCursor::End);
+                        text->insertPlainText(msg_com);
+                    }
+                }
+                else { // Le message n'est pas pour ce client
+                    if (this->mainWindow->getLeftNeighboor() != NULL) {
+                        if (this->mainWindow->getLeftNeighboor()->getName() != champ2)
+                            NetworkUDP::sendDatagrams(this->mainWindow->getSocketClients()->getSocket(), message, strlen(message), (SOCKADDR*)this->mainWindow->getLeftNeighboor()->getSockAddr(), this->mainWindow->getSocketClients()->getAddrinfo());
+                    }
+
+                    if (this->mainWindow->getRightNeighboor() != NULL) {
+                        if (this->mainWindow->getRightNeighboor()->getName() != champ2)
+                            NetworkUDP::sendDatagrams(this->mainWindow->getSocketClients()->getSocket(), message, strlen(message), (SOCKADDR*)this->mainWindow->getRightNeighboor()->getSockAddr(), this->mainWindow->getSocketClients()->getAddrinfo());
+                    }
+                }
+
+                 FIN MESSAGERIE PRIVEE */
+
+                // Si le message est pour un salon dans lequel il est présent
+                if(this->mainWindow->getRoomLists().contains(chaine5)) {
+                    cout << "ComClients() -> " << champ2 << " a envoyé un message" << endl;
+
+                    msg_com = chaine2;
+                    msg_com += " - ";
+                    msg_com += chaine4;
+                    msg_com += "\n";
+
+                    QTextEdit *text;
+
+                    text = this->mainWindow->getRoomLists().take(chaine5);
+                    text->moveCursor(QTextCursor::End);
+                    text->insertPlainText(msg_com);
+
+
+
+                    // COMPARAISON DES DEUX SOCKADDR
+
+                    if (this->mainWindow->getLeftNeighboor() != NULL) {
+                        if (NetworkUDP::compareSockaddr(addr_in, *(this->mainWindow->getLeftNeighboor()->getSockAddr()))) {
+                            cout << "Le message provient du voisin de gauche" << endl;
+                            compare=1;
+                        }
+                        else {
+                            cout << "Le message provient du voisin de droite" << endl;
+                            compare=2;
+                        }
+                    }
+                    else{
+
+                        if (this->mainWindow->getRightNeighboor() != NULL) {
+                            if (NetworkUDP::compareSockaddr(addr_in, *(this->mainWindow->getRightNeighboor()->getSockAddr()))) {
+                                cout << "Le message provient du voisin de droite" << endl;
+                                compare=2;
+                            }
+                            else {
+                                cout << "Le message provient du voisin de gauche" << endl;
+                                compare=1;
+                            }
+                        }
+                    }
+
+                    if (this->mainWindow->getLeftNeighboor() != NULL) {
+                        if (compare==2) // Si ca vient du voisin de droite
+                            NetworkUDP::sendDatagrams(this->mainWindow->getSocketClients()->getSocket(), message, strlen(message), (SOCKADDR*)this->mainWindow->getLeftNeighboor()->getSockAddr(), this->mainWindow->getSocketClients()->getAddrinfo());
+                    }
+
+                    if (this->mainWindow->getRightNeighboor() != NULL) {
+                        if (compare == 1) // Si ca vient du voisin de gauche
+                            NetworkUDP::sendDatagrams(this->mainWindow->getSocketClients()->getSocket(), message, strlen(message), (SOCKADDR*)this->mainWindow->getRightNeighboor()->getSockAddr(), this->mainWindow->getSocketClients()->getAddrinfo());
+                    }
+                }
+                else { // Le message n'est pas pour ce client
+                    if (this->mainWindow->getLeftNeighboor() != NULL) {
+                        if (compare==2) // Si ca vient du voisin de droite
+                            NetworkUDP::sendDatagrams(this->mainWindow->getSocketClients()->getSocket(), message, strlen(message), (SOCKADDR*)this->mainWindow->getLeftNeighboor()->getSockAddr(), this->mainWindow->getSocketClients()->getAddrinfo());
+                    }
+
+                    if (this->mainWindow->getRightNeighboor() != NULL) {
+                        if (compare == 1) // Si ca vient du voisin de gauche
+                            NetworkUDP::sendDatagrams(this->mainWindow->getSocketClients()->getSocket(), message, strlen(message), (SOCKADDR*)this->mainWindow->getRightNeighboor()->getSockAddr(), this->mainWindow->getSocketClients()->getAddrinfo());
+                    }
+                }
 
                 break;
 
-                case MSG_BOOK_LIST_RESP:
-                    cout << "ComClients() -> j'ai reçu l'annuaire" << endl;
-                    this->book->addNewClient(chaine2.toStdString(), chaine3.toStdString(), chaine4.toStdString(), &addr_in);
-                    mainWindow->getUi()->listWidget->addItem(chaine2);
+            case MSG_BOOK_LIST_RESP:
+                cout << "ComClients() -> j'ai reçu l'annuaire" << endl;
+                this->book->addNewClient(chaine2.toStdString(), chaine3.toStdString(), chaine4.toStdString(), &addr_in);
+                mainWindow->getUi()->listWidget->addItem(chaine2);
 
-                    break;
+                break;
 
-                case MSG_ACK:
-                    if(champ2 == MSG_ACK_CONNEXION_FAILED)
-                    {
-                        this->mainWindow->setConnected(false);
-                    }
+            case MSG_ACK:
+                if(champ2 == MSG_ACK_CONNEXION_FAILED)
+                {
+                    this->mainWindow->setConnected(false);
+                }
 
-                    if(champ2 == MSG_ACK_CONNEXION_SUCCESS)
-                    {
-                        this->mainWindow->setConnected(true);
-                        this->mainWindow->getUi()->action_Cr_er_un_nouveau_salon->setEnabled(true);
-                        this->mainWindow->getUi()->action_Joindre_un_salon->setEnabled(true);
-                        this->mainWindow->getUi()->label_pseudo->setEnabled(true);
-                        this->mainWindow->getUi()->lineEdit->setEnabled(true);
-                        this->mainWindow->getUi()->pushButton->setEnabled(true);
-                        this->mainWindow->getUi()->action_Connexion_au_serveur->setEnabled(false);
+                if(champ2 == MSG_ACK_CONNEXION_SUCCESS)
+                {
+                    this->mainWindow->setConnected(true);
+                    this->mainWindow->getUi()->action_Cr_er_un_nouveau_salon->setEnabled(true);
+                    this->mainWindow->getUi()->action_Joindre_un_salon->setEnabled(true);
+                    this->mainWindow->getUi()->label_pseudo->setEnabled(true);
+                    this->mainWindow->getUi()->lineEdit->setEnabled(true);
+                    this->mainWindow->getUi()->pushButton->setEnabled(true);
+                    this->mainWindow->getUi()->action_Connexion_au_serveur->setEnabled(false);
 
-                        keepalive = new Signalisation(mainWindow->getUi()->label_pseudo->text().toStdString(), mainWindow->getSocket());
-                        this->mainWindow->setSig(keepalive);
+                    keepalive = new Signalisation(mainWindow->getUi()->label_pseudo->text().toStdString(), mainWindow->getSocket());
+                    this->mainWindow->setSig(keepalive);
 
-                        keepalive->start();
-                    }
+                    keepalive->start();
+                }
 
-                    if(champ2 == MSG_ACK_REMOVE_CLIENT_FAILED)
-                    {
+                if(champ2 == MSG_ACK_REMOVE_CLIENT_FAILED)
+                {
 
-                    }
+                }
 
-                    if(champ2 == MSG_ACK_REMOVE_CLIENT_SUCCESS)
-                    {
-                        this->keepalive->stop();
-                    }
+                if(champ2 == MSG_ACK_REMOVE_CLIENT_SUCCESS)
+                {
+                    this->keepalive->stop();
+                }
 
-                    if(champ2 == MSG_ACK_ADD_CLIENT_TO_ROOM_FAILED)
-                    {
+                if(champ2 == MSG_ACK_ADD_CLIENT_TO_ROOM_FAILED)
+                {
 
-                    }
+                }
 
-                    if(champ2 == MSG_ACK_ADD_CLIENT_TO_ROOM_SUCCESS)
-                    {
+                if(champ2 == MSG_ACK_ADD_CLIENT_TO_ROOM_SUCCESS)
+                {
 
-                    }
+                }
 
-                    if(champ2 == MSG_ACK_REMOVE_CLIENT_TO_ROOM_FAILED)
-                    {
+                if(champ2 == MSG_ACK_REMOVE_CLIENT_TO_ROOM_FAILED)
+                {
 
-                    }
+                }
 
-                    if(champ2 == MSG_ACK_REMOVE_CLIENT_TO_ROOM_SUCCESS)
-                    {
+                if(champ2 == MSG_ACK_REMOVE_CLIENT_TO_ROOM_SUCCESS)
+                {
 
-                    }
+                }
 
-                    if(champ2 == MSG_ACK_ROOM_CREATE_FAILED)
-                    {
+                if(champ2 == MSG_ACK_ROOM_CREATE_FAILED)
+                {
 
-                    }
+                }
 
-                    if(champ2 == MSG_ACK_ROOM_CREATE_SUCCESS)
-                    {
-                        this->mainWindow->getUi()->statusBar->addPermanentWidget(new QLabel ("message permanent", this->mainWindow->getUi()->statusBar));
-                        QWidget *widget = new QWidget();
-                        widget->setObjectName(QStringLiteral("TAB_TOTO"));
+                if(champ2 == MSG_ACK_UNKNOWN_CLIENT)
+                {
+                    //this->mainWindow->getUi()->statusBar->addPermanentWidget (new QLabel ("message permanent"));
+                    emit statusBarChanged(QString("Vous n'etes pas connecté"));
+                }
 
-                        QVBoxLayout *vertLayout = new QVBoxLayout(widget);
-                        vertLayout->setSpacing(6);
-                        vertLayout->setContentsMargins(11, 11, 11, 11);
-                        vertLayout->setObjectName(QStringLiteral("verticalLayout_14"));
+                break;
 
-                        QTextEdit *textEdit = new QTextEdit(widget);
-                        textEdit->setObjectName(QStringLiteral("textEdit2"));
-                        textEdit->setTextInteractionFlags(Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse);
+            default:
 
-                        vertLayout->addWidget(textEdit);
-
-                        widget->show();
-
-                        this->mainWindow->getUi()->QTabWidget_onglets->addTab(widget, QString(champ3.c_str()));
-                    }
-
-                    if(champ2 == MSG_ACK_UNKNOWN_CLIENT)
-                    {
-                        //this->mainWindow->getUi()->statusBar->addPermanentWidget (new QLabel ("message permanent"));
-                        emit statusBarChanged(QString("Vous n'etes pas connecté"));
-                    }
-
-                    break;
-
-                default:
-
-                    break;
+                break;
 
 
             }
+        }
     }
-}
 }
 
 

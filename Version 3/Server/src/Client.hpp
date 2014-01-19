@@ -49,6 +49,7 @@ public:
     string getAddressIp() const;
     void setAddressIp(const string value);
 
+
 private:
     bool isMaster_;
     string name;
@@ -56,6 +57,7 @@ private:
     SOCKADDR_IN addr_in;
     string addressIp;
     string port;
+
 };
 
 #endif	/* CLIENT_HPP */

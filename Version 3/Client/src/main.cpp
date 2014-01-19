@@ -25,6 +25,6 @@ int main(int argc, char *argv[])
 
     ComClients *comClients = new ComClients(&w, w.getSocketClients(), book);
     comClients->start();
-    
+
     return a.exec();
 }

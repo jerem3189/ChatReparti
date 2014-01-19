@@ -105,6 +105,7 @@ void MainWindow::on_pushButton_clicked()
     {
 
         NetworkUDP::sendDatagrams(this->socketClients->getSocket(), (char*)msgCom.c_str(), strlen(msgCom.c_str()), (SOCKADDR*)book->getClients().at(i).getSockAddr(), this->socketClients->getAddrinfo());
+        cout << "PORT D'ENVOI DU MSG : [" << book->getClients().at(i).getSockAddr()->sin_port << "]" << endl;
     }
     //NetworkUDP::sendDatagrams(this->socket->getSocket(),(char*)msgCom.c_str(), strlen(msgCom.c_str()),socket->getSockaddr(), this->socket->getAddrinfo());
 

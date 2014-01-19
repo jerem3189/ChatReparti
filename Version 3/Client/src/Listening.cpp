@@ -65,126 +65,156 @@ void Listening::run() {
             QString msg_com = "";
 
             switch (rfc->type(message)) {
-                case MSG_COM:
-                    cout << "Listening() -> " << champ2 << " a envoyé un message" << endl;
 
-                    msg_com = chaine2;
-                    msg_com += " - ";
-                    msg_com += chaine4;
-                    msg_com += "\n";
+            case MSG_NEIGHBOOR:
+                cout << "ComClients() -> j'ai reçu un nouveau voisin" << endl;
 
-                    mainWindow->getUi()->textEdit->moveCursor(QTextCursor::End);
-                    mainWindow->getUi()->textEdit->insertPlainText(msg_com);
+                // Si je suis le premier client
+                if (this->book->getClients().at(0).getName() == this->mainWindow->getUi()->label_pseudo->text().toStdString()) {
+                    if(this->mainWindow->getRightNeighboor() == NULL) {
+                        cout << "Je suis le premier client, je n'ai pas de voisin a droite, donc je me le rajoute" << endl;
+                        this->mainWindow->setRightNeighboor(this->book->findClient(champ2));
+                        cout << "VOISIN DE DROITE : " << this->mainWindow->getRightNeighboor()->getName().c_str() << endl;
+                    }
+                }
+                else {
+                    // Si je n'ai pas de voisin de gauche
+                    if(this->mainWindow->getLeftNeighboor() == NULL) {
+                        cout << "Je n'ai pas de voisin à gauche donc je me le rajoute" << endl;
+                        this->mainWindow->setLeftNeighboor(this->book->findClient(champ2));
+                        cout << "VOISIN DE GAUCHE : " << this->mainWindow->getLeftNeighboor()->getName().c_str() << endl;
+                    }
+                    else {
+                        if(this->mainWindow->getRightNeighboor() == NULL) {
+                            cout << "Je n'ai pas de voisin à droite donc je me le rajoute" << endl;
+                            this->mainWindow->setRightNeighboor(this->book->findClient(champ2));
+                            cout << "VOISIN DE DROITE : " << this->mainWindow->getRightNeighboor()->getName().c_str() << endl;
+                        }
+                    }
+                }
 
                 break;
 
-                case MSG_BOOK_LIST_RESP:
-                    cout << "Listening() -> j'ai reçu l'annuaire" << endl;
+            case MSG_COM:
+                cout << "Listening() -> " << champ2 << " a envoyé un message" << endl;
 
-                    memset(&addr_client, 0, sizeof(addr_client));
+                msg_com = chaine2;
+                msg_com += " - ";
+                msg_com += chaine4;
+                msg_com += "\n";
 
-                    addr_client.sin_family = AF_INET;
-                    addr_client.sin_addr.s_addr = inet_addr(chaine3.toStdString().c_str());
-                    addr_client.sin_port = htons(chaine4.toInt());
+                mainWindow->getUi()->textEdit->moveCursor(QTextCursor::End);
+                mainWindow->getUi()->textEdit->insertPlainText(msg_com);
 
-                    this->book->addNewClient(chaine2.toStdString(), chaine3.toStdString(), chaine4.toStdString(), &addr_client);
-                    mainWindow->getUi()->listWidget->addItem(chaine2);
+                break;
 
-                    break;
+            case MSG_BOOK_LIST_RESP:
+                cout << "Listening() -> j'ai reçu l'annuaire" << endl;
 
-                case MSG_ACK:
-                    if(champ2 == MSG_ACK_CONNEXION_FAILED)
-                    {
-                        this->mainWindow->setConnected(false);
-                    }
+                memset(&addr_client, 0, sizeof(addr_client));
 
-                    if(champ2 == MSG_ACK_CONNEXION_SUCCESS)
-                    {
-                        this->mainWindow->setConnected(true);
-                        this->mainWindow->getUi()->action_Cr_er_un_nouveau_salon->setEnabled(true);
-                        this->mainWindow->getUi()->action_Joindre_un_salon->setEnabled(true);
-                        this->mainWindow->getUi()->label_pseudo->setEnabled(true);
-                        this->mainWindow->getUi()->lineEdit->setEnabled(true);
-                        this->mainWindow->getUi()->pushButton->setEnabled(true);
-                        this->mainWindow->getUi()->action_Connexion_au_serveur->setEnabled(false);
+                addr_client.sin_family = AF_INET;
+                addr_client.sin_addr.s_addr = inet_addr(chaine3.toStdString().c_str());
+                addr_client.sin_port = htons(chaine4.toInt());
 
-                        keepalive = new Signalisation(mainWindow->getUi()->label_pseudo->text().toStdString(), mainWindow->getSocket());
-                        this->mainWindow->setSig(keepalive);
+                this->book->addNewClient(chaine2.toStdString(), chaine3.toStdString(), chaine4.toStdString(), &addr_client);
+                mainWindow->getUi()->listWidget->addItem(chaine2);
 
-                        keepalive->start();
-                    }
+                break;
 
-                    if(champ2 == MSG_ACK_REMOVE_CLIENT_FAILED)
-                    {
+            case MSG_ACK:
+                if(champ2 == MSG_ACK_CONNEXION_FAILED)
+                {
+                    this->mainWindow->setConnected(false);
+                }
 
-                    }
+                if(champ2 == MSG_ACK_CONNEXION_SUCCESS)
+                {
+                    this->mainWindow->setConnected(true);
+                    this->mainWindow->getUi()->action_Cr_er_un_nouveau_salon->setEnabled(true);
+                    this->mainWindow->getUi()->action_Joindre_un_salon->setEnabled(true);
+                    this->mainWindow->getUi()->label_pseudo->setEnabled(true);
+                    this->mainWindow->getUi()->lineEdit->setEnabled(true);
+                    this->mainWindow->getUi()->pushButton->setEnabled(true);
+                    this->mainWindow->getUi()->action_Connexion_au_serveur->setEnabled(false);
 
-                    if(champ2 == MSG_ACK_REMOVE_CLIENT_SUCCESS)
-                    {
-                        this->keepalive->stop();
-                    }
+                    keepalive = new Signalisation(mainWindow->getUi()->label_pseudo->text().toStdString(), mainWindow->getSocket());
+                    this->mainWindow->setSig(keepalive);
 
-                    if(champ2 == MSG_ACK_ADD_CLIENT_TO_ROOM_FAILED)
-                    {
+                    keepalive->start();
+                }
 
-                    }
+                if(champ2 == MSG_ACK_REMOVE_CLIENT_FAILED)
+                {
 
-                    if(champ2 == MSG_ACK_ADD_CLIENT_TO_ROOM_SUCCESS)
-                    {
+                }
 
-                    }
+                if(champ2 == MSG_ACK_REMOVE_CLIENT_SUCCESS)
+                {
+                    this->keepalive->stop();
+                }
 
-                    if(champ2 == MSG_ACK_REMOVE_CLIENT_TO_ROOM_FAILED)
-                    {
+                if(champ2 == MSG_ACK_ADD_CLIENT_TO_ROOM_FAILED)
+                {
 
-                    }
+                }
 
-                    if(champ2 == MSG_ACK_REMOVE_CLIENT_TO_ROOM_SUCCESS)
-                    {
+                if(champ2 == MSG_ACK_ADD_CLIENT_TO_ROOM_SUCCESS)
+                {
 
-                    }
+                }
 
-                    if(champ2 == MSG_ACK_ROOM_CREATE_FAILED)
-                    {
+                if(champ2 == MSG_ACK_REMOVE_CLIENT_TO_ROOM_FAILED)
+                {
 
-                    }
+                }
 
-                    if(champ2 == MSG_ACK_ROOM_CREATE_SUCCESS)
-                    {
-                        this->mainWindow->getUi()->statusBar->addPermanentWidget(new QLabel ("message permanent", this->mainWindow->getUi()->statusBar));
-                        QWidget *widget = new QWidget();
-                        widget->setObjectName(QStringLiteral("TAB_TOTO"));
+                if(champ2 == MSG_ACK_REMOVE_CLIENT_TO_ROOM_SUCCESS)
+                {
 
-                        QVBoxLayout *vertLayout = new QVBoxLayout(widget);
-                        vertLayout->setSpacing(6);
-                        vertLayout->setContentsMargins(11, 11, 11, 11);
-                        vertLayout->setObjectName(QStringLiteral("verticalLayout_14"));
+                }
 
-                        QTextEdit *textEdit = new QTextEdit(widget);
-                        textEdit->setObjectName(QStringLiteral("textEdit2"));
-                        textEdit->setTextInteractionFlags(Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse);
+                if(champ2 == MSG_ACK_ROOM_CREATE_FAILED)
+                {
 
-                        vertLayout->addWidget(textEdit);
+                }
 
-                        widget->show();
+                if(champ2 == MSG_ACK_ROOM_CREATE_SUCCESS)
+                {
+                    this->mainWindow->getUi()->statusBar->addPermanentWidget(new QLabel ("message permanent", this->mainWindow->getUi()->statusBar));
+                    QWidget *widget = new QWidget();
+                    widget->setObjectName(QStringLiteral("TAB_TOTO"));
 
-                        this->mainWindow->getUi()->QTabWidget_onglets->addTab(widget, QString(champ3.c_str()));
-                    }
+                    QVBoxLayout *vertLayout = new QVBoxLayout(widget);
+                    vertLayout->setSpacing(6);
+                    vertLayout->setContentsMargins(11, 11, 11, 11);
+                    vertLayout->setObjectName(QStringLiteral("verticalLayout_14"));
 
-                    if(champ2 == MSG_ACK_UNKNOWN_CLIENT)
-                    {
-                        //this->mainWindow->getUi()->statusBar->addPermanentWidget (new QLabel ("message permanent"));
-                        emit statusBarChanged(QString("Vous n'etes pas connecté"));
-                    }
+                    QTextEdit *textEdit = new QTextEdit(widget);
+                    textEdit->setObjectName(QStringLiteral("textEdit2"));
+                    textEdit->setTextInteractionFlags(Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse);
 
-                    break;
+                    vertLayout->addWidget(textEdit);
 
-                default:
+                    widget->show();
 
-                    break;
+                    this->mainWindow->getUi()->QTabWidget_onglets->addTab(widget, QString(champ3.c_str()));
+                }
+
+                if(champ2 == MSG_ACK_UNKNOWN_CLIENT)
+                {
+                    //this->mainWindow->getUi()->statusBar->addPermanentWidget (new QLabel ("message permanent"));
+                    emit statusBarChanged(QString("Vous n'etes pas connecté"));
+                }
+
+                break;
+
+            default:
+
+                break;
 
 
             }
+        }
     }
-}
 }

@@ -65,7 +65,7 @@ bool Client::isMaster() {
 }
 
 void Client::setMaster(bool type) {
-        this->isMaster_=type;
+    this->isMaster_=type;
 }
 
 SOCKADDR_IN *Client::getSockAddr()
@@ -98,7 +98,6 @@ SOCK_ERROR_ENUM Client::addNetworkHints(SOCKADDR_IN *addr_in)
 
     return NETWORK_HINTS_OK;
 }
-
 
 void Client::setAddressIp(const string value)
 {

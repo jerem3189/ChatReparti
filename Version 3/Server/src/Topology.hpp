@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   topology.hpp
  * Author: darkey
  *

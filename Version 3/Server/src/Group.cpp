@@ -1,14 +1,14 @@
-/* 
+/*
  * File:   Group.cpp
  * Author: arnaud
- * 
+ *
  * Created on 6 janvier 2014, 09:27
  */
 
 #include "Group.hpp"
 
 Group::Group() {
-    
+
 }
 
 /**
@@ -19,8 +19,8 @@ Group::Group(Client c) {
     c.setMaster(true);
     this->numberOfClients=1;
     this->clients.push_back(c);
-    
-    
+
+
 }
 
 
@@ -33,13 +33,13 @@ Group::~Group() {
  * cherche dans la liste des clients du groupe le maitre
  * @return le client maitre du group
  */
-Client Group::master(){
+Client Group::master() {
     for (int i=0; i<numberOfClients; i++)
     {
-        if (getClients().at(i).isMaster()) 
+        if (getClients().at(i).isMaster())
             return getClients().at(i);
         ;
-        
+
     }
 }
 

@@ -54,6 +54,10 @@ MessagesTypesRFC1664 RFC1664::type(string msg) {
     if (found != string::npos)
         return MSG_BOOK_LIST_RESP;
 
+    found = msg.find("NEIGHBOOR§", 0);
+    if (found != string::npos)
+        return MSG_NEIGHBOOR;
+
     found = msg.find("COM§", 0);
     if (found != string::npos)
         return MSG_COM;
@@ -181,6 +185,11 @@ string RFC1664::createMsgCom(string senderName, string receiverName, string mess
  */
 string RFC1664::createMsgKeepAlive(string clientName) {
     string retour = "KEEP_ALIVE§" + clientName+"§";
+    return retour;
+}
+
+string RFC1664::createMsgNeighboor(string clientName) {
+    string retour = "NEIGHBOOR§" + clientName+"§";
     return retour;
 }
 

@@ -44,6 +44,7 @@ public:
     string createMsgCon(string clientName, string addressIp, string port);
     string createMsgCom(string senderName,string receiverName,string message, string roomName);
     string createMsgKeepAlive(string clientName);
+    string createMsgNeighboor(string clientName);
     string fieldFromMesg(string msg, int fieldNb, string delimiter);
     string createMsgRoomCreate(string clientName, string roomName);
     string createMsgAck(string message);

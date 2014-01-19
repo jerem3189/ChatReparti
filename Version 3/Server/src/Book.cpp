@@ -112,7 +112,7 @@ BOOK_ERROR_ENUM Book::addClientToRoom(string clientName, string roomName) {
  * @return 0
  */
 BOOK_ERROR_ENUM Book::removeClientFromRoom(string clientName, string roomName) {
-Client *client = findClient(clientName);
+    Client *client = findClient(clientName);
     Room *room = findRoom(roomName);
 
     if (room == NULL)

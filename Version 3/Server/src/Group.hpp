@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   Group.hpp
  * Author: darkey
  *
