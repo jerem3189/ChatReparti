@@ -123,7 +123,7 @@ string RFC1664::createMsgBookListRqst(string clientName) {
  * @return le message formé
  */
 string RFC1664::createMsgBookListResp(string clientName, string ip, string port) {
-    
+
     string retour = "BOOK_LIST_RESP§" + clientName + "§" + ip + "§" + port + "§";
 
     return retour;
