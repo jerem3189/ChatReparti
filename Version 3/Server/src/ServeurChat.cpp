@@ -86,7 +86,7 @@ int main(int argc, char** argv) {
 
                 //renvoit la liste de client connectés au nouveau client
                 for (i=0; i<book.getClients().size(); i++)
-                {
+                {          
                     roomList = book.getClientRooms(book.getClients().at(i).getName());
                     send = rfc.createMsgBookListResp(book.getClients().at(i).getName(), book.getClients().at(i).getAddressIp(), book.getClients().at(i).getPort(), roomList.size(), roomList);
                     cout << "Main() - Switch(MSG_CON) -> Message a renvoyer à " << champ2 << " : [" << send << "]" << endl;
@@ -205,6 +205,8 @@ int main(int argc, char** argv) {
         case MSG_ROOM_JOIN:
             //on essaye d'ajouter le clien au salon
             bookErrorEnum = book.addClientToRoom(champ2, champ3);
+                        
+            
 
             if (bookErrorEnum == CLIENT_ADD_TO_ROOM_OK)
             {   //si le client à bien été ajouté au salon

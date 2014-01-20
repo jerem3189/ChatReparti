@@ -6,6 +6,11 @@
 #include "Client.hpp"
 #include <vector>
 
+
+Room::Room(const Room &room): name(room.name),clients(room.clients){
+    
+}
+
 /**
  * Fonction d'ajout de client dans l'annuaire
  * @param *client informations sur le client

@@ -18,6 +18,7 @@ public:
     Room(string name) {
         this->name = name;
     }
+    Room(const Room &room);
     int addClient(Client *client);
     int delClient(Client *client);
     string getName();
