@@ -169,6 +169,7 @@ Client* Book::findClient(string name) {
  * @return NULL si aucun salon trouvé avec le nom donné
  */
 Room* Book::findRoom(string name) {
+    /*
     vector<Room>::iterator it;
     for(it = this->rooms.begin(); it != this->rooms.end(); ++it)
     {
@@ -176,6 +177,15 @@ Room* Book::findRoom(string name) {
         {
             cout << "Book::findRoom() -> room trouvée !!!" << endl;
             return &(*it);
+        }
+    }
+    */
+
+    for (int i = 0; i < this->rooms.size(); i++) {
+        if (this->rooms.at(i).getName() == name)
+        {
+            cout << "Book::findRoom() -> room trouvée !!!" << endl;
+            return &this->rooms.at(i);
         }
     }
 
@@ -246,7 +256,7 @@ vector<Room*> Book::getClientRooms(string clientName) {
     vector<Room>::iterator it;
 
     string tempName = "";
-
+/*
     for(it = this->rooms.begin(); it != this->rooms.end(); ++it)
     {
         for(int i=0; i<it->getClients().size(); i++)
@@ -255,6 +265,19 @@ vector<Room*> Book::getClientRooms(string clientName) {
             if (tempName == clientName)
             {
                 Room *room = &(*it);
+                vector_roomList.push_back(room);
+                break;
+            }
+        }
+    }
+    */
+
+    for(int i=0; i < this->rooms.size(); i++) {
+        for (int j=0; j < this->rooms.at(i).getClients().size(); j++) {
+            tempName = this->rooms.at(i).getClients().at(j)->getName();
+            if (tempName == clientName)
+            {
+                Room *room = &this->rooms.at(i);
                 vector_roomList.push_back(room);
                 break;
             }

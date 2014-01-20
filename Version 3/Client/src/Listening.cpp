@@ -129,7 +129,13 @@ void Listening::run() {
                 }
                 else { // Le client est dans l'annuaire
                     cout << "le client est deja dans l'annuaire" << endl;
-                    this->book->addClientToRoom(client->getName(), rfc->fieldFromMesg(testString, 5+chaine5.toInt(), "§"));
+
+                    champ1 = rfc->fieldFromMesg(testString, 5+chaine5.toInt(), "§");
+
+                    if(this->book->findRoom(champ1) == NULL)
+                        this->book->addRoom(champ1);
+
+                    this->book->addClientToRoom(client->getName(), champ1);
                 }
 
                 break;
@@ -193,6 +199,7 @@ void Listening::run() {
 
                 if(champ2 == MSG_ACK_ROOM_CREATE_SUCCESS)
                 {
+                    this->book->addRoom(this->mainWindow->getUi()->QTabWidget_onglets->tabText(this->mainWindow->getUi()->QTabWidget_onglets->count()-1).toStdString());
                 }
 
                 if(champ2 == MSG_ACK_UNKNOWN_CLIENT)
