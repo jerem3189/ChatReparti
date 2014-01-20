@@ -17,6 +17,8 @@
 #include "../../Server/src/Signalisation.hpp"
 #include <ui_mainwindow.h>
 
+#include <QTime>
+
 Listening::Listening(MainWindow *mainWindow, Socket *socket, Book *book)
 {
     this->mainWindow = mainWindow;
@@ -126,6 +128,8 @@ void Listening::run() {
                     cout << "le client n'est pas dans l'annuaire" << endl;
                     this->book->addNewClient(chaine2.toStdString(), chaine3.toStdString(), chaine4.toStdString(), &addr_client);
                     mainWindow->getUi()->listWidget->addItem(chaine2);
+                    //mainWindow->getUi()->textEdit->moveCursor(QTextCursor::End);
+                    //mainWindow->getUi()->textEdit->insertPlainText(QString(champ2.c_str()) + " a rejoint le salon à " + QTime::currentTime().toString("hh:mm:ss"));
                 }
                 else { // Le client est dans l'annuaire
                     cout << "le client est deja dans l'annuaire" << endl;
@@ -136,6 +140,8 @@ void Listening::run() {
                         this->book->addRoom(champ1);
 
                     this->book->addClientToRoom(client->getName(), champ1);
+                    emit statusBarChanged(chaine2 + QString(" a rejoint le salon ") + QString(champ1.c_str()));
+                    emit this->mainWindow->on_QTabWidget_onglets_currentChanged(this->mainWindow->getUi()->QTabWidget_onglets->currentIndex());
                 }
 
                 break;
@@ -149,7 +155,6 @@ void Listening::run() {
                 if(champ2 == MSG_ACK_CONNEXION_SUCCESS)
                 {
                     this->mainWindow->setConnected(true);
-                    this->mainWindow->getUi()->action_Cr_er_un_nouveau_salon->setEnabled(true);
                     this->mainWindow->getUi()->action_Joindre_un_salon->setEnabled(true);
                     this->mainWindow->getUi()->label_pseudo->setEnabled(true);
                     this->mainWindow->getUi()->lineEdit->setEnabled(true);
@@ -160,6 +165,7 @@ void Listening::run() {
                     this->mainWindow->setSig(keepalive);
 
                     keepalive->start();
+                    emit statusBarChanged(QString("Connexion effectuée avec succès"));
                 }
 
                 if(champ2 == MSG_ACK_REMOVE_CLIENT_FAILED)
@@ -170,6 +176,27 @@ void Listening::run() {
                 if(champ2 == MSG_ACK_REMOVE_CLIENT_SUCCESS)
                 {
                     this->keepalive->stop();
+                    delete this->keepalive;
+                    this->keepalive = NULL;
+
+                    // On vide l'annuaire local de tous ses clients
+                    while (this->book->getClients().size() > 0) {
+                        this->book->removeClient(this->book->getClients().at(0).getName());
+                    }
+
+                    // On vide l'annuaire local de toutes ses rooms
+                    this->book->getRooms().clear();
+
+                    this->mainWindow->setConnected(false);
+                    this->mainWindow->getUi()->action_Joindre_un_salon->setEnabled(false);
+                    this->mainWindow->getUi()->label_pseudo->setEnabled(false);
+                    this->mainWindow->getUi()->lineEdit->setEnabled(false);
+                    this->mainWindow->getUi()->pushButton->setEnabled(false);
+                    this->mainWindow->getUi()->action_Connexion_au_serveur->setEnabled(true);
+                    this->mainWindow->getUi()->label_pseudo->setText("pseudo");
+
+                    emit this->mainWindow->on_QTabWidget_onglets_currentChanged(this->mainWindow->getUi()->QTabWidget_onglets->currentIndex());
+                    emit statusBarChanged(QString("Déconnexion effectuée avec succès"));
                 }
 
                 if(champ2 == MSG_ACK_ADD_CLIENT_TO_ROOM_FAILED)
@@ -200,6 +227,7 @@ void Listening::run() {
                 if(champ2 == MSG_ACK_ROOM_CREATE_SUCCESS)
                 {
                     this->book->addRoom(this->mainWindow->getUi()->QTabWidget_onglets->tabText(this->mainWindow->getUi()->QTabWidget_onglets->count()-1).toStdString());
+                    emit statusBarChanged(QString("Le salon a été créé avec succès"));
                 }
 
                 if(champ2 == MSG_ACK_UNKNOWN_CLIENT)

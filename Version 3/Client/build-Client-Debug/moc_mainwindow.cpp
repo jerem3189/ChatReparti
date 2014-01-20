@@ -71,7 +71,7 @@ static const uint qt_meta_data_MainWindow[] = {
        5,    0,   52,    2, 0x08,
        6,    0,   53,    2, 0x08,
        7,    0,   54,    2, 0x08,
-       8,    1,   55,    2, 0x08,
+       8,    1,   55,    2, 0x0a,
 
  // slots: parameters
     QMetaType::Void,

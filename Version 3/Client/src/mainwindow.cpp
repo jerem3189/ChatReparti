@@ -245,18 +245,12 @@ void MainWindow::setRightNeighboor(Client *value)
 
 void MainWindow::on_QTabWidget_onglets_currentChanged(int index)
 {
-    cout << "SLOTSLOTSLOTSTOISRORIOIROSI" << endl;
     this->ui->listWidget->clear();
-    cout << "SLOTSLOTSLOTSTOISRORIOIROSI" << endl;
 
     QString roomName = this->ui->QTabWidget_onglets->tabText(index);
-    cout << "ROOM NAMPE " << roomName.toStdString().c_str() << endl;
     vector<Client*> roomClients = this->book->getRoomClients(roomName.toStdString());
-    cout << "SLOTSLOTSLOTSTOISRORIOIROSI" << endl;
 
     for(int i=0; i<roomClients.size(); i++) {
-        cout << "SLOTS dans FOR FOR FOR" << endl;
         this->ui->listWidget->addItem(QString(roomClients.at(i)->getName().c_str()));
-        cout << "SLOTS dans FOR FOR FOR" << endl;
     }
 }
