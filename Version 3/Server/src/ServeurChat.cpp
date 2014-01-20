@@ -214,7 +214,7 @@ int main(int argc, char** argv) {
                 roomList = book.getClientRooms(champ2);
 
                 ack = rfc.createMsgAck(MSG_ACK_ADD_CLIENT_TO_ROOM_SUCCESS);
-                send = rfc.createMsgBookListResp(champ2, champ3, "1337", roomList.size(), roomList);
+                send = rfc.createMsgBookListResp(champ2, champ3, client->getPort(), roomList.size(), roomList);
                 //on envoie une confirmation au client
                 NetworkUDP::sendDatagrams(listenSocket.getSocket(), (char*)ack.c_str(), strlen(ack.c_str()), (SOCKADDR*)client->getSockAddr(), listenSocket.getAddrinfo());
                 //et on envoie un message d'annuaire a tout les clients pour leur signaler que celui ci a rejoint un salon

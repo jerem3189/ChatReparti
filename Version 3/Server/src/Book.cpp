@@ -143,13 +143,20 @@ int Book::changeClientName(string name, string newName) {
  * @return NULL si aucun client correspond au nom recherché
  */
 Client* Book::findClient(string name) {
-    vector<Client>::iterator it;
+    /*vector<Client>::iterator it;
     for(it = this->clients.begin(); it != this->clients.end(); ++it)
     {
         if(it->getName() == name)
         {
             cout << "Book::findClient() -> Client trouvé !!!" << endl;
             return &(*it);
+        }
+    }*/
+
+    for(int i=0; i<this->clients.size();i++) {
+        if(clients.at(i).getName() == name) {
+            cout << "Book::findClient() -> Client trouvé !!!" << endl;
+            return &clients.at(i);
         }
     }
 

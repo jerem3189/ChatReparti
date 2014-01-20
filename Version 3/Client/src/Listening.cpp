@@ -64,6 +64,8 @@ void Listening::run() {
 
             QString msg_com = "";
 
+            Client *client = NULL;
+
             switch (rfc->type(message)) {
 
             case MSG_NEIGHBOOR:
@@ -117,8 +119,18 @@ void Listening::run() {
                 addr_client.sin_addr.s_addr = inet_addr(chaine3.toStdString().c_str());
                 addr_client.sin_port = htons(chaine4.toInt());
 
-                this->book->addNewClient(chaine2.toStdString(), chaine3.toStdString(), chaine4.toStdString(), &addr_client);
-                mainWindow->getUi()->listWidget->addItem(chaine2);
+                client = NULL;
+                client = this->book->findClient(champ2);
+
+                if(client == NULL) { // Le client n'est pas dans l'annuaire
+                    cout << "le client n'est pas dans l'annuaire" << endl;
+                    this->book->addNewClient(chaine2.toStdString(), chaine3.toStdString(), chaine4.toStdString(), &addr_client);
+                    mainWindow->getUi()->listWidget->addItem(chaine2);
+                }
+                else { // Le client est dans l'annuaire
+                    cout << "le client est deja dans l'annuaire" << endl;
+                    this->book->addClientToRoom(client->getName(), rfc->fieldFromMesg(testString, 5+chaine5.toInt(), "§"));
+                }
 
                 break;
 
@@ -181,29 +193,10 @@ void Listening::run() {
 
                 if(champ2 == MSG_ACK_ROOM_CREATE_SUCCESS)
                 {
-                    this->mainWindow->getUi()->statusBar->addPermanentWidget(new QLabel ("message permanent", this->mainWindow->getUi()->statusBar));
-                    QWidget *widget = new QWidget();
-                    widget->setObjectName(QStringLiteral("TAB_TOTO"));
-
-                    QVBoxLayout *vertLayout = new QVBoxLayout(widget);
-                    vertLayout->setSpacing(6);
-                    vertLayout->setContentsMargins(11, 11, 11, 11);
-                    vertLayout->setObjectName(QStringLiteral("verticalLayout_14"));
-
-                    QTextEdit *textEdit = new QTextEdit(widget);
-                    textEdit->setObjectName(QStringLiteral("textEdit2"));
-                    textEdit->setTextInteractionFlags(Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse);
-
-                    vertLayout->addWidget(textEdit);
-
-                    widget->show();
-
-                    this->mainWindow->getUi()->QTabWidget_onglets->addTab(widget, QString(champ3.c_str()));
                 }
 
                 if(champ2 == MSG_ACK_UNKNOWN_CLIENT)
                 {
-                    //this->mainWindow->getUi()->statusBar->addPermanentWidget (new QLabel ("message permanent"));
                     emit statusBarChanged(QString("Vous n'etes pas connecté"));
                 }
 

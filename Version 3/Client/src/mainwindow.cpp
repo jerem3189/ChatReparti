@@ -119,6 +119,18 @@ void MainWindow::on_pushButton_clicked()
     }
 
     this->ui->lineEdit->clear();
+
+    // Saisie du message envoyé dans l'IHM et dans le bon salon
+    msgCom = ui->label_pseudo->text().toStdString();
+    msgCom += " - ";
+    msgCom += msg.toStdString();
+    msgCom += "\n";
+
+    QTextEdit *text;
+
+    text = this->getRoomLists().take(ui->QTabWidget_onglets->tabText(ui->QTabWidget_onglets->currentIndex()));
+    text->moveCursor(QTextCursor::End);
+    text->insertPlainText(QString(msgCom.c_str()));
 }
 
 void MainWindow::on_action_Joindre_un_salon_triggered()
@@ -149,6 +161,13 @@ void MainWindow::on_action_Joindre_un_salon_triggered()
     new QWidget(this->ui->QTabWidget_onglets);
 
     this->ui->QTabWidget_onglets->addTab(QTabWidget_Room ,roomName);
+
+
+    string msg = rfc.createMsgRoomCreate(ui->label_pseudo->text().toStdString(),roomName.toStdString());
+    NetworkUDP::sendDatagrams(this->socket->getSocket(),(char*)msg.c_str(), strlen(msg.c_str()),socket->getSockaddr(), this->socket->getAddrinfo());
+
+    msg = rfc.createMsgRoomJoin(ui->label_pseudo->text().toStdString(), roomName.toStdString());
+    NetworkUDP::sendDatagrams(this->socket->getSocket(),(char*)msg.c_str(), strlen(msg.c_str()),socket->getSockaddr(), this->socket->getAddrinfo());
 }
 
 void MainWindow::on_actionD_connexion_triggered()
@@ -222,4 +241,18 @@ Client *MainWindow::getRightNeighboor() const {
 void MainWindow::setRightNeighboor(Client *value)
 {
     rightNeighboor = value;
+}
+
+void MainWindow::on_QTabWidget_onglets_currentChanged(int index)
+{
+    /*
+    this->ui->listWidget->clear();
+
+    QString roomName = this->ui->QTabWidget_onglets->tabText(index);
+    vector<Client*> roomClients = this->book->getRoomClients(roomName.toStdString());
+
+    for(int i=0; i<roomClients.size(); i++) {
+        this->ui->listWidget->addItem(QString(roomClients.at(i)->getName().c_str()));
+    }
+    */
 }

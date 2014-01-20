@@ -59,6 +59,8 @@ private slots:
 
     void on_pushButton_2_clicked();
 
+    void on_QTabWidget_onglets_currentChanged(int index);
+
 private:
     Ui::MainWindow *ui;
     Socket *socket;

@@ -104,6 +104,9 @@ void ComClients::run() {
 
                  FIN MESSAGERIE PRIVEE */
 
+
+
+
                 // Si le message est pour un salon dans lequel il est présent
                 if(this->mainWindow->getRoomLists().contains(chaine5)) {
                     cout << "ComClients() -> " << champ2 << " a envoyé un message" << endl;
@@ -121,6 +124,7 @@ void ComClients::run() {
 
 
 
+
                     // COMPARAISON DES DEUX SOCKADDR
 
                     if (this->mainWindow->getLeftNeighboor() != NULL) {
@@ -134,7 +138,6 @@ void ComClients::run() {
                         }
                     }
                     else{
-
                         if (this->mainWindow->getRightNeighboor() != NULL) {
                             if (NetworkUDP::compareSockaddr(addr_in, *(this->mainWindow->getRightNeighboor()->getSockAddr()))) {
                                 cout << "Le message provient du voisin de droite" << endl;
@@ -147,6 +150,8 @@ void ComClients::run() {
                         }
                     }
 
+
+
                     if (this->mainWindow->getLeftNeighboor() != NULL) {
                         if (compare==2) // Si ca vient du voisin de droite
                             NetworkUDP::sendDatagrams(this->mainWindow->getSocketClients()->getSocket(), message, strlen(message), (SOCKADDR*)this->mainWindow->getLeftNeighboor()->getSockAddr(), this->mainWindow->getSocketClients()->getAddrinfo());
@@ -157,7 +162,41 @@ void ComClients::run() {
                             NetworkUDP::sendDatagrams(this->mainWindow->getSocketClients()->getSocket(), message, strlen(message), (SOCKADDR*)this->mainWindow->getRightNeighboor()->getSockAddr(), this->mainWindow->getSocketClients()->getAddrinfo());
                     }
                 }
-                else { // Le message n'est pas pour ce client
+                else { // Le message est pour un salon dans lequel le client n'est pas
+
+
+                    cout << "Le message reçu est pour un salon dans lequel je ne suis pas" << endl;
+
+
+
+
+                    // COMPARAISON DES DEUX SOCKADDR
+
+                    if (this->mainWindow->getLeftNeighboor() != NULL) {
+                        if (NetworkUDP::compareSockaddr(addr_in, *(this->mainWindow->getLeftNeighboor()->getSockAddr()))) {
+                            cout << "Le message provient du voisin de gauche" << endl;
+                            compare=1;
+                        }
+                        else {
+                            cout << "Le message provient du voisin de droite" << endl;
+                            compare=2;
+                        }
+                    }
+                    else{
+                        if (this->mainWindow->getRightNeighboor() != NULL) {
+                            if (NetworkUDP::compareSockaddr(addr_in, *(this->mainWindow->getRightNeighboor()->getSockAddr()))) {
+                                cout << "Le message provient du voisin de droite" << endl;
+                                compare=2;
+                            }
+                            else {
+                                cout << "Le message provient du voisin de gauche" << endl;
+                                compare=1;
+                            }
+                        }
+                    }
+
+
+
                     if (this->mainWindow->getLeftNeighboor() != NULL) {
                         if (compare==2) // Si ca vient du voisin de droite
                             NetworkUDP::sendDatagrams(this->mainWindow->getSocketClients()->getSocket(), message, strlen(message), (SOCKADDR*)this->mainWindow->getLeftNeighboor()->getSockAddr(), this->mainWindow->getSocketClients()->getAddrinfo());

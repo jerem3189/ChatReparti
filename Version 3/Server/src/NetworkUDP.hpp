@@ -29,7 +29,7 @@ public:
     static int sendDatagrams(SOCKET sock, char *data, size_t len, SOCKADDR *address, ADDRINFO *infos);
     static int receiveDatagrams(SOCKET sock, char *data, size_t maxLen, SOCKADDR *address, ADDRINFO *infos);
     static bool compareSockaddr(sockaddr_in const &a, sockaddr_in const &b) {
-        if (memcmp(&a, &b, sizeof(SOCKADDR_IN)) == 0) {
+        if ((a.sin_addr.s_addr == b.sin_addr.s_addr) && (a.sin_port == b.sin_port)) {
            return true;
         }
         return false;
