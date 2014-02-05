@@ -203,26 +203,6 @@ string RFC1664::createMsgAck(string message) {
     return retour;
 }
 
-/*
-string RFC1664::fieldFromMesg(string msg, int fieldNb, char delim) {
-    string retour;
-    istringstream iss(msg);
-    string mot;
-    //char delim = '§';
-    int i = 1;
-    while (std::getline(iss, mot, delim) && (i < fieldNb)) {
-        //cout << i << endl;
-        i++;
-        //cout << i << endl;
-        //cout << mot << endl;
-    }
-    //cout << mot<<endl;
-    mot.erase(mot.size() - 1, 1);
-    retour = mot;
-
-    return retour;
-}*/
-
 /** récupère un champ d'un message en fonction d'un délimiteur
  *
  * @param msg de message à découper

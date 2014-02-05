@@ -158,6 +158,7 @@ int main(int argc, char** argv) {
                 {   //sinon on envoie une confirmation de suppression
                     ack = rfc.createMsgAck(MSG_ACK_REMOVE_CLIENT_SUCCESS);
                     NetworkUDP::sendDatagrams(listenSocket.getSocket(), (char*)ack.c_str(), strlen(ack.c_str()), (SOCKADDR*)&addr_in, listenSocket.getAddrinfo());
+                    
                 }
             }
             else
